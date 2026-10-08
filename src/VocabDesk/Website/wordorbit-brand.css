@@ -1,0 +1,6 @@
+/* A compact live wordmark remains crisp and readable in both themes. */
+.topbar .brand{gap:12px;min-width:0}
+.topbar .wordorbit-mark{display:block;width:52px;height:52px;object-fit:contain;flex-shrink:0}
+.topbar .wordorbit-wordmark strong{font-family:"Segoe UI",Arial,sans-serif;font-size:25px;font-weight:750;letter-spacing:-.045em;line-height:1.1;color:#f3f6ff}
+.topbar .wordorbit-wordmark span{display:block;font-family:"Microsoft YaHei",sans-serif;font-size:11px;letter-spacing:.12em;color:#b8c7df;margin-top:4px}
+@media(max-width:560px){.topbar .brand{gap:7px}.topbar .wordorbit-mark{width:40px;height:40px}.topbar .wordorbit-wordmark strong{font-size:21px}.topbar .wordorbit-wordmark span{font-size:9px;letter-spacing:.04em}}

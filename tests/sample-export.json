@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 2,
+  "words": [
+    {
+      "id": "seed-1-1",
+      "word": "atmosphere",
+      "meaning": "大气层；气氛",
+      "chapter": "自然地理",
+      "source_page": "009",
+      "source": "seed",
+      "status": "verified"
+    }
+  ],
+  "records": {
+    "seed-1-1": {
+      "level": 2,
+      "seen": 7,
+      "correct": 5,
+      "wrong": 2,
+      "due": null,
+      "lastSeen": "2026-10-07T12:00:00.000Z"
+    }
+  },
+  "favorites": ["seed-1-1"],
+  "attempts": [
+    {"date": "2026-10-07", "id": "seed-1-1", "correct": true, "mode": "single"}
+  ]
+}

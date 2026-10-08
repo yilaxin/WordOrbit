@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>VocabDesk</AssemblyName>
+    <RootNamespace>VocabDesk</RootNamespace>
+    <Product>词轨 WordOrbit</Product>
+    <Title>词轨 WordOrbit</Title>
+    <AssemblyTitle>词轨 WordOrbit</AssemblyTitle>
+    <Description>词轨 WordOrbit · 离线英语学习</Description>
+    <ApplicationIcon>Assets/wordorbit-earth.ico</ApplicationIcon>
+    <Version>1.1.1</Version>
+    <PublishTrimmed>false</PublishTrimmed>
+    <NuGetAudit>false</NuGetAudit>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.4258.31" />
+    <Content Include="Website\**\*" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <Content Include="Assets\wordorbit-earth.ico" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

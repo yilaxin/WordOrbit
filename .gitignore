@@ -1,0 +1,10 @@
+.build/
+artifacts/
+**/bin/
+**/obj/
+*.user
+*.suo
+*.pdf
+*.zip
+design/*
+!design/wordorbit-v7-earth-contrast.png

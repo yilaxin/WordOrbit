@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#15243b" />
+  <meta name="description" content="词轨 WordOrbit · 离线英语词汇学习" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="dark-overrides.css" />
+  <link rel="stylesheet" href="answer-details.css" />
+  <link rel="stylesheet" href="data-controls.css" />
+  <link rel="stylesheet" href="desktop-controls.css" />
+  <title>词轨 WordOrbit · 离线背词</title>
+  <link rel="stylesheet" href="wordorbit-brand.css" />
+  <link rel="icon" href="wordorbit-earth-mark.png" type="image/png" />
+</head>
+<body>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <header class="topbar">
+    <div class="brand">
+      <img class="wordorbit-mark" src="wordorbit-earth-mark.png" width="52" height="52" alt="" />
+      <div class="wordorbit-wordmark"><strong>WordOrbit</strong><span>词轨 · 离线英语学习</span></div>
+    </div>
+    <div class="top-actions">
+      <button class="ghost-btn" data-view="stats">学习数据</button>
+      <button class="icon-btn" id="themeBtn" title="切换显示模式" aria-label="切换显示模式">◐</button>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <section id="view-home" class="view active" aria-labelledby="home-title">
+      <div class="hero-row">
+        <div>
+          <p class="eyebrow">IELTS WORD LAB / 本地学习空间</p>
+          <h1 id="home-title">今天，先把该复习的词学会。</h1>
+          <p class="lede">基于《雅思词汇真经》主题词群，按你的熟练度安排每一次练习。</p>
+        </div>
+        <div class="streak-card"><span>连续学习</span><strong id="streakValue">0 天</strong><small id="streakHint">今天开始第一轮</small></div>
+      </div>
+
+      <div class="dashboard-grid">
+        <article class="panel today-panel">
+          <div class="panel-head"><div><p class="eyebrow">TODAY / 今日队列</p><h2>开始今天的练习</h2></div><span id="dueBadge" class="badge badge-blue">0 待复习</span></div>
+          <div class="today-stats"><div><strong id="todayNew">20</strong><span>新词上限</span></div><div><strong id="todayDue">0</strong><span>到期复习</span></div><div><strong id="todayMastered">0</strong><span>已掌握</span></div></div>
+          <div class="progress-track"><span id="todayProgressBar"></span></div><p id="todayProgressText" class="muted">今天还没有开始</p>
+          <div class="button-row"><button class="primary-btn" id="startTodayBtn">开始今日复习 <span>→</span></button><button class="secondary-btn" id="continueBtn">继续上次练习</button></div>
+        </article>
+
+        <article class="panel quick-panel">
+          <div class="panel-head"><div><p class="eyebrow">QUICK ACCESS / 快捷入口</p><h2>选择练习方式</h2></div></div>
+          <div class="quick-grid"><button class="quick-card" data-practice="mixed"><span>▦</span><strong>混合练习</strong><small>按熟练度智能出题</small></button><button class="quick-card" data-practice="wrong"><span>↻</span><strong>错题重练</strong><small id="wrongCount">0 道待巩固</small></button><button class="quick-card" data-practice="favorite"><span>☆</span><strong>我的收藏</strong><small id="favoriteCount">0 个收藏</small></button><button class="quick-card" data-view="library"><span>⌕</span><strong>浏览词库</strong><small>按主题与状态筛选</small></button></div>
+        </article>
+      </div>
+
+      <div class="section-head"><div><p class="eyebrow">FOCUS / 学习焦点</p><h2>按主题掌握进度</h2></div><button class="text-btn" data-view="library">查看完整词库 →</button></div>
+      <div id="chapterGrid" class="chapter-grid"></div>
+    </section>
+
+    <section id="view-setup" class="view" aria-labelledby="setup-title">
+      <div class="section-head"><div><p class="eyebrow">PRACTICE SETUP / 练习设置</p><h1 id="setup-title">把这一轮练成你的节奏</h1><p class="lede">默认混合题型；你可以随时切换到专项训练。</p></div><button class="text-btn" data-view="home">← 返回首页</button></div>
+      <div class="setup-layout"><div class="panel setup-panel"><div class="form-block"><label>题型</label><div class="choice-grid" id="typeChoices"><button class="choice active" data-type="mixed">全部混合</button><button class="choice" data-type="single">单选</button><button class="choice" data-type="multi">多选</button><button class="choice" data-type="fill">填空</button><button class="choice" data-type="spell">拼写</button><button class="choice" data-type="listen">听音</button></div></div><div class="form-block"><label>题量</label><div class="choice-grid compact" id="countChoices"><button class="choice active" data-count="10">10</button><button class="choice" data-count="20">20</button><button class="choice" data-count="50">50</button><button class="choice" data-count="all">全部</button></div></div><div class="form-block"><label>来源与范围</label><div class="filter-row"><select id="chapterSelect"><option value="all">全部主题</option></select><select id="sourceSelect"><option value="all">全部来源</option><option value="seed">首批精选词</option><option value="imported">我导入的词</option></select></div></div><div class="form-block"><label>出题顺序</label><div class="choice-grid compact" id="orderChoices"><button class="choice active" data-order="smart">智能排序</button><button class="choice" data-order="random">随机</button><button class="choice" data-order="sequential">顺序</button></div></div><button class="primary-btn full" id="launchPracticeBtn">开始这一轮 <span>→</span></button></div><aside class="panel setup-aside"><p class="eyebrow">本轮预览</p><div class="preview-number" id="previewNumber">10</div><p class="muted">道题将从符合条件的词条中生成。答错会自动排到本轮末尾，直到答对或结束本轮。</p><div class="rule-list"><div><span>✓</span><span>答题后立即看到解析和来源</span></div><div><span>✓</span><span>收藏、错题和进度自动保存在本机</span></div><div><span>✓</span><span>可随时结束，下一次继续</span></div></div></aside></div>
+    </section>
+
+    <section id="view-practice" class="view" aria-labelledby="practice-title"><div class="practice-top"><button class="text-btn" id="exitPractice">← 结束本轮</button><div class="practice-meta"><span id="practiceProgress">第 1 / 10 题</span><span id="practiceAccuracy">本轮正确率 --</span></div></div><div class="practice-layout"><aside class="practice-rail panel"><div class="rail-head"><span>题目导航</span><span id="railCount">0/0</span></div><div id="questionNav" class="question-nav"></div><div class="rail-tip"><span>●</span> 红色表示待重做<br><span>●</span> 绿色表示已答对</div></aside><article class="panel question-card"><div class="question-head"><div><span id="questionLabel" class="eyebrow">WORD / 词汇</span><h1 id="questionPrompt">--</h1></div><button id="favoriteQuestionBtn" class="favorite-btn" aria-label="收藏词条">☆ <span>收藏</span></button></div><div id="questionContext" class="question-context"></div><div id="answerArea" class="answer-area"></div><div id="explanation" class="explanation hidden"></div><div class="question-actions"><button class="secondary-btn" id="speakBtn">🔊 听发音</button><div><button class="secondary-btn" id="prevQuestionBtn">上一题</button><button class="primary-btn" id="nextQuestionBtn">检查答案 <span>→</span></button></div></div></article></div></section>
+
+    <section id="view-library" class="view" aria-labelledby="library-title"><div class="section-head"><div><p class="eyebrow">LIBRARY / 词库</p><h1 id="library-title">把每一个词放回语境</h1><p class="lede">搜索、筛选、编辑，或把自己的笔记留在词条旁。</p></div><button class="text-btn" data-view="home">← 返回首页</button></div><div class="library-toolbar panel"><input id="searchInput" type="search" placeholder="搜索单词、释义或标签…" /><select id="libraryChapter"><option value="all">全部主题</option></select><select id="libraryStatus"><option value="all">全部状态</option><option value="due">待复习</option><option value="learning">学习中</option><option value="mastered">已掌握</option><option value="favorite">我的收藏</option></select><button class="secondary-btn" id="importBtn">导入 JSON</button><button class="secondary-btn" id="exportBtn">导出数据</button><input type="file" id="importFile" accept="application/json,.json" hidden /></div><div id="wordTable" class="word-list"></div></section>
+
+    <section id="view-stats" class="view" aria-labelledby="stats-title"><div class="section-head"><div><p class="eyebrow">LEARNING DATA / 学习数据</p><h1 id="stats-title">看见你的记忆轨迹</h1><p class="lede">用数据找到薄弱主题，而不是只看一个总分。</p></div><button class="text-btn" data-view="home">← 返回首页</button></div><div class="metric-grid"><div class="metric-card"><span>累计作答</span><strong id="metricAttempts">0</strong><small>道题</small></div><div class="metric-card"><span>累计正确率</span><strong id="metricAccuracy">0%</strong><small>所有练习</small></div><div class="metric-card"><span>已掌握词</span><strong id="metricMastered">0</strong><small>熟练度 ≥ 3</small></div><div class="metric-card"><span>连续学习</span><strong id="metricStreak">0</strong><small>天</small></div></div><div class="stats-layout"><article class="panel"><div class="panel-head"><div><p class="eyebrow">LAST 30 DAYS / 近 30 天</p><h2>学习活动</h2></div></div><div id="activityChart" class="activity-chart"></div></article><article class="panel"><div class="panel-head"><div><p class="eyebrow">BY CHAPTER / 主题表现</p><h2>章节进度</h2></div></div><div id="chapterStats"></div></article></div><article class="panel data-controls"><div><p class="eyebrow">DATA CONTROL / 数据管理</p><h2>清空学习数据</h2><p class="muted">仅清理练习记录与进度；词库、释义、笔记和显示设置保留。清空全部时也会清除收藏。</p></div><div class="data-control-actions"><button class="secondary-btn" data-clear-learning="session">清空本次训练</button><button class="secondary-btn" data-clear-learning="today">清空当天数据</button><button class="secondary-btn data-danger" data-clear-learning="all">清空所有学习数据</button></div></article></section>
+
+    <div id="editModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="editTitle"><div class="modal-card"><div class="modal-head"><div><p class="eyebrow">EDIT ENTRY / 编辑词条</p><h2 id="editTitle">--</h2></div><button class="icon-btn" id="closeModal">×</button></div><form id="editForm"><label>中文释义<textarea id="editMeaning" rows="2"></textarea></label><label>例句<textarea id="editExample" rows="3"></textarea></label><label>个人笔记<textarea id="editNotes" rows="3" placeholder="写下你的联想、易错点或记忆钩子"></textarea></label><label>标签（用逗号分隔）<input id="editTags" /></label><div class="modal-actions"><button type="button" class="secondary-btn" id="cancelEdit">取消</button><button type="submit" class="primary-btn">保存修改</button></div></form></div></div>
+  </main>
+  <script src="full-ocr-data.js"></script>
+  <script src="external-dictionary.js"></script>
+  <script src="example-sentences.js"></script>
+  <script src="app.js"></script>
+  <script src="quality-overrides.js"></script>
+  <script src="desktop-controls.js"></script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+/* Desktop-only controls, sized and colored to match the site's own header. */
+.desktop-menu{position:relative;display:flex;align-items:center}
+.desktop-menu-trigger{display:grid;place-items:center;width:38px;height:38px;padding:0;border:1px solid transparent;border-radius:6px;background:transparent;color:#d8e0eb;font-size:23px;line-height:1;cursor:pointer;transition:background .15s,border-color .15s}
+.desktop-menu-trigger:hover,.desktop-menu-trigger[aria-expanded="true"]{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.14)}
+.desktop-menu-trigger:focus-visible{outline:2px solid #a8c7ea;outline-offset:2px}
+.desktop-menu-popover{position:absolute;right:0;top:calc(100% + 11px);z-index:50;width:246px;padding:8px;background:#fff;color:#16243a;border:1px solid #dfe3e8;border-radius:9px;box-shadow:0 18px 44px rgba(9,17,31,.22)}
+.desktop-menu-popover[hidden]{display:none}
+.desktop-menu-label{display:block;padding:7px 10px 8px;color:#718096;font-size:10px;font-weight:700;letter-spacing:.14em}
+.desktop-menu-item{display:flex;align-items:center;gap:11px;width:100%;padding:10px;border:0;border-radius:6px;background:transparent;color:inherit;text-align:left;cursor:pointer;font:inherit}
+.desktop-menu-item:hover,.desktop-menu-item:focus-visible{background:#f1f4f8;outline:none}
+.desktop-menu-item .desktop-menu-icon{display:grid;place-items:center;flex:none;width:28px;height:28px;border-radius:6px;background:#e8eff6;color:#315d82;font-size:17px}
+.desktop-menu-item strong{display:block;font-size:12px;font-weight:650;line-height:1.3}
+.desktop-menu-item small{display:block;margin-top:2px;color:#718096;font-size:10px;line-height:1.3}
+.desktop-menu-divider{height:1px;margin:5px 9px;background:#e3e8ef}
+body.dark .desktop-menu-popover{background:#1b2a40;color:#eaf2ff;border-color:#344660;box-shadow:0 18px 44px rgba(0,0,0,.34)}
+body.dark .desktop-menu-label,body.dark .desktop-menu-item small{color:#aabbd0}
+body.dark .desktop-menu-item:hover,body.dark .desktop-menu-item:focus-visible{background:#253750}
+body.dark .desktop-menu-item .desktop-menu-icon{background:#2b4563;color:#d1e7ff}
+body.dark .desktop-menu-divider{background:#35475e}
+@media(max-width:560px){.desktop-menu-trigger{width:34px;height:34px}.desktop-menu-popover{right:-38px;max-width:calc(100vw - 28px)}}
