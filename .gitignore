@@ -8,3 +8,6 @@ artifacts/
 *.zip
 design/*
 !design/wordorbit-v7-earth-contrast.png
+!design/constellation-prompts.json
+!design/constellation-art-overview.png
+!design/constellation-ui-dark.png

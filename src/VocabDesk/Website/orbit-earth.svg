@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 480" fill="none">
+  <defs>
+    <radialGradient id="sea" cx=".28" cy=".24" r=".85"><stop stop-color="#65D5FF"/><stop offset=".34" stop-color="#407ED9"/><stop offset=".74" stop-color="#233C8F"/><stop offset="1" stop-color="#111E4A"/></radialGradient>
+    <radialGradient id="shade" cx=".27" cy=".2" r=".82"><stop offset=".4" stop-color="#102759" stop-opacity="0"/><stop offset="1" stop-color="#070B21" stop-opacity=".88"/></radialGradient>
+    <linearGradient id="land" x1="204" y1="125" x2="404" y2="338" gradientUnits="userSpaceOnUse"><stop stop-color="#A9F1D9"/><stop offset=".5" stop-color="#68C9C3"/><stop offset="1" stop-color="#536DAF"/></linearGradient>
+    <linearGradient id="ring" x1="55" y1="340" x2="588" y2="139" gradientUnits="userSpaceOnUse"><stop stop-color="#665AF5" stop-opacity=".1"/><stop offset=".25" stop-color="#BCA0FF"/><stop offset=".66" stop-color="#9B78FF"/><stop offset="1" stop-color="#59C8FF" stop-opacity=".35"/></linearGradient>
+    <linearGradient id="ring2" x1="150" y1="75" x2="498" y2="411" gradientUnits="userSpaceOnUse"><stop stop-color="#679FFF" stop-opacity=".15"/><stop offset=".55" stop-color="#75CFFF"/><stop offset="1" stop-color="#B798FF" stop-opacity=".1"/></linearGradient>
+    <clipPath id="globe"><circle cx="334" cy="239" r="128"/></clipPath>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="4"/></filter>
+    <filter id="halo" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="22"/></filter>
+  </defs>
+  <g fill="#B4C9FA"><circle cx="128" cy="91" r="1.2"/><circle cx="536" cy="94" r="1.7"/><circle cx="579" cy="272" r="1"/><circle cx="93" cy="349" r="1.6"/><circle cx="486" cy="390" r="1.2"/><circle cx="202" cy="405" r="1"/><circle cx="431" cy="65" r="1"/><circle cx="80" cy="200" r="1"/></g>
+  <path d="M549 182v10m-5-5h10M180 370v8m-4-4h8" stroke="#B2A0FA" stroke-opacity=".7"/>
+  <ellipse cx="334" cy="239" rx="159" ry="155" fill="#5966F8" opacity=".13" filter="url(#halo)"/>
+  <ellipse cx="334" cy="239" rx="270" ry="82" transform="rotate(-21 334 239)" stroke="url(#ring)" stroke-width="1.5" opacity=".5"/>
+  <ellipse cx="334" cy="239" rx="223" ry="72" transform="rotate(53 334 239)" stroke="url(#ring2)" stroke-width="1.1" opacity=".45"/>
+  <ellipse cx="334" cy="239" rx="292" ry="99" transform="rotate(-21 334 239)" stroke="#7777C9" stroke-opacity=".16" stroke-dasharray="2 10"/>
+  <circle cx="334" cy="239" r="130" stroke="#7CCAFF" stroke-opacity=".28" stroke-width="2"/>
+  <circle cx="334" cy="239" r="128" fill="url(#sea)"/>
+  <g clip-path="url(#globe)">
+    <g stroke="#C3E9FF" stroke-opacity=".12" stroke-width=".8"><ellipse cx="334" cy="239" rx="77" ry="128"/><ellipse cx="334" cy="239" rx="32" ry="128"/><ellipse cx="334" cy="239" rx="128" ry="47"/><ellipse cx="334" cy="239" rx="128" ry="89"/><path d="M206 239h256M334 111v256"/></g>
+    <g fill="url(#land)">
+      <path d="m268 111 28 7 10 13 23 3 9 14-15 13-22-1-6 17-17 9 4 14-14 14-19-8-10-19-20-4-5-21 10-19 14-5 7-14z"/>
+      <path d="m255 217 22 7 11 18 21 7 4 21-12 16-7 27-18 20-6-8 3-27-11-13-2-23-15-16z"/>
+      <path d="m339 151 12-15 20 7 16-11 25 13 10 17 26 7 10 25-17 17-22-5-7 17-18-7-13 10-15-15-17-3-5-17-17-4-5-17z"/>
+      <path d="m345 212 17 6 17 17-6 26-15 24-14 5-8-19-11-12-3-26z"/>
+      <path d="m412 287 20-7 21 12 3 17-22 10-20-9zM396 233l10 8 6 16-7 6-10-17zM314 115l17 7-7 15-13-6z"/>
+    </g>
+    <path d="M222 182c50-25 117-30 178 2M216 273c62 12 144 10 222-10" stroke="#D4F0FF" stroke-width="7" stroke-opacity=".12" stroke-linecap="round"/>
+    <circle cx="334" cy="239" r="128" fill="url(#shade)"/>
+  </g>
+  <path d="M82 304c30 46 176 28 327-30s250-134 219-160" stroke="url(#ring)" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M205 69c-29 22 3 111 72 200s149 143 177 121" stroke="url(#ring2)" stroke-width="1.7" stroke-linecap="round"/>
+  <circle cx="490" cy="239" r="6" fill="#A996FF" filter="url(#glow)"/>
+  <circle cx="490" cy="239" r="4" fill="#DBCEFF"/><circle cx="490" cy="239" r="8" stroke="#BBA2FF" stroke-opacity=".3"/>
+  <circle cx="249" cy="131" r="4" fill="#99E2FF"/>
+  <path d="m488 239-15 7" stroke="#B6A3FF" stroke-opacity=".5" stroke-linecap="round"/>
+</svg>

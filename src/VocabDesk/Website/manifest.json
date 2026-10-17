@@ -3,15 +3,15 @@
   "short_name": "词轨",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#0f1725",
-  "theme_color": "#0b1220",
+  "background_color": "#0b1020",
+  "theme_color": "#0b1020",
   "lang": "zh-CN",
   "description": "词轨 WordOrbit · 离线英语词汇学习",
   "icons": [
     {
+      "src": "wordorbit-earth-mark.png",
       "sizes": "any",
       "type": "image/png",
-      "src": "wordorbit-earth-mark.png",
       "purpose": "any"
     }
   ]

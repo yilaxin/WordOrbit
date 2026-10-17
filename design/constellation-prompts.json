@@ -1,0 +1,227 @@
+{
+  "mode": "built-in image_gen",
+  "transparent": true,
+  "style": "Use case: stylized-concept. Asset type: a single independent transparent cutout for the WordOrbit interactive topic constellation, one of a coherent 22-object collection. Style: premium refined friendly 3D miniature illustration, semi-realistic sculpted forms, soft tactile materials, elegant astronomical collectible, strong readable silhouette at small display sizes. Three-quarter view from slightly above, centered in a square canvas. Lighting: soft broad upper-left white key light, gentle violet rim lower-right, avoid deep black shading. Entire object including appendages comfortably fits with generous transparent padding; main body occupies about 68% of canvas. Background must be genuinely transparent alpha, with no scene, floor, card, border or background star field. No text, numbers, logos, watermarks, labels or unrelated extra objects. Exactly ONE object image, not a sheet or grid.",
+  "assets": [
+    {
+      "number": "01",
+      "id": "natural-geography",
+      "chapter": "自然地理",
+      "title": "地貌星球",
+      "kind": "planet",
+      "color": "#68c8f6",
+      "src": "assets/constellation/01-natural-geography.png",
+      "prompt": "Use case: stylized-concept. Asset type: one transparent cutout collectible space illustration for WordOrbit vocabulary learning app, part of a coherent 22-object astronomy collection. Primary request: Natural Geography — ONE terrain planet, centered, with blue oceans, visibly sculpted rocky continental canyon layers, pale cloud ribbons and a thin cyan atmosphere. Style: refined friendly premium 3D illustration, semi-realistic miniature, smooth tactile surfaces with restrained micro-detail, strong legible silhouette at 80px. Three-quarter view slightly above the equator. Lighting: broad soft upper-left white key light, gentle violet rim on lower-right, no dramatic black shadows. Palette: luminous ocean blue, warm rocky strata, white clouds, complementary subtle violet. Composition: square canvas, entire single object and small atmosphere visible, body about 68% of canvas diameter, centered, equal generous transparent margins. Background: genuinely transparent alpha, no scenery, no floor, no floating labels. No text, letters, numbers, logos, watermark, card, frame, orbit lines or unrelated satellites. Deliver exactly one final image."
+    },
+    {
+      "number": "02",
+      "id": "plant-research",
+      "chapter": "植物研究",
+      "title": "生态星球",
+      "kind": "planet",
+      "color": "#75d6a9",
+      "src": "assets/constellation/02-plant-research.png",
+      "prompt": "Use case: stylized-concept. Asset type: a single independent transparent cutout for the WordOrbit interactive topic constellation, one of a coherent 22-object collection. Style: premium refined friendly 3D miniature illustration, semi-realistic sculpted forms, soft tactile materials, elegant astronomical collectible, strong readable silhouette at small display sizes. Three-quarter view from slightly above, centered in a square canvas. Lighting: soft broad upper-left white key light, gentle violet rim lower-right, avoid deep black shading. Entire object including appendages comfortably fits with generous transparent padding; main body occupies about 68% of canvas. Background must be genuinely transparent alpha, with no scene, floor, card, border or background star field. No text, numbers, logos, watermarks, labels or unrelated extra objects. Exactly ONE object image, not a sheet or grid.\nSubject: ONE emerald ecological planet with miniature lush forest canopy covering rounded continents, pale winding rivers, a translucent mint atmospheric rim. No separate floating leaves."
+    },
+    {
+      "number": "03",
+      "id": "animal-protection",
+      "chapter": "动物保护",
+      "title": "生命栖息星球",
+      "kind": "planet",
+      "color": "#7ad6cc",
+      "src": "assets/constellation/03-animal-protection.png",
+      "prompt": "Use case: stylized-concept. Asset type: a single independent transparent cutout for the WordOrbit interactive topic constellation, one of a coherent 22-object collection. Style: premium refined friendly 3D miniature illustration, semi-realistic sculpted forms, soft tactile materials, elegant astronomical collectible, strong readable silhouette at small display sizes. Three-quarter view from slightly above, centered in a square canvas. Lighting: soft broad upper-left white key light, gentle violet rim lower-right, avoid deep black shading. Entire object including appendages comfortably fits with generous transparent padding; main body occupies about 68% of canvas. Background must be genuinely transparent alpha, with no scene, floor, card, border or background star field. No text, numbers, logos, watermarks, labels or unrelated extra objects. Exactly ONE object image, not a sheet or grid.\nSubject: ONE teal living-habitat planet with distinct warm grassland and ocean biomes; very subtle small animal-constellation light motifs embedded over the landscape, conveying protected wildlife habitats. No giant animal, no attached character."
+    },
+    {
+      "number": "04",
+      "id": "space-exploration",
+      "chapter": "太空探索",
+      "title": "深空探测飞船",
+      "kind": "ship",
+      "color": "#a99cf4",
+      "src": "assets/constellation/04-space-exploration.png",
+      "prompt": "Use case: stylized-concept. Asset type: a single independent transparent cutout for the WordOrbit interactive topic constellation, one of a coherent 22-object collection. Style: premium refined friendly 3D miniature illustration, semi-realistic sculpted forms, soft tactile materials, elegant astronomical collectible, strong readable silhouette at small display sizes. Three-quarter view from slightly above, centered in a square canvas. Lighting: soft broad upper-left white key light, gentle violet rim lower-right, avoid deep black shading. Entire object including appendages comfortably fits with generous transparent padding; main body occupies about 68% of canvas. Background must be genuinely transparent alpha, with no scene, floor, card, border or background star field. No text, numbers, logos, watermarks, labels or unrelated extra objects. Exactly ONE object image, not a sheet or grid.\nSubject: ONE compact deep-space exploration spacecraft, silver-white and violet hull, elegant swept body, two deployed sensor antennae, small sapphire engine glow. Three-quarter above view, nose generally to upper right. Not an airplane."
+    },
+    {
+      "number": "05",
+      "id": "school-education",
+      "chapter": "学校教育",
+      "title": "知识恒星",
+      "kind": "star",
+      "color": "#f3cc79",
+      "src": "assets/constellation/05-school-education.png",
+      "prompt": "Use case: stylized-concept. Asset type: a single independent transparent cutout for the WordOrbit interactive topic constellation, one of a coherent 22-object collection. Style: premium refined friendly 3D miniature illustration, semi-realistic sculpted forms, soft tactile materials, elegant astronomical collectible, strong readable silhouette at small display sizes. Three-quarter view from slightly above, centered in a square canvas. Lighting: soft broad upper-left white key light, gentle violet rim lower-right, avoid deep black shading. Entire object including appendages comfortably fits with generous transparent padding; main body occupies about 68% of canvas. Background must be genuinely transparent alpha, with no scene, floor, card, border or background star field. No text, numbers, logos, watermarks, labels or unrelated extra objects. Exactly ONE object image, not a sheet or grid.\nSubject: ONE luminous knowledge star, round golden-white stellar energy core with a restrained close violet-gold corona, delicate geometric constellation connections subtly embedded across the surface. A readable round core, not a spiky sun icon. The halo must stay close to the core. No books, no letters."
+    },
+    {
+      "number": "06",
+      "id": "technology-invention",
+      "chapter": "科技发明",
+      "title": "科研飞船",
+      "kind": "ship",
+      "color": "#70cfe7",
+      "src": "assets/constellation/06-technology-invention.png",
+      "prompt": "Use case: stylized-concept. Asset type: a single independent transparent cutout for the WordOrbit interactive topic constellation, one of a coherent 22-object collection. Style: premium refined friendly 3D miniature illustration, semi-realistic sculpted forms, soft tactile materials, elegant astronomical collectible, strong readable silhouette at small display sizes. Three-quarter view from slightly above, centered in a square canvas. Lighting: soft broad upper-left white key light, gentle violet rim lower-right, avoid deep black shading. Entire object including appendages comfortably fits with generous transparent padding; main body occupies about 68% of canvas. Background must be genuinely transparent alpha, with no scene, floor, card, border or background star field. No text, numbers, logos, watermarks, labels or unrelated extra objects. Exactly ONE object image, not a sheet or grid.\nSubject: ONE compact modular research spaceship with cyan-blue scanners, a pearl-white central laboratory capsule, violet structural joints, and a small connected sensor instrument arm. Futuristic scientific craft, distinctly different from a long transport shuttle."
+    },
+    {
+      "number": "07",
+      "id": "culture-history",
+      "chapter": "文化历史",
+      "title": "遗迹小行星",
+      "kind": "asteroid",
+      "color": "#d9ab7c",
+      "src": "assets/constellation/07-culture-history.png",
+      "prompt": "Use case: stylized-concept. Asset type: a single independent transparent cutout for the WordOrbit interactive topic constellation, one of a coherent 22-object collection. Style: premium refined friendly 3D miniature illustration, semi-realistic sculpted forms, soft tactile materials, elegant astronomical collectible, strong readable silhouette at small display sizes. Three-quarter view from slightly above, centered in a square canvas. Lighting: soft broad upper-left white key light, gentle violet rim lower-right, avoid deep black shading. Entire object including appendages comfortably fits with generous transparent padding; main body occupies about 68% of canvas. Background must be genuinely transparent alpha, with no scene, floor, card, border or background star field. No text, numbers, logos, watermarks, labels or unrelated extra objects. Exactly ONE object image, not a sheet or grid.\nSubject: ONE ancient-civilization asteroid: an irregular warm bronze and stone rock with tiny circular architectural ruins and weathered stepped relic patterns integrated into its surface. A single coherent floating miniature, no separate debris field."
+    },
+    {
+      "number": "08",
+      "id": "language-evolution",
+      "chapter": "语言演化",
+      "title": "通信卫星",
+      "kind": "satellite",
+      "color": "#b4a0f0",
+      "src": "assets/constellation/08-language-evolution.png",
+      "prompt": "Use case: stylized-concept. Asset type: a single independent transparent cutout for the WordOrbit interactive topic constellation, one of a coherent 22-object collection. Style: premium refined friendly 3D miniature illustration, semi-realistic sculpted forms, soft tactile materials, elegant astronomical collectible, strong readable silhouette at small display sizes. Three-quarter view from slightly above, centered in a square canvas. Lighting: soft broad upper-left white key light, gentle violet rim lower-right, avoid deep black shading. Entire object including appendages comfortably fits with generous transparent padding; main body occupies about 68% of canvas. Background must be genuinely transparent alpha, with no scene, floor, card, border or background star field. No text, numbers, logos, watermarks, labels or unrelated extra objects. Exactly ONE object image, not a sheet or grid.\nSubject: ONE language communication satellite: violet-blue rounded central core, two neatly deployed iridescent communication panels and a compact antenna, a few delicate close concentric signal arcs. No letters or written symbols."
+    },
+    {
+      "number": "09",
+      "id": "entertainment-sport",
+      "chapter": "娱乐运动",
+      "title": "竞技空间站",
+      "kind": "station",
+      "color": "#efa77e",
+      "src": "assets/constellation/09-entertainment-sport.png",
+      "prompt": "Use case: stylized-concept. Asset type: a single independent transparent cutout for the WordOrbit interactive topic constellation, one of a coherent 22-object collection. Style: premium refined friendly 3D miniature illustration, semi-realistic sculpted forms, soft tactile materials, elegant astronomical collectible, strong readable silhouette at small display sizes. Three-quarter view from slightly above, centered in a square canvas. Lighting: soft broad upper-left white key light, gentle violet rim lower-right, avoid deep black shading. Entire object including appendages comfortably fits with generous transparent padding; main body occupies about 68% of canvas. Background must be genuinely transparent alpha, with no scene, floor, card, border or background star field. No text, numbers, logos, watermarks, labels or unrelated extra objects. Exactly ONE object image, not a sheet or grid.\nSubject: ONE orbital sports station, elegant continuous stadium-ring structure with a tiny illuminated orange running track integrated around the ring, silver-blue hub and a few small connected modules. A single coherent station, no floating sport balls."
+    },
+    {
+      "number": "10",
+      "id": "objects-materials",
+      "chapter": "物品材料",
+      "title": "晶矿小行星",
+      "kind": "asteroid",
+      "color": "#a79ce9",
+      "src": "assets/constellation/10-objects-materials.png",
+      "prompt": "Use case: stylized-concept. Asset type: a single independent transparent cutout for the WordOrbit interactive topic constellation, one of a coherent 22-object collection. Style: premium refined friendly 3D miniature illustration, semi-realistic sculpted forms, soft tactile materials, elegant astronomical collectible, strong readable silhouette at small display sizes. Three-quarter view from slightly above, centered in a square canvas. Lighting: soft broad upper-left white key light, gentle violet rim lower-right, avoid deep black shading. Entire object including appendages comfortably fits with generous transparent padding; main body occupies about 68% of canvas. Background must be genuinely transparent alpha, with no scene, floor, card, border or background star field. No text, numbers, logos, watermarks, labels or unrelated extra objects. Exactly ONE object image, not a sheet or grid.\nSubject: ONE mineral asteroid formed of sculpted charcoal rock, pearlescent metallic facets and several integrated translucent violet-cyan crystals, strong irregular silhouette, clear rich material contrast. No separate jewels around it."
+    },
+    {
+      "number": "11",
+      "id": "fashion-trends",
+      "chapter": "时尚潮流",
+      "title": "极光星球",
+      "kind": "planet",
+      "color": "#e69fc6",
+      "src": "assets/constellation/11-fashion-trends.png",
+      "prompt": "Use case: stylized-concept. Asset type: a single independent transparent cutout for the WordOrbit interactive topic constellation, one of a coherent 22-object collection. Style: premium refined friendly 3D miniature illustration, semi-realistic sculpted forms, soft tactile materials, elegant astronomical collectible, strong readable silhouette at small display sizes. Three-quarter view from slightly above, centered in a square canvas. Lighting: soft broad upper-left white key light, gentle violet rim lower-right, avoid deep black shading. Entire object including appendages comfortably fits with generous transparent padding; main body occupies about 68% of canvas. Background must be genuinely transparent alpha, with no scene, floor, card, border or background star field. No text, numbers, logos, watermarks, labels or unrelated extra objects. Exactly ONE object image, not a sheet or grid.\nSubject: ONE aurora fashion planet, rounded pearl sphere with satin-like swirling rose pink, lilac and cyan bands, elegant soft iridescent aurora hugging its atmosphere. Surface material like fine luminous silk, still clearly a celestial planet."
+    },
+    {
+      "number": "12",
+      "id": "diet-health",
+      "chapter": "饮食健康",
+      "title": "生命补给站",
+      "kind": "station",
+      "color": "#b4d998",
+      "src": "assets/constellation/12-diet-health.png",
+      "prompt": "Use case: stylized-concept. Asset type: a single independent transparent cutout for the WordOrbit interactive topic constellation, one of a coherent 22-object collection. Style: premium refined friendly 3D miniature illustration, semi-realistic sculpted forms, soft tactile materials, elegant astronomical collectible, strong readable silhouette at small display sizes. Three-quarter view from slightly above, centered in a square canvas. Lighting: soft broad upper-left white key light, gentle violet rim lower-right, avoid deep black shading. Entire object including appendages comfortably fits with generous transparent padding; main body occupies about 68% of canvas. Background must be genuinely transparent alpha, with no scene, floor, card, border or background star field. No text, numbers, logos, watermarks, labels or unrelated extra objects. Exactly ONE object image, not a sheet or grid.\nSubject: ONE life-support supply space station: a compact silver-orange central module with three connected green translucent greenhouse domes containing tiny planted rows, subtle blue docking lights. Single complete connected spacecraft structure, no loose food props."
+    },
+    {
+      "number": "13",
+      "id": "buildings-places",
+      "chapter": "建筑场所",
+      "title": "城市星球",
+      "kind": "planet",
+      "color": "#a9bbed",
+      "src": "assets/constellation/13-buildings-places.png",
+      "prompt": "Use case: stylized-concept. Asset type: a single independent transparent cutout for the WordOrbit interactive topic constellation, one of a coherent 22-object collection. Style: premium refined friendly 3D miniature illustration, semi-realistic sculpted forms, soft tactile materials, elegant astronomical collectible, strong readable silhouette at small display sizes. Three-quarter view from slightly above, centered in a square canvas. Lighting: soft broad upper-left white key light, gentle violet rim lower-right, avoid deep black shading. Entire object including appendages comfortably fits with generous transparent padding; main body occupies about 68% of canvas. Background must be genuinely transparent alpha, with no scene, floor, card, border or background star field. No text, numbers, logos, watermarks, labels or unrelated extra objects. Exactly ONE object image, not a sheet or grid.\nSubject: ONE city planet, a small silver-gray rocky world wrapped by a few miniature elegant architectural towers and curved city structures, soft violet-blue window lights, clean readable skyline around the sphere. No text, no Earth flags."
+    },
+    {
+      "number": "14",
+      "id": "transport-travel",
+      "chapter": "交通旅行",
+      "title": "星际运输飞船",
+      "kind": "ship",
+      "color": "#88c1f0",
+      "src": "assets/constellation/14-transport-travel.png",
+      "prompt": "Use case: stylized-concept. Asset type: a single independent transparent cutout for the WordOrbit interactive topic constellation, one of a coherent 22-object collection. Style: premium refined friendly 3D miniature illustration, semi-realistic sculpted forms, soft tactile materials, elegant astronomical collectible, strong readable silhouette at small display sizes. Three-quarter view from slightly above, centered in a square canvas. Lighting: soft broad upper-left white key light, gentle violet rim lower-right, avoid deep black shading. Entire object including appendages comfortably fits with generous transparent padding; main body occupies about 68% of canvas. Background must be genuinely transparent alpha, with no scene, floor, card, border or background star field. No text, numbers, logos, watermarks, labels or unrelated extra objects. Exactly ONE object image, not a sheet or grid.\nSubject: ONE interstellar transport spacecraft, long streamlined silver and blue hull, a clear compact cockpit, two connected cargo pods, short restrained cyan engine exhaust. Three-quarter above view, nose to upper right, distinguishable from a research probe."
+    },
+    {
+      "number": "15",
+      "id": "countries-government",
+      "chapter": "国家政府",
+      "title": "秩序星球",
+      "kind": "planet",
+      "color": "#c9bd87",
+      "src": "assets/constellation/15-countries-government.png",
+      "prompt": "Use case: stylized-concept. Asset type: a single independent transparent cutout for the WordOrbit interactive topic constellation, one of a coherent 22-object collection. Style: premium refined friendly 3D miniature illustration, semi-realistic sculpted forms, soft tactile materials, elegant astronomical collectible, strong readable silhouette at small display sizes. Three-quarter view from slightly above, centered in a square canvas. Lighting: soft broad upper-left white key light, gentle violet rim lower-right, avoid deep black shading. Entire object including appendages comfortably fits with generous transparent padding; main body occupies about 68% of canvas. Background must be genuinely transparent alpha, with no scene, floor, card, border or background star field. No text, numbers, logos, watermarks, labels or unrelated extra objects. Exactly ONE object image, not a sheet or grid.\nSubject: ONE order-and-governance planet, deep blue spherical world with elegant symmetric fine gold meridian structures and a modest geometric central city on the surface. Organization and civic coordination expressed through balanced architecture, no flags, no existing emblems."
+    },
+    {
+      "number": "16",
+      "id": "society-economy",
+      "chapter": "社会经济",
+      "title": "星际贸易站",
+      "kind": "station",
+      "color": "#d7bf84",
+      "src": "assets/constellation/16-society-economy.png",
+      "prompt": "Use case: stylized-concept. Asset type: a single independent transparent cutout for the WordOrbit interactive topic constellation, one of a coherent 22-object collection. Style: premium refined friendly 3D miniature illustration, semi-realistic sculpted forms, soft tactile materials, elegant astronomical collectible, strong readable silhouette at small display sizes. Three-quarter view from slightly above, centered in a square canvas. Lighting: soft broad upper-left white key light, gentle violet rim lower-right, avoid deep black shading. Entire object including appendages comfortably fits with generous transparent padding; main body occupies about 68% of canvas. Background must be genuinely transparent alpha, with no scene, floor, card, border or background star field. No text, numbers, logos, watermarks, labels or unrelated extra objects. Exactly ONE object image, not a sheet or grid.\nSubject: ONE interstellar trade station, luxurious but compact gold-and-blue orbital docking ring with several connected shipping capsules and small docking ports, a clear central exchange hub. Strong clean silhouette, all modules connected."
+    },
+    {
+      "number": "17",
+      "id": "laws-regulations",
+      "chapter": "法律法规",
+      "title": "守衡卫星",
+      "kind": "satellite",
+      "color": "#a9d2df",
+      "src": "assets/constellation/17-laws-regulations.png",
+      "prompt": "Use case: stylized-concept. Asset type: a single independent transparent cutout for the WordOrbit interactive topic constellation, one of a coherent 22-object collection. Style: premium refined friendly 3D miniature illustration, semi-realistic sculpted forms, soft tactile materials, elegant astronomical collectible, strong readable silhouette at small display sizes. Three-quarter view from slightly above, centered in a square canvas. Lighting: soft broad upper-left white key light, gentle violet rim lower-right, avoid deep black shading. Entire object including appendages comfortably fits with generous transparent padding; main body occupies about 68% of canvas. Background must be genuinely transparent alpha, with no scene, floor, card, border or background star field. No text, numbers, logos, watermarks, labels or unrelated extra objects. Exactly ONE object image, not a sheet or grid.\nSubject: ONE guardian balance satellite, symmetric silver and pale gold central core with two equal opposing blue sensor dishes or panels, one close pale-blue protective ring, sense of balance and justice. No literal scales, no gavel, no letters."
+    },
+    {
+      "number": "18",
+      "id": "battle-conflict",
+      "chapter": "沙场争锋",
+      "title": "防御巡航舰",
+      "kind": "ship",
+      "color": "#bc8c9f",
+      "src": "assets/constellation/18-battle-conflict.png",
+      "prompt": "Use case: stylized-concept. Asset type: a single independent transparent cutout for the WordOrbit interactive topic constellation, one of a coherent 22-object collection. Style: premium refined friendly 3D miniature illustration, semi-realistic sculpted forms, soft tactile materials, elegant astronomical collectible, strong readable silhouette at small display sizes. Three-quarter view from slightly above, centered in a square canvas. Lighting: soft broad upper-left white key light, gentle violet rim lower-right, avoid deep black shading. Entire object including appendages comfortably fits with generous transparent padding; main body occupies about 68% of canvas. Background must be genuinely transparent alpha, with no scene, floor, card, border or background star field. No text, numbers, logos, watermarks, labels or unrelated extra objects. Exactly ONE object image, not a sheet or grid.\nSubject: ONE defensive patrol starship, sturdy shield-like graphite armored hull with restrained dark burgundy accent panels and short cold-blue engines. Three-quarter above view, nose to upper right, strong disciplined silhouette, no visible firing, no battle scene."
+    },
+    {
+      "number": "19",
+      "id": "social-roles",
+      "chapter": "社会角色",
+      "title": "协作空间站",
+      "kind": "station",
+      "color": "#9dcbb6",
+      "src": "assets/constellation/19-social-roles.png",
+      "prompt": "Use case: stylized-concept. Asset type: a single independent transparent cutout for the WordOrbit interactive topic constellation, one of a coherent 22-object collection. Style: premium refined friendly 3D miniature illustration, semi-realistic sculpted forms, soft tactile materials, elegant astronomical collectible, strong readable silhouette at small display sizes. Three-quarter view from slightly above, centered in a square canvas. Lighting: soft broad upper-left white key light, gentle violet rim lower-right, avoid deep black shading. Entire object including appendages comfortably fits with generous transparent padding; main body occupies about 68% of canvas. Background must be genuinely transparent alpha, with no scene, floor, card, border or background star field. No text, numbers, logos, watermarks, labels or unrelated extra objects. Exactly ONE object image, not a sheet or grid.\nSubject: ONE collaborative habitat station composed of five different but harmoniously connected rounded living pods linked by short bridges around a shared center, mint-silver and soft violet lights. Diverse roles cooperating as one orbital community, no people."
+    },
+    {
+      "number": "20",
+      "id": "behavior-actions",
+      "chapter": "行为动作",
+      "title": "动能彗星",
+      "kind": "comet",
+      "color": "#f3b374",
+      "src": "assets/constellation/20-behavior-actions.png",
+      "prompt": "Use case: stylized-concept. Asset type: a single independent transparent cutout for the WordOrbit interactive topic constellation, one of a coherent 22-object collection. Style: premium refined friendly 3D miniature illustration, semi-realistic sculpted forms, soft tactile materials, elegant astronomical collectible, strong readable silhouette at small display sizes. Three-quarter view from slightly above, centered in a square canvas. Lighting: soft broad upper-left white key light, gentle violet rim lower-right, avoid deep black shading. Entire object including appendages comfortably fits with generous transparent padding; main body occupies about 68% of canvas. Background must be genuinely transparent alpha, with no scene, floor, card, border or background star field. No text, numbers, logos, watermarks, labels or unrelated extra objects. Exactly ONE object image, not a sheet or grid.\nSubject: ONE kinetic comet, an orange-gold sculpted rocky spherical nucleus centered in the image, with a compact luminous blue-violet trailing plume extending to lower left. Core clearly readable, bright energetic but restrained glow. Short tapering tail, complete object comfortably inside square canvas."
+    },
+    {
+      "number": "21",
+      "id": "body-mind-health",
+      "chapter": "身心健康",
+      "title": "疗愈星球",
+      "kind": "planet",
+      "color": "#88d6d0",
+      "src": "assets/constellation/21-body-mind-health.png",
+      "prompt": "Use case: stylized-concept. Asset type: a single independent transparent cutout for the WordOrbit interactive topic constellation, one of a coherent 22-object collection. Style: premium refined friendly 3D miniature illustration, semi-realistic sculpted forms, soft tactile materials, elegant astronomical collectible, strong readable silhouette at small display sizes. Three-quarter view from slightly above, centered in a square canvas. Lighting: soft broad upper-left white key light, gentle violet rim lower-right, avoid deep black shading. Entire object including appendages comfortably fits with generous transparent padding; main body occupies about 68% of canvas. Background must be genuinely transparent alpha, with no scene, floor, card, border or background star field. No text, numbers, logos, watermarks, labels or unrelated extra objects. Exactly ONE object image, not a sheet or grid.\nSubject: ONE soothing healing planet, smooth mint-cyan world with pale blue seas and softly sculpted living land forms; delicate pulse-like flowing luminous lines subtly wrap the sphere. Calm and alive, pearl atmospheric rim, no medical cross, no heart-shaped planet."
+    },
+    {
+      "number": "22",
+      "id": "time-dates",
+      "chapter": "时间日期",
+      "title": "周期彗星",
+      "kind": "comet",
+      "color": "#aad7f5",
+      "src": "assets/constellation/22-time-dates.png",
+      "prompt": "Use case: stylized-concept. Asset type: a single independent transparent cutout for the WordOrbit interactive topic constellation, one of a coherent 22-object collection. Style: premium refined friendly 3D miniature illustration, semi-realistic sculpted forms, soft tactile materials, elegant astronomical collectible, strong readable silhouette at small display sizes. Three-quarter view from slightly above, centered in a square canvas. Lighting: soft broad upper-left white key light, gentle violet rim lower-right, avoid deep black shading. Entire object including appendages comfortably fits with generous transparent padding; main body occupies about 68% of canvas. Background must be genuinely transparent alpha, with no scene, floor, card, border or background star field. No text, numbers, logos, watermarks, labels or unrelated extra objects. Exactly ONE object image, not a sheet or grid.\nSubject: ONE small periodic ice comet, a clearly visible ice-blue spherical nucleus centered in the image, a short feathered pale-cyan tail to lower left and a few close spaced tiny light particles suggesting periodic time intervals. Clean refined crystalline ice, no clock face or numbers."
+    }
+  ]
+}

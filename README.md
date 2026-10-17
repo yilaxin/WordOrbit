@@ -6,7 +6,7 @@
 
 ## 下载与运行
 
-当前发布版：**v1.1.1，仅支持 Windows ARM64**。在 GitHub Releases 下载 `WordOrbit-v1.1.1-win-arm64.zip`，完整解压后打开其中的 `VocabDesk.exe`。请保留解压后的整个文件夹；程序需要同目录下的 `Website`、`Assets` 和其他运行文件。系统还需安装 Microsoft Edge WebView2 Runtime。
+当前发布版：**[v1.2.0，仅支持 Windows ARM64](https://github.com/yilaxin/WordOrbit/releases/tag/v1.2.0)**。在 GitHub Releases 下载 `WordOrbit-v1.2.0-win-arm64.zip`，完整解压后打开其中的 `VocabDesk.exe`。请保留解压后的整个文件夹；程序需要同目录下的 `Website`、`Assets` 和其他运行文件。系统还需安装 Microsoft Edge WebView2 Runtime。
 
 这不是手机 App，也尚未提供 Windows x64、macOS 或 Linux 安装包。程序使用 .NET 10 WPF 和 WebView2；词库与例句随程序放在本机，练习时不需要登录账号。
 
@@ -15,7 +15,7 @@
 | 功能 | 用法 |
 | --- | --- |
 | 今日复习 | 首页显示待复习词、当天进度和已掌握数量，可直接开始当天练习。 |
-| 多种题型 | 混合练习组合单选、多选、填空、拼写和听音；支持英文选中文、中文选英文。听音题使用系统语音功能。 |
+| 多种题型 | 混合练习轮换英文选中文、中文选英文、填空、拼写和听音；也可选择专项题型。听音题使用系统语音功能。 |
 | 自定练习 | 选择题型、题量、主题范围和智能、随机或顺序出题；选择题可按 `1`、`2`、`3`、`4` 作答。 |
 | 整本遍历 | 每轮从全书词库随机抽取 50 个词：前 50 题英文选中文，后 50 题用同一批词中文选英文，两段各自打乱；做错的题排到本轮末尾重做。 |
 | 答题反馈 | 提交后显示正误、完整中文释义、音标、词性、来源主题与页码；有可靠资料时显示英汉例句和词族衍生词。 |
@@ -24,9 +24,26 @@
 | 学习数据 | 查看累计作答、正确率、已掌握词、连续学习、近 30 天活动和主题表现；可清空本次训练、当天或全部学习数据。 |
 | 备份与迁移 | 在词库页导出 JSON；桌面版右上角 `⋯` 可导入旧网页版 JSON，导入前会备份当前记录。 |
 
+## v1.2.0：交互式主题星图
+
+首页采用宇宙主题界面，主题区升级为可交互的星图。从一个目的地开始一轮背词练习，也可以切换回主题列表快速选择。
+
+![交互式主题星图实际界面](design/constellation-ui-dark.png)
+
+- 22 个主题使用 22 张独立的本地透明图片，包含星球、恒星、飞船、卫星、空间站、小行星和彗星。图片及生成提示保存在 `src/VocabDesk/Website/assets/constellation/` 和 `design/constellation-prompts.json`。
+- 词数最多的主题成为明显更大的中央恒星；其余天体使用较小的尺寸，仍随正式词库的可练习词数变化，并按词数分到四层轨道（3、5、6、7 个）。掌握进度用外围细圆弧表示。
+- 鼠标移入星图区、悬停在星球上时保持公转；可通过暂停按钮手动停止。键盘聚焦选择时暂停，且遵守全局动效及系统减少动态效果设置。
+- 可以拖动平移、缩放、重置、展开星图，或切回主题列表。展开时按 `Esc` 收起；聚焦星图空白处可用方向键平移、`+` / `-` 缩放、`0` 重置。
+- 点击一个主题后，在底部查看该主题词数和掌握进度，再点击“开始练习”。默认进入该主题的 20 题混合练习，也可以继续调整练习设置。
+- 星图没有另建学习记录系统；原有学习数据、收藏与续练逻辑保持不变。所有主题图片随桌面程序一起发布，运行时不依赖图片网络地址。
+
+![22 个主题素材总览](design/constellation-art-overview.png)
+
 ## 学习记录
 
 数据默认保存在 `%LOCALAPPDATA%\VocabDesk\WebView2`，导入前的自动备份在 `%LOCALAPPDATA%\VocabDesk\Backups`。建议定期用词库页“导出数据”保存 JSON。程序不会自动上传学习记录。
+
+旧版桌面用户升级前建议导出 JSON 备份。关闭旧版，再打开完整解压的新版程序，即可沿用本机相同位置的学习记录；不要同时运行两个版本进行练习。新版不会自动清空记录。
 
 ## 词库与资料说明
 
@@ -36,6 +53,8 @@
 
 ## 从源码构建
 
-需要 Windows ARM64、.NET 10 SDK 和 WebView2 Runtime。入口为 `src/VocabDesk/VocabDesk.csproj`；在 PowerShell 运行 `scripts/Publish.ps1`，输出至 `artifacts/WordOrbit-win-arm64-v1.1.1`。需要桌面快捷方式时，运行 `scripts/Update-DesktopShortcut.ps1`。`-SyncLegacyWebsite` 仅在主动同步旧网页文件夹时使用。
+需要 Windows ARM64、.NET 10 SDK 和 WebView2 Runtime。入口为 `src/VocabDesk/VocabDesk.csproj`；在 PowerShell 运行 `scripts/Publish.ps1`，按项目版本号输出至 `artifacts/WordOrbit-win-arm64-v1.2.0`。需要桌面快捷方式时，运行 `scripts/Update-DesktopShortcut.ps1`。`-SyncLegacyWebsite` 仅在主动同步旧网页文件夹时使用。
+
+浏览器交互测试位于 `tests/constellation.browser.cjs`（需可用的 Playwright 和 Microsoft Edge）；音标显示规则测试可运行 `node --test tests/pronunciation-visibility.test.cjs`。测试使用独立浏览器数据，不读取用户的日常学习记录。
 
 源码、程序与资料受各自权利人及相应许可约束；书籍扫描件的发布依据为项目发布者提供的再分发授权声明。

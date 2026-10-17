@@ -34,18 +34,19 @@ public partial class MainWindow : Window
             ShowActivated = false;
             WindowState = WindowState.Minimized;
         }
-        SourceInitialized += (_, _) => ApplyDarkTitleBar();
+        SourceInitialized += (_, _) => ApplyWindowTheme(true);
         Loaded += async (_, _) => await InitializeBrowserAsync();
     }
 
-    private void ApplyDarkTitleBar()
+    private void ApplyWindowTheme(bool dark)
     {
         try
         {
             var hwnd = new WindowInteropHelper(this).Handle;
-            var enabled = 1;
-            var caption = 0x20120B; // Windows COLORREF for #0B1220.
-            var text = 0xFFFFFF;
+            var enabled = dark ? 1 : 0;
+            // Windows COLORREF uses BGR: #0B1020 / #F3F5FC.
+            var caption = dark ? 0x20100B : 0xFCF5F3;
+            var text = dark ? 0xFFFFFF : 0x432920;
             DwmSetWindowAttribute(hwnd, 20, ref enabled, sizeof(int));
             DwmSetWindowAttribute(hwnd, 35, ref caption, sizeof(int));
             DwmSetWindowAttribute(hwnd, 36, ref text, sizeof(int));
@@ -98,6 +99,12 @@ public partial class MainWindow : Window
             return;
         }
         ready = true;
+        try
+        {
+            var dark = await Browser.ExecuteScriptAsync("document.body.classList.contains('dark')");
+            ApplyWindowTheme(dark == "true");
+        }
+        catch { /* Page colors still work if the Windows title-bar theme is unavailable. */ }
         if (testOutput is not null)
         {
             try
@@ -113,7 +120,10 @@ public partial class MainWindow : Window
                 var brandReady = await Browser.ExecuteScriptAsync("document.title.includes('词轨 WordOrbit') && document.querySelector('.wordorbit-mark')?.complete && document.querySelector('.wordorbit-mark')?.naturalWidth > 0 && document.querySelector('.wordorbit-wordmark strong')?.textContent === 'WordOrbit'");
                 if (brandReady != "true" || !Title.Contains("词轨 WordOrbit"))
                     throw new InvalidOperationException("WordOrbit branding did not load correctly.");
-                var result = await Browser.ExecuteScriptAsync("JSON.stringify({title:document.title,wordCount:state.words.length,homeVisible:document.querySelector('#view-home')?.classList.contains('active'),desktopMenu:!!document.querySelector('#desktopMenuButton'),exampleCount:Object.keys(window.EXAMPLE_SENTENCES||{}).length,offline:!document.querySelector('script[src^=\"http\"]'),attemptCount:state.attempts.length,importedSeen:state.records['seed-1-1']?.seen||0})");
+                var constellationReady = await Browser.ExecuteScriptAsync("window.WordOrbitConstellation?.snapshot().nodes.length === 22 && document.querySelectorAll('.celestial-object img').length === 22 && [...document.querySelectorAll('.celestial-object img')].every(image => image.complete && image.naturalWidth > 0)");
+                if (constellationReady != "true")
+                    throw new InvalidOperationException("The 22 local constellation images did not load correctly.");
+                var result = await Browser.ExecuteScriptAsync("JSON.stringify({title:document.title,wordCount:state.words.length,homeVisible:document.querySelector('#view-home')?.classList.contains('active'),desktopMenu:!!document.querySelector('#desktopMenuButton'),exampleCount:Object.keys(window.EXAMPLE_SENTENCES||{}).length,offline:!document.querySelector('script[src^=\"http\"]'),attemptCount:state.attempts.length,importedSeen:state.records['seed-1-1']?.seen||0,constellationCount:WordOrbitConstellation.snapshot().nodes.length,constellationImages:[...document.querySelectorAll('.celestial-object img')].filter(image=>image.complete&&image.naturalWidth>0).length,constellationStar:WordOrbitConstellation.snapshot().nodes.find(node=>node.star)?.chapter})");
                 await FinishSelfTestAsync(JsonSerializer.Deserialize<string>(result) ?? "ERROR: empty script result");
             }
             catch (Exception error) { await FinishSelfTestAsync($"ERROR: {error}"); }
@@ -163,6 +173,8 @@ public partial class MainWindow : Window
         catch { return; }
         if (action == "import") await ImportDataAsync();
         else if (action == "old-site") OpenOldSite();
+        else if (action == "theme-dark") ApplyWindowTheme(true);
+        else if (action == "theme-light") ApplyWindowTheme(false);
     }
 
     private void OpenOldSite()

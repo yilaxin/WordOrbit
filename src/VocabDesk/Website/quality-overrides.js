@@ -79,9 +79,10 @@ function qRenderVerifiedChapterGrid(){
     const words=state.words.filter(w=>qVerified(w)&&w.chapter===chapter);
     const done=words.filter(mastered).length;
     const pct=words.length?Math.round(done/words.length*100):0;
-    return `<button class="chapter-card" data-chapter="${qEscape(chapter)}"><small>${String(index+1).padStart(2,'0')} / THEME</small><strong>${qEscape(chapter)}</strong><div class="mini-track"><span style="width:${pct}%"></span></div><small>${done} / ${words.length} 已掌握</small></button>`;
+    return `<button class="chapter-card" data-chapter="${qEscape(chapter)}" aria-label="${qEscape(chapter)}，已掌握 ${done} / ${words.length} 词"><div class="chapter-topline"><span class="chapter-planet" aria-hidden="true"></span><small>ORBIT ${String(index+1).padStart(2,'0')}</small></div><strong>${qEscape(chapter)}</strong><div class="mini-track"><span style="width:${pct}%"></span></div><div class="chapter-bottom"><span>${done} / ${words.length} 已掌握</span><b>${pct}%</b></div></button>`;
   }).join('');
   $$('.chapter-card').forEach(button=>button.onclick=()=>{setup.chapter=button.dataset.chapter;showView('setup');$('#chapterSelect').value=setup.chapter});
+  window.WordOrbitConstellation?.render();
 }
 renderHome=function(){
   qBaseRenderHome();
@@ -172,7 +173,8 @@ renderAnswerArea=function(w,item){
       const isSelected=type==='multi'?selected.includes(option):selected===option;
       const isCorrect=type==='multi'?(item.correctValues||[qFullMeaning(w)]).includes(option):option===target;
       const classes=`answer-option ${isSelected?'selected ':''}${item.checked?(isCorrect?'correct':'incorrect'):''}`;
-      return `<button class="${classes}" data-value="${qEscape(option)}" aria-pressed="${isSelected}">${String.fromCharCode(65+index)}. ${qEscape(option)}</button>`;
+      const feedback=item.checked?(isCorrect?'✓ 正确':isSelected?'✕ 你的选择':''):'';
+      return `<button class="${classes}" data-value="${qEscape(option)}" aria-pressed="${isSelected}" ${item.checked?'disabled':''}><span class="option-key" aria-hidden="true">${index+1}</span><span class="option-copy">${qEscape(option)}</span>${feedback?`<span class="option-state">${feedback}</span>`:''}</button>`;
     }).join('')}</div>`;
     $$('.answer-option').forEach(button=>button.onclick=()=>{
       if(item.checked)return;
@@ -206,14 +208,15 @@ renderQuestion=function(){
     session.index=next;renderQuestion();
   });
   $('#questionPrompt').textContent=w.word;
+  const type=answerType();
   const chapterBadge=item.checked?`<span class="badge badge-blue">${qEscape(w.chapter||'待分章')}</span> `:'';
-  $('#questionContext').innerHTML=`${chapterBadge}<span class="badge">p.${qEscape(w.source_page||'—')}</span> <span class="badge">${qEscape(w.ipa||'—')} · ${qEscape(w.pos||'待核验')}</span>`;
+  const pronunciationBadge=type==='reverse'&&!item.checked?'':`<span class="badge ipa-badge"><span class="ipa-label">音标</span>${qEscape(w.ipa||'—')} · ${qEscape(w.pos||'待核验')}</span>`;
+  $('#questionContext').innerHTML=`${chapterBadge}<span class="badge source-page">p.${qEscape(w.source_page||'—')}</span>${pronunciationBadge}`;
   $('#favoriteQuestionBtn').innerHTML=`${state.favorites.includes(w.id)?'★':'☆'} <span>${state.favorites.includes(w.id)?'已收藏':'收藏'}</span>`;
   $('#favoriteQuestionBtn').onclick=()=>toggleFavorite(w.id);$('#speakBtn').onclick=()=>speak(w.word);$('#explanation').classList.add('hidden');
   $('#nextQuestionBtn').textContent=item.checked?'下一题 →':'检查答案 →';$('#prevQuestionBtn').disabled=session.index===0;$('#prevQuestionBtn').onclick=()=>{if(session.index>0){session.index--;renderQuestion()}};
   renderAnswerArea(w,item);
   if(item.redo)$('#questionLabel').textContent=`RETRY / 错题重做 · ${$('#questionLabel').textContent}`;
-  const type=answerType();
   if(type==='spell'){$('#questionPrompt').textContent=qMeaningClean(qFullMeaning(w))?qFullMeaning(w):'请点击“听发音”后拼写单词';$('#questionLabel').textContent='SPELL / 听音写词'}
   if(type==='listen'){$('#questionPrompt').textContent='点击“听发音”，选择你听到的英文单词';$('#questionLabel').textContent='LISTEN / 听音选英文'}
 };

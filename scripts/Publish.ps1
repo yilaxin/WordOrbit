@@ -3,7 +3,10 @@ $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $PSScriptRoot
 $sourceSite = Join-Path ([Environment]::GetFolderPath('DesktopDirectory')) '雅思词汇离线站'
 $websiteFolder = Join-Path $projectRoot 'src\VocabDesk\Website'
-$releaseFolder = Join-Path $projectRoot 'artifacts\WordOrbit-win-arm64-v1.1.1'
+$project = Join-Path $projectRoot 'src\VocabDesk\VocabDesk.csproj'
+$releaseVersion = ([xml](Get-Content -LiteralPath $project -Raw)).Project.PropertyGroup.Version
+if ($releaseVersion -notmatch '^\d+\.\d+\.\d+$') { throw '项目版本号无效。' }
+$releaseFolder = Join-Path $projectRoot "artifacts\WordOrbit-win-arm64-v$releaseVersion"
 if ($SyncLegacyWebsite) {
 $required = @('index.html','styles.css','dark-overrides.css','answer-details.css','data-controls.css','app.js','quality-overrides.js','full-ocr-data.js','external-dictionary.js','example-sentences.js','icon.svg','manifest.json','service-worker.js','README.md')
 foreach ($name in $required) {
@@ -39,7 +42,6 @@ $indexText = $indexText.Replace($scriptAnchor, $scriptAnchor + "`n  " + '<script
 & (Join-Path $PSScriptRoot 'Apply-WordOrbitBrand.ps1')
 & (Join-Path $PSScriptRoot 'Build-WordOrbitIcon.ps1')
 
-$project = Join-Path $projectRoot 'src\VocabDesk\VocabDesk.csproj'
 $env:DOTNET_CLI_HOME = Join-Path $projectRoot '.build\dotnet-home'
 $env:NUGET_PACKAGES = Join-Path $projectRoot '.build\packages'
 $env:DOTNET_CLI_TELEMETRY_OPTOUT = '1'

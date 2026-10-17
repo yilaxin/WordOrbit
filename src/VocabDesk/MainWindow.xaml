@@ -5,6 +5,6 @@
         Title="词轨 WordOrbit · 英语学习"
         Icon="Assets/wordorbit-earth.ico"
         Width="1320" Height="880" MinWidth="800" MinHeight="580"
-        Background="#0F1725" WindowStartupLocation="CenterScreen">
+        Background="#0B1020" WindowStartupLocation="CenterScreen">
   <wv2:WebView2 x:Name="Browser" />
 </Window>

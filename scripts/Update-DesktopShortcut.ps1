@@ -1,12 +1,15 @@
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $PSScriptRoot
-$releaseFolder = Join-Path $projectRoot 'artifacts\WordOrbit-win-arm64-v1.1.1'
+$project = Join-Path $projectRoot 'src\VocabDesk\VocabDesk.csproj'
+$releaseVersion = ([xml](Get-Content -LiteralPath $project -Raw)).Project.PropertyGroup.Version
+if ($releaseVersion -notmatch '^\d+\.\d+\.\d+$') { throw '项目版本号无效。' }
+$releaseFolder = Join-Path $projectRoot "artifacts\WordOrbit-win-arm64-v$releaseVersion"
 $exe = Join-Path $releaseFolder 'VocabDesk.exe'
 $icon = Join-Path $releaseFolder 'Assets\wordorbit-earth.ico'
 $desktopFolder = [Environment]::GetFolderPath('DesktopDirectory')
 $shortcutPath = Join-Path $desktopFolder '词轨 WordOrbit.lnk'
 $oldShortcutPath = Join-Path $desktopFolder '词汇真经.lnk'
-$allowedTargets = @($exe, (Join-Path $projectRoot 'artifacts\WordOrbit-win-arm64-v1.1.0\VocabDesk.exe'), (Join-Path $projectRoot 'artifacts\VocabDesk-win-arm64\VocabDesk.exe'), (Join-Path $projectRoot 'artifacts\VocabDesk-win-arm64-v1.0.1\VocabDesk.exe'))
+$allowedTargets = @($exe, (Join-Path $projectRoot 'artifacts\WordOrbit-win-arm64-v1.1.1\VocabDesk.exe'), (Join-Path $projectRoot 'artifacts\WordOrbit-win-arm64-v1.1.0\VocabDesk.exe'), (Join-Path $projectRoot 'artifacts\VocabDesk-win-arm64\VocabDesk.exe'), (Join-Path $projectRoot 'artifacts\VocabDesk-win-arm64-v1.0.1\VocabDesk.exe'))
 if (-not (Test-Path -LiteralPath $exe -PathType Leaf)) { throw "程序不存在：$exe" }
 if (-not (Test-Path -LiteralPath $icon -PathType Leaf)) { throw "图标不存在：$icon" }
 $shell = New-Object -ComObject WScript.Shell
