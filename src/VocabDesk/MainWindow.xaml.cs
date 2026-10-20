@@ -35,6 +35,7 @@ public partial class MainWindow : Window
             WindowState = WindowState.Minimized;
         }
         SourceInitialized += (_, _) => ApplyWindowTheme(true);
+        StateChanged += (_, _) => ApplyMemoryUsageTarget();
         Loaded += async (_, _) => await InitializeBrowserAsync();
     }
 
@@ -60,6 +61,21 @@ public partial class MainWindow : Window
         return index >= 0 && index + 1 < args.Length ? args[index + 1] : null;
     }
 
+    private void ApplyMemoryUsageTarget()
+    {
+        var core = Browser.CoreWebView2;
+        if (core is null) return;
+        try
+        {
+            // Supported WebView2 hint: reduce background memory without suspending scripts
+            // or discarding the in-progress round. Always return to Normal on restore.
+            core.MemoryUsageTargetLevel = WindowState == WindowState.Minimized
+                ? CoreWebView2MemoryUsageTargetLevel.Low
+                : CoreWebView2MemoryUsageTargetLevel.Normal;
+        }
+        catch { /* Older runtimes can continue with their default memory policy. */ }
+    }
+
     private async Task InitializeBrowserAsync()
     {
         try
@@ -74,6 +90,7 @@ public partial class MainWindow : Window
             Directory.CreateDirectory(appData);
             var environment = await CoreWebView2Environment.CreateAsync(userDataFolder: Path.Combine(appData, "WebView2"));
             await Browser.EnsureCoreWebView2Async(environment);
+            ApplyMemoryUsageTarget();
             Browser.CoreWebView2.SetVirtualHostNameToFolderMapping(AppHost, website, CoreWebView2HostResourceAccessKind.DenyCors);
             Browser.CoreWebView2.NavigationStarting += OnNavigationStarting;
             Browser.CoreWebView2.NewWindowRequested += OnNewWindowRequested;
@@ -124,7 +141,12 @@ public partial class MainWindow : Window
                 if (constellationReady != "true")
                     throw new InvalidOperationException("The 22 local constellation images did not load correctly.");
                 var result = await Browser.ExecuteScriptAsync("JSON.stringify({title:document.title,wordCount:state.words.length,homeVisible:document.querySelector('#view-home')?.classList.contains('active'),desktopMenu:!!document.querySelector('#desktopMenuButton'),exampleCount:Object.keys(window.EXAMPLE_SENTENCES||{}).length,offline:!document.querySelector('script[src^=\"http\"]'),attemptCount:state.attempts.length,importedSeen:state.records['seed-1-1']?.seen||0,constellationCount:WordOrbitConstellation.snapshot().nodes.length,constellationImages:[...document.querySelectorAll('.celestial-object img')].filter(image=>image.complete&&image.naturalWidth>0).length,constellationStar:WordOrbitConstellation.snapshot().nodes.find(node=>node.star)?.chapter})");
-                await FinishSelfTestAsync(JsonSerializer.Deserialize<string>(result) ?? "ERROR: empty script result");
+                var testResult = JsonSerializer.Deserialize<Dictionary<string, object?>>(JsonSerializer.Deserialize<string>(result) ?? "{}")
+                    ?? throw new InvalidOperationException("Empty self-test result.");
+                try { testResult["memoryUsageTarget"] = Browser.CoreWebView2.MemoryUsageTargetLevel.ToString(); }
+                catch { testResult["memoryUsageTarget"] = "runtime default"; }
+                testResult["maxThemeImageWidth"] = JsonSerializer.Deserialize<int>(await Browser.ExecuteScriptAsync("Math.max(...[...document.querySelectorAll('.celestial-object img')].map(image => image.naturalWidth))"));
+                await FinishSelfTestAsync(JsonSerializer.Serialize(testResult));
             }
             catch (Exception error) { await FinishSelfTestAsync($"ERROR: {error}"); }
         }

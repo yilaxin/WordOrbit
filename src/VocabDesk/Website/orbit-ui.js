@@ -161,6 +161,11 @@
   const previousView = showView;
   showView = function (name) {
     previousView(name);
+    if (name !== 'library') {
+      select('#wordTable')?.replaceChildren();
+      const pager = select('#libraryPager');
+      if (pager) pager.hidden = true;
+    }
     syncNavigation();
     if (name === 'setup') syncSetup();
     if (document.body.dataset.motion === 'off') window.scrollTo({ top: 0, behavior: 'instant' });

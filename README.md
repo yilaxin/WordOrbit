@@ -6,7 +6,7 @@
 
 ## 下载与运行
 
-当前发布版：**[v1.2.0，仅支持 Windows ARM64](https://github.com/yilaxin/WordOrbit/releases/tag/v1.2.0)**。在 GitHub Releases 下载 `WordOrbit-v1.2.0-win-arm64.zip`，完整解压后打开其中的 `VocabDesk.exe`。请保留解压后的整个文件夹；程序需要同目录下的 `Website`、`Assets` 和其他运行文件。系统还需安装 Microsoft Edge WebView2 Runtime。
+当前发布版：**[v1.2.1，仅支持 Windows ARM64](https://github.com/yilaxin/WordOrbit/releases/tag/v1.2.1)**。在 GitHub Releases 下载 `WordOrbit-v1.2.1-win-arm64.zip`，完整解压后打开其中的 `VocabDesk.exe`。请保留解压后的整个文件夹；程序需要同目录下的 `Website`、`Assets` 和其他运行文件。系统还需安装 Microsoft Edge WebView2 Runtime。
 
 这不是手机 App，也尚未提供 Windows x64、macOS 或 Linux 安装包。程序使用 .NET 10 WPF 和 WebView2；词库与例句随程序放在本机，练习时不需要登录账号。
 
@@ -41,6 +41,16 @@
 
 ## 学习记录
 
+### v1.2.1 内存优化
+
+界面改用专门生成的显示资源：普通主题图片 384px、中央恒星 512px、页眉标志 128px，原始插画保持不变。首次打开星图时，图片解码像素体积估算由约 138 MiB 减至约 13 MiB；这不是整个应用的进程内存。
+
+词库每页显示 80 词，搜索和筛选仍覆盖全部词条；翻页后仍可编辑、收藏。离开词库页面会释放已渲染列表，返回时保留翻页位置。Windows 桌面版最小化后向 WebView2 请求较低内存占用，恢复时回到正常策略；不暂停保存脚本，也不清空学习记录。
+
+`scripts/Build-DisplayAssets.ps1` 可重新生成显示资源，发布脚本会自动调用；浏览器回归测试位于 `tests/memory.browser.cjs`。
+
+### 备份与升级
+
 数据默认保存在 `%LOCALAPPDATA%\VocabDesk\WebView2`，导入前的自动备份在 `%LOCALAPPDATA%\VocabDesk\Backups`。建议定期用词库页“导出数据”保存 JSON。程序不会自动上传学习记录。
 
 旧版桌面用户升级前建议导出 JSON 备份。关闭旧版，再打开完整解压的新版程序，即可沿用本机相同位置的学习记录；不要同时运行两个版本进行练习。新版不会自动清空记录。
@@ -53,8 +63,12 @@
 
 ## 从源码构建
 
-需要 Windows ARM64、.NET 10 SDK 和 WebView2 Runtime。入口为 `src/VocabDesk/VocabDesk.csproj`；在 PowerShell 运行 `scripts/Publish.ps1`，按项目版本号输出至 `artifacts/WordOrbit-win-arm64-v1.2.0`。需要桌面快捷方式时，运行 `scripts/Update-DesktopShortcut.ps1`。`-SyncLegacyWebsite` 仅在主动同步旧网页文件夹时使用。
+需要 Windows ARM64、.NET 10 SDK 和 WebView2 Runtime。入口为 `src/VocabDesk/VocabDesk.csproj`；在 PowerShell 运行 `scripts/Publish.ps1`，按项目版本号输出至 `artifacts/WordOrbit-win-arm64-v<版本号>`。需要桌面快捷方式时，运行 `scripts/Update-DesktopShortcut.ps1`。`-SyncLegacyWebsite` 仅在主动同步旧网页文件夹时使用。
 
 浏览器交互测试位于 `tests/constellation.browser.cjs`（需可用的 Playwright 和 Microsoft Edge）；音标显示规则测试可运行 `node --test tests/pronunciation-visibility.test.cjs`。测试使用独立浏览器数据，不读取用户的日常学习记录。
 
 源码、程序与资料受各自权利人及相应许可约束；书籍扫描件的发布依据为项目发布者提供的再分发授权声明。
+
+## 项目更新与发布
+
+本项目已按用户要求采用“完成更新后同步 GitHub”的维护流程，详见 `AGENTS.md`。应用更新需先通过测试，再提交源码与版本标签、上传下载包和校验文件，核对后公开新 Release。`scripts/Publish-GitHubRelease.ps1` 读取项目版本号和已经推送的提交；不带 `-Publish` 时仅准备本地包，带 `-Publish` 才向本仓库发布。脚本不保存凭据，也不上传个人学习记录。

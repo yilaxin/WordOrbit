@@ -225,6 +225,8 @@ kbd{display:inline-grid;place-items:center;min-width:22px;height:22px;border:1px
 .library-toolbar{display:grid;grid-template-columns:minmax(200px,1.5fr) 1fr 1fr auto auto;gap:9px;padding:16px;margin-bottom:16px}
 .library-toolbar input,.library-toolbar select{width:100%;min-width:0;font-size:12px}.library-toolbar button{padding:10px 14px;font-size:12px}
 .word-list{display:grid;gap:9px}
+.library-pager{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-top:18px;padding:14px 0;color:var(--muted);font-size:11px}
+.library-pager>div{display:flex;flex-wrap:wrap;gap:7px}.library-pager button:disabled{opacity:.35}
 .word-row{display:grid;grid-template-columns:minmax(180px,1fr) minmax(0,1.7fr) auto;align-items:center;gap:22px;padding:19px 22px;border:1px solid var(--line);background:var(--card);border-radius:12px}
 .word-main strong{font:500 23px Georgia,serif;color:var(--ink-2)}
 .word-main small,.word-detail small{display:block;font-size:10px;line-height:1.7;color:var(--muted);margin-top:5px}

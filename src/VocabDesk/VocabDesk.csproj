@@ -12,7 +12,7 @@
     <AssemblyTitle>词轨 WordOrbit</AssemblyTitle>
     <Description>词轨 WordOrbit · 离线英语学习</Description>
     <ApplicationIcon>Assets/wordorbit-earth.ico</ApplicationIcon>
-    <Version>1.2.0</Version>
+    <Version>1.2.1</Version>
     <PublishTrimmed>false</PublishTrimmed>
     <NuGetAudit>false</NuGetAudit>
   </PropertyGroup>

@@ -40,6 +40,7 @@ $indexText = $indexText.Replace($scriptAnchor, $scriptAnchor + "`n  " + '<script
 }
 
 & (Join-Path $PSScriptRoot 'Apply-WordOrbitBrand.ps1')
+& (Join-Path $PSScriptRoot 'Build-DisplayAssets.ps1')
 & (Join-Path $PSScriptRoot 'Build-WordOrbitIcon.ps1')
 
 $env:DOTNET_CLI_HOME = Join-Path $projectRoot '.build\dotnet-home'

@@ -391,11 +391,26 @@ exportData=function(){
   const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='vocab-offline-export.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('学习数据已导出');
 };
 
-renderLibrary=function(){
+const Q_LIBRARY_PAGE_SIZE=80;
+let qLibraryPage=0,qLibraryFilterKey='';
+renderLibrary=function(requestedPage){
   const q=($('#searchInput')?.value||'').trim().toLowerCase(),chapter=$('#libraryChapter')?.value||'all',status=$('#libraryStatus')?.value||'all';
+  const filterKey=JSON.stringify([q,chapter,status]);
+  if(filterKey!==qLibraryFilterKey){qLibraryPage=0;qLibraryFilterKey=filterKey}
   const words=state.words.filter(w=>(chapter==='all'||w.chapter===chapter)&&(!q||`${w.word} ${w.meaning} ${(w.tags||[]).join(' ')}`.toLowerCase().includes(q))&&statusMatch(w,status));
-  $('#wordTable').innerHTML=words.length?words.map(w=>`<div class="word-row"><div class="word-main"><strong>${qEscape(w.word)}</strong><small>${qEscape(w.ipa||'—')} · ${qEscape(w.pos||'待核验')} · ${qEscape(w.chapter||'待分章')} · p.${qEscape(w.source_page||'—')}</small></div><div class="word-detail">${qEscape(qFullMeaning(w)||'释义待核验')}<small>${qEscape(w.notes||w.example||'')}</small></div><div class="word-actions"><button class="mini-btn fav-toggle" data-id="${qEscape(w.id)}">${state.favorites.includes(w.id)?'★':'☆'}</button><button class="mini-btn edit-word" data-id="${qEscape(w.id)}">编辑</button></div></div>`).join(''):'<div class="panel"><p class="muted">没有符合条件的词条。可以清空筛选，或选择待核验状态。</p></div>';
-  $$('.fav-toggle').forEach(button=>button.onclick=()=>toggleFavorite(button.dataset.id));$$('.edit-word').forEach(button=>button.onclick=()=>openEdit(button.dataset.id));
+  const lastPage=Math.max(0,Math.ceil(words.length/Q_LIBRARY_PAGE_SIZE)-1);
+  if(Number.isInteger(requestedPage))qLibraryPage=requestedPage;
+  qLibraryPage=Math.max(0,Math.min(qLibraryPage,lastPage));
+  const first=qLibraryPage*Q_LIBRARY_PAGE_SIZE;
+  const pageWords=words.slice(first,first+Q_LIBRARY_PAGE_SIZE);
+  const table=$('#wordTable');
+  table.innerHTML=words.length?pageWords.map(w=>`<div class="word-row"><div class="word-main"><strong>${qEscape(w.word)}</strong><small>${qEscape(w.ipa||'—')} · ${qEscape(w.pos||'待核验')} · ${qEscape(w.chapter||'待分章')} · p.${qEscape(w.source_page||'—')}</small></div><div class="word-detail">${qEscape(qFullMeaning(w)||'释义待核验')}<small>${qEscape(w.notes||w.example||'')}</small></div><div class="word-actions"><button class="mini-btn fav-toggle" data-id="${qEscape(w.id)}">${state.favorites.includes(w.id)?'★':'☆'}</button><button class="mini-btn edit-word" data-id="${qEscape(w.id)}">编辑</button></div></div>`).join(''):'<div class="panel"><p class="muted">没有符合条件的词条。可以清空筛选，或选择待核验状态。</p></div>';
+  table.onclick=event=>{const favorite=event.target.closest('.fav-toggle'),edit=event.target.closest('.edit-word');if(favorite)toggleFavorite(favorite.dataset.id);else if(edit)openEdit(edit.dataset.id)};
+  let pager=$('#libraryPager');
+  if(!pager){pager=document.createElement('nav');pager.id='libraryPager';pager.className='library-pager';pager.setAttribute('aria-label','词库分页');table.after(pager)}
+  pager.hidden=!words.length;
+  pager.innerHTML=`<span role="status">共 ${words.length} 词 · 显示 ${first+1}–${first+pageWords.length} · 第 ${qLibraryPage+1}/${lastPage+1} 页</span><div><button class="mini-btn" data-library-page="0" ${qLibraryPage===0?'disabled':''}>首页</button><button class="mini-btn" data-library-page="${qLibraryPage-1}" ${qLibraryPage===0?'disabled':''}>上一页</button><button class="mini-btn" data-library-page="${qLibraryPage+1}" ${qLibraryPage===lastPage?'disabled':''}>下一页</button><button class="mini-btn" data-library-page="${lastPage}" ${qLibraryPage===lastPage?'disabled':''}>末页</button></div>`;
+  pager.onclick=event=>{const button=event.target.closest('[data-library-page]');if(!button||button.disabled)return;renderLibrary(Number(button.dataset.libraryPage));table.scrollIntoView({block:'start',behavior:'instant'})};
 };
 const qBaseStatusMatch=statusMatch;
 statusMatch=function(w,status){if(status==='review')return qReview(w);return qBaseStatusMatch(w,status)};

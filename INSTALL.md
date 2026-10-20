@@ -1,8 +1,8 @@
 # 安装词轨 WordOrbit
 
-1. 在项目的 GitHub Releases 下载 `WordOrbit-v1.2.0-win-arm64.zip`。
+1. 在项目的 GitHub Releases 下载已发布版本的 `WordOrbit-<版本号>-win-arm64.zip`；本地构建请使用对应版本的输出文件夹。
 2. 将 ZIP **完整解压**到固定文件夹。
-3. 打开 `WordOrbit-win-arm64-v1.2.0` 文件夹，双击 `VocabDesk.exe`。
+3. 打开完整解压后的 `WordOrbit-win-arm64-v<版本号>` 文件夹，双击 `VocabDesk.exe`。
 4. 如提示缺少 WebView2 Runtime，安装 Microsoft Edge WebView2 Runtime 后重试。
 
 当前只提供 Windows ARM64 版本。不要单独移动 `VocabDesk.exe`，它需要同目录下的 `Website`、`Assets` 及 .NET 运行文件。首次练习无需联网或注册账号。
