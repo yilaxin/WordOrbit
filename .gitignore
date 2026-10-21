@@ -11,3 +11,6 @@ design/*
 !design/constellation-prompts.json
 !design/constellation-art-overview.png
 !design/constellation-ui-dark.png
+wordorbit-nebula-backup*.json
+nebula-private*/
+nebula-data/

@@ -27,7 +27,7 @@ try {
         if (-not (Test-Path -LiteralPath $published) -or (Get-FileHash -LiteralPath $file.FullName).Hash -ne (Get-FileHash -LiteralPath $published).Hash) { throw "Stale build asset: $($file.Name)" }
     }
     $files = @(Get-ChildItem -LiteralPath $build -Recurse -File)
-    if (@($files | Where-Object { $_.FullName -match '(?i)\\(WebView2|Backups|\.git|\.build)\\|\\\.env$|self-test-.*\.json$' }).Count) { throw 'The build contains private/test data; refusing to package it.' }
+    if (@($files | Where-Object { $_.FullName -match '(?i)\\(WebView2|Backups|\.git|\.build|nebula-private[^\\]*|nebula-data)\\|\\\.env$|self-test-.*\.json$|wordorbit-nebula-backup[^\\]*\.json$' }).Count) { throw 'The build contains private/test data; refusing to package it.' }
     $zipName = "WordOrbit-v$version-win-arm64.zip"
     $zip = Join-Path (Join-Path $root 'artifacts') $zipName
     if (-not (Test-Path -LiteralPath $zip)) { Compress-Archive -LiteralPath $build -DestinationPath $zip -CompressionLevel Optimal }

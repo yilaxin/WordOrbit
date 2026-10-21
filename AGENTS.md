@@ -18,3 +18,4 @@
 - 常用测试：`node --test tests/pronunciation-visibility.test.cjs`、`node tests/constellation.browser.cjs`、`node tests/memory.browser.cjs`（浏览器测试需要 Playwright 和 Microsoft Edge）。
 - 不强制关闭用户正在使用的 App。用新版本文件夹发布；桌面入口切换前先通过隔离自检，并告诉用户重新打开后生效。
 - 原始主题插画位于 `Website/assets/constellation/`，运行时使用其 `display/` 显示资源；用 `scripts/Build-DisplayAssets.ps1` 生成，不覆盖原图。
+- 星云文章正文、笔记、佳句、生词、阅读位置和私人练习只保存在本机 IndexedDB `wordorbit-nebula-private-v1`。不得写进词库、源码、截图、Release 或自动同步到 GitHub；星云备份仅由用户手动导出。测试只使用合成文章和隔离上下文。雅思题库的导出、清空和练习不应顺带改动星云数据。

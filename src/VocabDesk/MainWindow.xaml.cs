@@ -143,6 +143,34 @@ public partial class MainWindow : Window
                 var result = await Browser.ExecuteScriptAsync("JSON.stringify({title:document.title,wordCount:state.words.length,homeVisible:document.querySelector('#view-home')?.classList.contains('active'),desktopMenu:!!document.querySelector('#desktopMenuButton'),exampleCount:Object.keys(window.EXAMPLE_SENTENCES||{}).length,offline:!document.querySelector('script[src^=\"http\"]'),attemptCount:state.attempts.length,importedSeen:state.records['seed-1-1']?.seen||0,constellationCount:WordOrbitConstellation.snapshot().nodes.length,constellationImages:[...document.querySelectorAll('.celestial-object img')].filter(image=>image.complete&&image.naturalWidth>0).length,constellationStar:WordOrbitConstellation.snapshot().nodes.find(node=>node.star)?.chapter})");
                 var testResult = JsonSerializer.Deserialize<Dictionary<string, object?>>(JsonSerializer.Deserialize<string>(result) ?? "{}")
                     ?? throw new InvalidOperationException("Empty self-test result.");
+                // Only the explicitly requested self-test creates this synthetic article.
+                // Its WebView2 profile is isolated by --data-dir in the validation workflow.
+                await Browser.ExecuteScriptAsync("""
+                    window.__nebulaSelfTest = null;
+                    (async () => {
+                      try {
+                        if (!window.WordOrbitNebula || !document.querySelector('.primary-nav [data-view="nebula"]')) throw Error('Nebula did not load');
+                        const sample = NebulaCore.cleanArticle({id:'neb-native-self-test', title:'Synthetic native test', body:'We explore a distant orbit.', notes:'Synthetic local persistence test'});
+                        await NebulaStore.save(sample);
+                        const restored = await NebulaStore.get(sample.id);
+                        if (restored?.notes !== sample.notes || restored?.body !== sample.body) throw Error('Local article persistence failed');
+                        await NebulaStore.remove(sample);
+                        window.__nebulaSelfTest = {passed:true};
+                      } catch(error) { window.__nebulaSelfTest = {passed:false,error:String(error)}; }
+                    })();
+                    """);
+                var nebulaReady = false;
+                for (var attempt = 0; attempt < 30; attempt++)
+                {
+                    if (await Browser.ExecuteScriptAsync("window.__nebulaSelfTest !== null") == "true")
+                    {
+                        nebulaReady = await Browser.ExecuteScriptAsync("window.__nebulaSelfTest?.passed === true") == "true";
+                        break;
+                    }
+                    await Task.Delay(100);
+                }
+                if (!nebulaReady) throw new InvalidOperationException("Nebula native persistence self-test failed: " + await Browser.ExecuteScriptAsync("JSON.stringify(window.__nebulaSelfTest)"));
+                testResult["nebulaLocalPersistence"] = true;
                 try { testResult["memoryUsageTarget"] = Browser.CoreWebView2.MemoryUsageTargetLevel.ToString(); }
                 catch { testResult["memoryUsageTarget"] = "runtime default"; }
                 testResult["maxThemeImageWidth"] = JsonSerializer.Deserialize<int>(await Browser.ExecuteScriptAsync("Math.max(...[...document.querySelectorAll('.celestial-object img')].map(image => image.naturalWidth))"));
