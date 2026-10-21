@@ -143,6 +143,10 @@ public partial class MainWindow : Window
                 var result = await Browser.ExecuteScriptAsync("JSON.stringify({title:document.title,wordCount:state.words.length,homeVisible:document.querySelector('#view-home')?.classList.contains('active'),desktopMenu:!!document.querySelector('#desktopMenuButton'),exampleCount:Object.keys(window.EXAMPLE_SENTENCES||{}).length,offline:!document.querySelector('script[src^=\"http\"]'),attemptCount:state.attempts.length,importedSeen:state.records['seed-1-1']?.seen||0,constellationCount:WordOrbitConstellation.snapshot().nodes.length,constellationImages:[...document.querySelectorAll('.celestial-object img')].filter(image=>image.complete&&image.naturalWidth>0).length,constellationStar:WordOrbitConstellation.snapshot().nodes.find(node=>node.star)?.chapter})");
                 var testResult = JsonSerializer.Deserialize<Dictionary<string, object?>>(JsonSerializer.Deserialize<string>(result) ?? "{}")
                     ?? throw new InvalidOperationException("Empty self-test result.");
+                var vocabularyAudit = await Browser.ExecuteScriptAsync("JSON.stringify({officialWordCount:qEligibleWords().length,reviewWordCount:state.words.filter(qReview).length,reviewedDictionaryCount:window.REVIEWED_DICTIONARY?.count})");
+                var vocabularyResult = JsonSerializer.Deserialize<Dictionary<string, object?>>(JsonSerializer.Deserialize<string>(vocabularyAudit) ?? "{}")
+                    ?? throw new InvalidOperationException("Empty vocabulary self-test result.");
+                foreach (var entry in vocabularyResult) testResult[entry.Key] = entry.Value;
                 // Only the explicitly requested self-test creates this synthetic article.
                 // Its WebView2 profile is isolated by --data-dir in the validation workflow.
                 await Browser.ExecuteScriptAsync("""

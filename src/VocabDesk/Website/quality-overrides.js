@@ -30,10 +30,16 @@ function qFullMeaning(word){
   const fixed=Q_MEANING_FIXES[qCanonicalWord(word.word)];
   return String(external?.meaning||fixed||word.fullMeaning||word.meaning||'').trim();
 }
+// Only exact editorial glossary values bypass the OCR language heuristics. This
+// admits real definitions such as 酶 / 使习惯于 / 分期付款, not arbitrary OCR prose.
+let qReviewedMeanings;
 function qMeaningClean(value){
   if(typeof value!=='string')return false;
   const s=value.replace(/\s+/g,'').trim();
   if(!s||s==='—'||/待核验/.test(s)||s.length>180||/[。！？!?]/.test(s))return false;
+  if(!/[\u4e00-\u9fff]/.test(s)||/[<>\u0000-\u001f]/.test(s))return false;
+  if(!qReviewedMeanings)qReviewedMeanings=new Set(Object.values(window.REVIEWED_DICTIONARY?.entries||{}).map(entry=>entry.meaning.replace(/\s+/g,'')));
+  if(qReviewedMeanings.has(s))return true;
   if(/^(她|他|它|我|你|我们|你们|他们|她们|这|那|某|自己|自己的|他的|她的|它的|一个|一种|可以|能够|因为|所以|在|从|对|向|将|被|使|与|和)/.test(s))return false;
   if(/(你的|前途|不要|查阅|付款|分期|一期|行动计划|句中|例句|就少不了|查阅图|球体|假想的环绕|唯一途径|泪水润湿|太阳升起|作为对|水是维持|大坏蛋|一辆|一根|一只|一有|一恶|海浪侵)/.test(s))return false;
   return (s.match(/[\u4e00-\u9fff]/g)||[]).length>=2;
@@ -91,6 +97,8 @@ renderHome=function(){
   $('#dueBadge').textContent=`${words.filter(isDue).length} 待复习`;
   $('#todayMastered').textContent=words.filter(mastered).length;
   $('#wrongCount').textContent=`${words.filter(w=>recordFor(w.id).wrong>recordFor(w.id).correct).length} 道待巩固`;
+  const reviewNote=$('.quick-card[data-practice="review"] small');
+  if(reviewNote)reviewNote.textContent=`${state.words.filter(qReview).length} 个待核验 · 查证后进入正式词库`;
   qRenderVerifiedChapterGrid();
 };
 renderStats=function(){
@@ -445,9 +453,10 @@ function qApplyExternalDictionary(){
     if(word.meaning!==external.meaning){word.meaning=external.meaning;changed=true}
     if(word.fullMeaning!==external.meaning){word.fullMeaning=external.meaning;changed=true}
     const needsIpa=!word.ipa||word.ipa==='—'||/待核验/.test(String(word.ipa));
-    if(external.ipa&&((word.source==='ocr'||word.source==='index'||needsIpa))&&word.ipa!==external.ipa){word.ipa=external.ipa;changed=true}
+    if(external.ipa&&(external.reviewed||word.source==='ocr'||word.source==='index'||needsIpa)&&word.ipa!==external.ipa){word.ipa=external.ipa;changed=true}
     if(external.pos&&word.pos!==external.pos){word.pos=external.pos;changed=true}
-    if(word.translationSource!=='ECDICT'){word.translationSource='ECDICT';changed=true}
+    const translationSource=external.reviewSource||'ECDICT';
+    if(word.translationSource!==translationSource){word.translationSource=translationSource;changed=true}
     if(word.status!=='verified'){word.status='verified';changed=true}
   });
   if(removed.size){state.words=state.words.filter(word=>!removed.has(word));changed=true}
@@ -475,7 +484,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   const source=$('#sourceSelect');
   if(source){if(source.options[0])source.options[0].textContent='正式词库（已审核）';if(!source.querySelector('[value="verified"]'))source.insertAdjacentHTML('beforeend','<option value="review">待核验词库（仅查看/专项练习）</option>')}
   const status=$('#libraryStatus');if(status&&!status.querySelector('[value="review"]'))status.insertAdjacentHTML('beforeend','<option value="review">待核验</option>');
-  const quick=$('.quick-grid');if(quick&&!quick.querySelector('[data-practice="review"]'))quick.insertAdjacentHTML('beforeend','<button class="quick-card" data-practice="review"><span>!</span><strong>待核验词库</strong><small>查看 OCR 与索引补录</small></button>');
+  const quick=$('.quick-grid');if(quick&&!quick.querySelector('[data-practice="review"]'))quick.insertAdjacentHTML('beforeend',`<button class="quick-card" data-practice="review"><span>!</span><strong>待核验词库</strong><small>${state.words.filter(qReview).length} 个待核验 · 查证后进入正式词库</small></button>`);
   qApplyExternalDictionary();
   qApplyMeaningFixes();
   const saved=state.lastSession;

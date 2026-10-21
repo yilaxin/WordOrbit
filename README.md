@@ -6,7 +6,7 @@
 
 ## 下载与运行
 
-当前发布版：**[v1.4.0，仅支持 Windows ARM64](https://github.com/yilaxin/WordOrbit/releases/tag/v1.4.0)**。在 GitHub Releases 下载 `WordOrbit-v1.4.0-win-arm64.zip`，完整解压后打开其中的 `VocabDesk.exe`。请保留解压后的整个文件夹；程序需要同目录下的 `Website`、`Assets` 和其他运行文件。系统还需安装 Microsoft Edge WebView2 Runtime。
+当前发布版：**[v1.4.1，仅支持 Windows ARM64](https://github.com/yilaxin/WordOrbit/releases/tag/v1.4.1)**。在 GitHub Releases 下载 `WordOrbit-v1.4.1-win-arm64.zip`，完整解压后打开其中的 `VocabDesk.exe`。请保留解压后的整个文件夹；程序需要同目录下的 `Website`、`Assets` 和其他运行文件。系统还需安装 Microsoft Edge WebView2 Runtime。
 
 这不是手机 App，也尚未提供 Windows x64、macOS 或 Linux 安装包。程序使用 .NET 10 WPF 和 WebView2；词库与例句随程序放在本机，练习时不需要登录账号。
 
@@ -25,6 +25,18 @@
 | 备份与迁移 | 在词库页导出 JSON；桌面版右上角 `⋯` 可导入旧网页版 JSON，导入前会备份当前记录。 |
 | 星云文章学习 | 粘贴英文文章，分类收藏、点词查离线词典、记阅读笔记与佳句，从文章生词开始原句填空和中译英回忆。私人文章数据独立保存。 |
 | 我的词库 | 单个添加单词或短语、批量粘贴并预览去重；加入独立私人星球，支持英选中、中选英、混合练习及独立备份。 |
+
+## v1.4.1：待核验词查证入库
+
+本版将原先被误判的 **102 个有效单词**纳入正式练习，随附词库共有 **4,249 个正式可练习词，待核验 0 个**。这是对当前随附词库的核对结果，不代表任何新导入的未知字符串都能自动通过审核，也不是重新声称全书零遗漏。
+
+- 查证有效拼写，保留 `jeopardise`、`fertilise`、`mesmerise` 等英式形式；更新 102 词的学习用完整释义、词性与音标。另外修正 `hybridise`、`hybridisation` 两词原先只引用美式拼写、没有实际译义的问题。
+- 修正“使…”“对…”开头、包含“查阅”“分期付款”及单字“酶”等正常释义被 OCR 规则误拒的问题。只有本次编辑核对过的**完整释义精确值**可以通过这一例外；句子残片、占位文字和标签代码仍被排除。
+- 补足 `flyby` 的航天含义及 `instalment` 的分期款、连载含义，移除 `expand`、`prompt` 里的旧 DOS 命令说明，不再截取第一个义项作选项。查证参考为 [Cambridge Dictionary](https://dictionary.cambridge.org/dictionary/english-chinese-simplified/) 及 [Collins 的 accustom 词条](https://www.collinsdictionary.com/dictionary/english/accustom)，结合原有 MIT ECDICT，整理为简明中文学习释义，参考地址随修订词条保存。
+- 打开新版自动更新原词条，不另建重复 ID、不清空学习记录；保留收藏、笔记、训练进度与已有有效选项。私人词库与星云文章不会被改写或上传。
+- 全部修订随包离线提供；不增加运行时联网查询、后台轮询或新依赖。待核验入口显示实际剩余数量，保留给后续未知导入词使用。
+
+核对范围与限制见 [词库查证说明](docs/VOCABULARY_REVIEW_2026-10-22.md)。
 
 ## v1.4.0：我的词库与私人星球
 
@@ -90,7 +102,7 @@
 
 ## 词库与资料说明
 
-词表参考《雅思词汇真经》的主题及书末索引整理；书名只用于说明来源，本项目与原书作者或出版社无隶属关系。中文释义和音标主要由离线英汉词典补全，并非逐字复制原书。扫描补录词条可能有识别错误，应用中会保留“待核验”标记与来源页码。词库适合个人学习，但不保证释义、音标和例句零错误。
+词表参考《雅思词汇真经》的主题及书末索引整理；书名只用于说明来源，本项目与原书作者或出版社无隶属关系。中文释义和音标主要由离线英汉词典补全，并非逐字复制原书。v1.4.1 已完成当前随附词库的待核验词查证；后续没有可靠释义的导入词仍保留“待核验”标记与来源页码。词库适合个人学习，但不保证释义、音标和例句零错误，也不将简明学习释义视为详尽专业词典。
 
 原书扫描 PDF 不是运行本应用的必要文件。项目发布者已确认拥有公开再分发该扫描件的授权，整本 321 页的文件单独放在 [v1.1.1 Release 附件](https://github.com/yilaxin/WordOrbit/releases/tag/v1.1.1) 中，文件名为 `IELTS-Vocabulary-Source-Book.pdf`。它约 497 MB，因此不会放进安装包或 Git 源码。第三方词典、例句及许可见 [资料来源与致谢](THIRD_PARTY_NOTICES.md)。
 
@@ -103,6 +115,8 @@
 星云逻辑测试：`node --test tests/nebula-core.test.cjs`；隔离浏览器回归：`node tests/nebula.browser.cjs`；本地服务器离线缓存测试：`node tests/nebula-offline.browser.cjs`。浏览器测试需要 Playwright 与 Microsoft Edge，所有文章均为合成测试内容。
 
 私人词库逻辑测试：`node --test tests/mywords-core.test.cjs`；隔离浏览器回归：`node tests/mywords.browser.cjs`。离线缓存测试同时覆盖私人词库和星云，桌面隔离自检覆盖两者的本地持久化；所有私人词条样例均为合成测试，不读取日常学习数据。
+
+待核验修订数据测试：`node --test tests/reviewed-dictionary.test.cjs`；全量出题与旧数据升级测试：`node tests/reviewed-dictionary.browser.cjs`。后者检查 104 条修订、全书 4,249 词资格、双向选项、OCR 残片隔离、100 题双阶段、笔记/收藏/记录/题目选项保留及两个私人数据库独立性。
 
 源码、程序与资料受各自权利人及相应许可约束；书籍扫描件的发布依据为项目发布者提供的再分发授权声明。
 

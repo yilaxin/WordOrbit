@@ -20,8 +20,10 @@ const { pathToFileURL } = require('node:url');
   await page.locator('#topicExplorer').scrollIntoViewIfNeeded();
   await page.waitForFunction(() => [...document.querySelectorAll('.celestial-object img')].every(i => i.complete && i.naturalWidth > 0));
   const initial = await page.evaluate(() => WordOrbitConstellation.snapshot());
-  assert.equal(initial.nodes.reduce((sum, n) => sum + n.count, 0), 4147);
-  assert.equal(initial.nodes.find(n => n.star).chapter, '学校教育');
+  assert.equal(initial.nodes.reduce((sum, n) => sum + n.count, 0), 4249);
+  assert.equal(initial.nodes.find(n => n.star).chapter, '身心健康');
+  assert.equal(initial.nodes.find(n => n.star).count, Math.max(...initial.nodes.map(n => n.count)));
+  assert.equal(await page.locator('.celestial-body.is-star .stellar-theme-mark img').count(), 1);
   assert.deepEqual([0, 1, 2, 3].map(ring => initial.nodes.filter(n => n.ring === ring).length), [3, 5, 6, 7]);
   const orbiting = initial.nodes.filter(n => !n.star);
   const centralStar = initial.nodes.find(n => n.star);
@@ -48,7 +50,7 @@ const { pathToFileURL } = require('node:url');
 
   await page.locator('.celestial-body[data-topic="自然地理"]').click();
   assert.equal(await page.locator('#selectedTopicName').textContent(), '自然地理');
-  assert.match(await page.locator('#selectedTopicCounts').textContent(), /207 个可练习词/);
+  assert.match(await page.locator('#selectedTopicCounts').textContent(), /209 个可练习词/);
   assert.equal(await page.locator('.celestial-body.selected').count(), 1);
   await page.locator('#topicExplorer').screenshot({ path: path.join(output, 'constellation-dark.png') });
   await page.locator('#themeBtn').click();
@@ -90,7 +92,7 @@ const { pathToFileURL } = require('node:url');
     qRenderVerifiedChapterGrid();
     WordOrbitConstellation.select('自然地理');
   });
-  assert.match(await page.locator('#selectedTopicCounts').textContent(), /已掌握 207 个/);
+  assert.match(await page.locator('#selectedTopicCounts').textContent(), /已掌握 209 个/);
   assert.equal(await page.evaluate(() => state.words.some(w => w.chapter === '自然地理' && qVerified(w) && isDue(w))), false, 'Completed-topic fixture has no due words');
   assert.equal(await page.locator('.celestial-body.selected').getAttribute('data-topic'), '自然地理');
   await page.evaluate(() => { setup.type = 'whole'; setup.count = 100; setup.chapter = 'all'; setup.order = 'random'; });
@@ -104,14 +106,14 @@ const { pathToFileURL } = require('node:url');
   // Changing eligible catalog counts recalculates the star, not merely its label.
   const changed = await page.evaluate(() => {
     let removed = 0;
-    state.words = state.words.filter(w => !(w.chapter === '学校教育' && qVerified(w) && removed++ < 10));
+    state.words = state.words.filter(w => !(w.chapter === '身心健康' && qVerified(w) && removed++ < 100));
     qRenderVerifiedChapterGrid();
     return WordOrbitConstellation.snapshot();
   });
-  assert.equal(changed.nodes.find(n => n.star).chapter, '身心健康');
-  assert.equal(await page.locator('.celestial-body.is-star .stellar-theme-mark img').count(), 1);
+  assert.equal(changed.nodes.find(n => n.star).chapter, '学校教育');
+  assert.equal(changed.nodes.find(n => n.star).count, Math.max(...changed.nodes.map(n => n.count)));
   await page.evaluate(() => { state.words = window.constellationTestBackup.words; state.records = window.constellationTestBackup.records; setup = window.constellationTestBackup.setup; state.lastSession = null; session = null; save(); renderHome(); });
-  assert.equal(await page.evaluate(() => WordOrbitConstellation.snapshot().nodes.find(n => n.star).chapter), '学校教育');
+  assert.equal(await page.evaluate(() => WordOrbitConstellation.snapshot().nodes.find(n => n.star).chapter), '身心健康');
 
   // Hovering empty space or a topic keeps moving; explicit pause still freezes all bodies.
   await page.emulateMedia({ reducedMotion: 'no-preference' });
@@ -158,6 +160,6 @@ const { pathToFileURL } = require('node:url');
   }
   assert.deepEqual(overflows, []);
   assert.deepEqual(errors, []);
-  console.log(JSON.stringify({ ok: true, themes: 22, words: 4147, rings: [3, 5, 6, 7], checks: ['local artwork', 'live counts/mastery', 'adaptive star', 'label layout', 'topic practice', 'animation/pause', 'camera', 'modal focus', 'persistent list', 'responsive'] }, null, 2));
+  console.log(JSON.stringify({ ok: true, themes: 22, words: 4249, rings: [3, 5, 6, 7], checks: ['local artwork', 'live counts/mastery', 'adaptive star', 'label layout', 'topic practice', 'animation/pause', 'camera', 'modal focus', 'persistent list', 'responsive'] }, null, 2));
   await browser.close();
 })().catch(error => { console.error(error); process.exit(1); });
