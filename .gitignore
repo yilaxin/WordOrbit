@@ -14,3 +14,6 @@ design/*
 wordorbit-nebula-backup*.json
 nebula-private*/
 nebula-data/
+wordorbit-mywords-backup*.json
+mywords-private*/
+mywords-data/

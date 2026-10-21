@@ -171,6 +171,32 @@ public partial class MainWindow : Window
                 }
                 if (!nebulaReady) throw new InvalidOperationException("Nebula native persistence self-test failed: " + await Browser.ExecuteScriptAsync("JSON.stringify(window.__nebulaSelfTest)"));
                 testResult["nebulaLocalPersistence"] = true;
+                await Browser.ExecuteScriptAsync("""
+                    window.__myWordsSelfTest = null;
+                    (async () => {
+                      try {
+                        if (!window.WordOrbitMyWords || !document.querySelector('.primary-nav [data-view="mywords"]')) throw Error('My Words did not load');
+                        const sample = MyWordsCore.clean({word:'native-private-word',meaning:'合成桌面测试词',record:{level:3,correct:3,seen:3}});
+                        await MyWordsStore.commit({puts:[sample],round:null,summary:MyWordsCore.summary([sample])});
+                        const restored = await MyWordsStore.load();
+                        if (restored.entries.find(word=>word.id===sample.id)?.record.correct !== 3) throw Error('Private word persistence failed');
+                        await MyWordsStore.commit({removes:[sample.id],round:null,summary:MyWordsCore.summary([])});
+                        window.__myWordsSelfTest = {passed:true};
+                      } catch(error) { window.__myWordsSelfTest = {passed:false,error:String(error)}; }
+                    })();
+                    """);
+                var myWordsReady = false;
+                for (var attempt = 0; attempt < 30; attempt++)
+                {
+                    if (await Browser.ExecuteScriptAsync("window.__myWordsSelfTest !== null") == "true")
+                    {
+                        myWordsReady = await Browser.ExecuteScriptAsync("window.__myWordsSelfTest?.passed === true") == "true";
+                        break;
+                    }
+                    await Task.Delay(100);
+                }
+                if (!myWordsReady) throw new InvalidOperationException("My Words persistence self-test failed: " + await Browser.ExecuteScriptAsync("JSON.stringify(window.__myWordsSelfTest)"));
+                testResult["myWordsLocalPersistence"] = true;
                 try { testResult["memoryUsageTarget"] = Browser.CoreWebView2.MemoryUsageTargetLevel.ToString(); }
                 catch { testResult["memoryUsageTarget"] = "runtime default"; }
                 testResult["maxThemeImageWidth"] = JsonSerializer.Deserialize<int>(await Browser.ExecuteScriptAsync("Math.max(...[...document.querySelectorAll('.celestial-object img')].map(image => image.naturalWidth))"));

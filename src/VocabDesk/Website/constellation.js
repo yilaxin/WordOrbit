@@ -48,6 +48,13 @@
       group.forEach((row, index) => { row.ring = ringIndex; row.angle = ring.phase + index * Math.PI * 2 / group.length; });
       cursor += group.length;
     });
+    // A private planet is optional. It never changes the book's 22-topic central star.
+    const personal = window.WordOrbitMyWords?.summary();
+    if (personal?.total > 0) {
+      const outer = rows.filter(row => !row.star && row.ring === 3);
+      outer.forEach((row,index) => { row.angle = RINGS[3].phase + index * Math.PI * 2 / (outer.length + 1); });
+      rows.push({id:'mywords-private',chapter:'我的词库',title:'私人词汇星球',kind:'personal',color:'#74d4f8',src:'assets/display-brand.png',fit:1.15,index:rows.length,count:personal.total,ready:personal.ready,done:personal.done,percent:personal.ready?Math.round(personal.done/personal.ready*100):0,personal:true,star:false,size:Math.min(72,40+Math.sqrt(personal.total)*.6),ring:3,angle:RINGS[3].phase+outer.length*Math.PI*2/(outer.length+1)});
+    }
     return rows;
   }
 
@@ -138,6 +145,18 @@
   }
 
   function decorateList() {
+    const personal = model.find(row => row.personal);
+    let privateCard = $map('#myWordsChapterCard');
+    if (personal && !privateCard) {
+      privateCard = document.createElement('button');
+      privateCard.id = 'myWordsChapterCard';privateCard.className = 'chapter-card is-personal';privateCard.dataset.chapter = '我的词库';
+      $map('#chapterGrid').append(privateCard);
+    }
+    if (!personal && privateCard) { privateCard.remove(); privateCard = null; }
+    if (privateCard) {
+      privateCard.innerHTML = '<div class="chapter-topline"><img class="chapter-art" src="assets/display-brand.png" alt="" width="48" height="48"/><small>PRIVATE / 仅本机</small></div><strong>我的词库</strong><div class="mini-track"><span style="width:'+personal.percent+'%"></span></div><div class="chapter-bottom"><span>'+personal.done+' / '+personal.ready+' 可练习词已掌握</span><b>'+personal.percent+'%</b></div>';
+      privateCard.setAttribute('aria-label','我的词库，'+personal.count+' 个私人词条，'+personal.ready+' 个可练习词');
+    }
     const byChapter = new Map(model.map(row => [row.chapter, row]));
     document.querySelectorAll('#chapterGrid .chapter-card').forEach(button => {
       const row = byChapter.get(button.dataset.chapter);
@@ -167,7 +186,7 @@
     nodeViews = [...bodies.querySelectorAll('.celestial-body')].map((element, index) => {
       const row = model[index];
       element.onclick = () => selectTopic(row.chapter);
-      element.setAttribute('aria-label', row.chapter + '，' + row.count + ' 个可练习词，已掌握 ' + row.done + ' 个，' + (row.star ? '中央恒星' : '第 ' + (row.ring + 1) + ' 轨道'));
+      element.setAttribute('aria-label', row.chapter + '，' + (row.personal ? row.count+' 个私人词条，'+row.ready+' 个可练习词' : row.count+' 个可练习词') + '，已掌握 ' + row.done + ' 个，' + (row.star ? '中央恒星' : '第 ' + (row.ring + 1) + ' 轨道'));
       element.title = row.chapter + ' · ' + row.count + ' 词 · 已掌握 ' + row.percent + '%';
       element.querySelector('.celestial-object img').onerror = () => element.classList.add('asset-missing');
       return { row, element, object: element.querySelector('.celestial-object'), progress: element.querySelector('.celestial-progress'), label: element.querySelector('.celestial-label') };
@@ -177,7 +196,7 @@
   function render() {
     if (!ensureMounted()) return;
     const rows = readModel();
-    const nextSignature = rows.map(row => [row.chapter, row.count, row.done, row.star].join(':')).join('|');
+    const nextSignature = rows.map(row => [row.chapter, row.count, row.done, row.star, row.ready || 0].join(':')).join('|');
     if (nextSignature !== signature) {
       model = rows;
       signature = nextSignature;
@@ -185,7 +204,9 @@
     }
     decorateList();
     const star = model.find(row => row.star);
-    $map('#constellationSummary').textContent = model.length + ' 个主题 · ' + model.reduce((total, row) => total + row.count, 0).toLocaleString('zh-CN') + ' 个可练习词';
+    const personal = model.find(row => row.personal);
+    viewport.setAttribute('aria-label', model.length+' 个可选择目的地。拖动空白处移动星图，使用放大缩小按钮调整视野。');
+    $map('#constellationSummary').textContent = ART.length + ' 个主题 · ' + model.filter(row=>!row.personal).reduce((total, row) => total + row.count, 0).toLocaleString('zh-CN') + ' 个可练习词' + (personal ? ' · 私人 '+personal.count+' 词' : '');
     $map('#constellationCenterLabel').textContent = (star?.chapter || '') + ' · 中央恒星';
     updateSelection();
     resize();
@@ -354,11 +375,12 @@
     $map('#constellationEmpty').hidden = !!row;
     $map('#constellationSelectedInfo').hidden = !row;
     $map('#constellationStart').disabled = !row || !row.count;
+    $map('#constellationStart').textContent = row?.personal && !row.ready ? '补充我的词库释义 ↗' : '开始练习 ↗';
     if (!row) return;
     $map('#selectedTopicImage').src = row.src;
     $map('#selectedTopicKind').textContent = (row.star ? '中央恒星 · ' : '第 ' + (row.ring + 1) + ' 轨道 · ') + row.title;
     $map('#selectedTopicName').textContent = row.chapter;
-    $map('#selectedTopicCounts').textContent = row.count + ' 个可练习词 · 已掌握 ' + row.done + ' 个';
+    $map('#selectedTopicCounts').textContent = row.personal ? row.count+' 个私人词条 · 可练习 '+row.ready+' 个 · 已掌握 '+row.done+' 个' : row.count + ' 个可练习词 · 已掌握 ' + row.done + ' 个';
     $map('#selectedTopicPercent').textContent = row.percent + '%';
     $map('#selectedTopicProgress').style.width = row.percent + '%';
   }
@@ -367,6 +389,11 @@
     const row = model.find(item => item.chapter === selected);
     if (!row?.count) return;
     if (expanded) setExpanded(false);
+    if (row.personal) {
+      if (row.ready) window.WordOrbitMyWords.openPractice();
+      else showView('mywords');
+      return;
+    }
     setup = { ...setup, type: 'mixed', count: 20, chapter: row.chapter, source: 'all', order: 'smart' };
     openSetup('mixed');
     $map('#chapterSelect').value = row.chapter;
@@ -435,7 +462,7 @@
   window.WordOrbitConstellation = {
     render,
     select: selectTopic,
-    snapshot: () => ({ selected, view, expanded, zoom, elapsed, paused: !canAnimate(), nodes: model.map(row => ({ chapter: row.chapter, count: row.count, done: row.done, size: row.size, star: row.star, ring: row.ring, src: row.src })) })
+    snapshot: () => ({ selected, view, expanded, zoom, elapsed, paused: !canAnimate(), nodes: model.map(row => ({ chapter: row.chapter, count: row.count, done: row.done, size: row.size, star: row.star, ring: row.ring, src: row.src, personal:!!row.personal, ready:row.ready })) })
   };
   document.addEventListener('DOMContentLoaded', render);
 })();

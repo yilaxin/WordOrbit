@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="constellation.css" />
   <link rel="stylesheet" href="nebula.css" />
+  <link rel="stylesheet" href="mywords.css" />
   <title>词轨 WordOrbit · 离线背词</title>
   <link rel="icon" href="assets/display-brand.png" type="image/png" />
 </head>
@@ -23,6 +24,7 @@
     <nav class="primary-nav" aria-label="主导航">
       <button class="nav-link active" data-view="home" aria-current="page"><span aria-hidden="true">◉</span> 今日航程</button>
       <button class="nav-link" data-view="library"><span aria-hidden="true">▤</span> 单词星图</button>
+      <button class="nav-link" data-view="mywords"><span aria-hidden="true">◎</span> 我的词库</button>
       <button class="nav-link" data-view="nebula"><span aria-hidden="true">✧</span> 星云</button>
       <button class="nav-link" data-view="stats"><span aria-hidden="true">⌁</span> 记忆轨迹</button>
     </nav>
@@ -68,6 +70,7 @@
         <div class="constellation-toolbar">
           <div class="constellation-view-switch" role="group" aria-label="主题展示方式"><button id="starMapViewBtn" class="active" aria-pressed="true">◉ 星图</button><button id="starListViewBtn" aria-pressed="false">▤ 列表</button></div>
           <span id="constellationSummary" class="constellation-summary">22 个主题 · 正在整理星图</span>
+          <button type="button" class="text-btn mywords-home-entry" data-view="mywords" title="添加私人词条后，将在星图中出现独立星球">＋ 我的词库</button>
           <div class="constellation-controls" role="group" aria-label="星图控制"><button id="starMapPlayBtn" aria-label="暂停公转" title="暂停公转">Ⅱ</button><span class="map-control-divider"></span><button id="starMapZoomOut" aria-label="缩小星图" title="缩小">−</button><span id="starMapZoomValue" class="zoom-value">100%</span><button id="starMapZoomIn" aria-label="放大星图" title="放大">＋</button><button id="starMapReset" aria-label="复位星图" title="复位">⌖</button><button id="starMapExpand" aria-label="展开星图" aria-expanded="false" title="展开星图">⤢</button></div>
         </div>
         <div id="constellationViewport" class="constellation-viewport" tabindex="0" role="group" aria-label="22 个可选择主题。拖动空白处移动星图，使用放大缩小按钮调整视野。">
@@ -85,6 +88,7 @@
       </section>
     </section>
 
+    <section id="view-mywords" class="view" aria-labelledby="myWordsHeading"><div id="myWordsContent"></div></section>
     <section id="view-nebula" class="view" aria-labelledby="nebulaHeading"><div id="nebulaContent"></div></section>
 
     <section id="view-setup" class="view" aria-labelledby="setup-title">
@@ -104,6 +108,8 @@
 
     <div id="editModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="editTitle"><div class="modal-card"><div class="modal-head"><div><p class="eyebrow">EDIT ENTRY / 编辑词条</p><h2 id="editTitle">--</h2></div><button class="icon-btn" id="closeModal">×</button></div><form id="editForm"><label>中文释义<textarea id="editMeaning" rows="2"></textarea></label><label>例句<textarea id="editExample" rows="3"></textarea></label><label>个人笔记<textarea id="editNotes" rows="3" placeholder="写下你的联想、易错点或记忆钩子"></textarea></label><label>标签（用逗号分隔）<input id="editTags" /></label><div class="modal-actions"><button type="button" class="secondary-btn" id="cancelEdit">取消</button><button type="submit" class="primary-btn">保存修改</button></div></form></div></div>
     <dialog id="nebulaEditor" class="neb-dialog" aria-labelledby="nebulaEditorTitle"><form id="nebulaEditorForm"><div class="neb-dialog-head"><div><p class="eyebrow">YOUR PRIVATE UNIVERSE</p><h2 id="nebulaEditorTitle">新建星云</h2></div><button type="button" class="icon-btn" id="nebulaEditorClose" aria-label="关闭文章编辑">×</button></div><p class="muted">粘贴你喜欢的英文文章。仅保存在本机，不上传、不识图，也不自动翻译全文。</p><label>文章标题<input id="nebulaTitle" required maxlength="160" placeholder="为这片星云取一个名字" /></label><div class="neb-form-grid"><label>来源（选填）<input id="nebulaSource" maxlength="500" placeholder="书名、作者或来源地址" /></label><label>分类（逗号分隔，选填）<input id="nebulaTags" maxlength="200" placeholder="科学, 生活, 喜欢的故事" /></label></div><label>英文正文<textarea id="nebulaBody" required maxlength="100000" rows="12" placeholder="把文章文字粘贴到这里…"></textarea></label><div class="neb-editor-count"><span id="nebulaBodyCount">0 词</span><span>最多 100,000 字符</span></div><p id="nebulaEditorError" class="neb-error" role="alert"></p><div class="modal-actions"><button type="button" class="secondary-btn" id="nebulaEditorCancel">取消</button><button type="submit" class="primary-btn" id="nebulaEditorSave">保存到本机</button></div></form></dialog>
+    <dialog id="myWordDialog" class="neb-dialog" aria-labelledby="myWordDialogTitle"><form id="myWordForm"><div class="neb-dialog-head"><div><p class="eyebrow">GROW YOUR PRIVATE ORBIT</p><h2 id="myWordDialogTitle">添加一个单词</h2></div><button type="button" class="icon-btn" id="myWordClose" aria-label="关闭词条编辑">×</button></div><p class="muted">可添加英文单词或短语。只存本机，不随代码同步到 GitHub。</p><label>英文单词 / 短语<input id="myWordValue" required maxlength="100" placeholder="例如 resilient 或 take into account" autocomplete="off" spellcheck="false"/></label><button type="button" class="text-btn" id="myLookupButton">从离线词典补全 ↗</button><p class="neb-tip" id="myLookupStatus"></p><label>完整中文释义<textarea id="myWordMeaning" rows="3" maxlength="1000" placeholder="可填写多个义项，用分号分隔；未填写中文释义的词暂不出题"></textarea></label><div class="neb-form-grid"><label>词性<input id="myWordPos" maxlength="80" placeholder="例如 adj."/></label><label>音标<input id="myWordIpa" maxlength="160" placeholder="选填，不编造缺失音标"/></label></div><details class="my-advanced"><summary>例句、标签和个人笔记（选填）</summary><label>英文例句<textarea id="myWordExample" rows="2" maxlength="2000"></textarea></label><label>例句译文<textarea id="myWordExampleZh" rows="2" maxlength="2000"></textarea></label><label>标签（逗号分隔）<input id="myWordTags" maxlength="300"/></label><label>笔记<textarea id="myWordNotes" rows="2" maxlength="2000"></textarea></label></details><p id="myWordError" class="neb-error" role="alert"></p><div class="modal-actions"><button type="button" class="secondary-btn" id="myWordCancel">取消</button><button type="submit" class="primary-btn" id="myWordSave">保存到我的词库</button></div></form></dialog>
+    <dialog id="myBatchDialog" class="neb-dialog my-batch-dialog" aria-labelledby="myBatchTitle"><form id="myBatchForm"><div class="neb-dialog-head"><div><p class="eyebrow">BRING YOUR OWN WORDS</p><h2 id="myBatchTitle">批量粘贴</h2></div><button type="button" class="icon-btn" id="myBatchClose" aria-label="关闭批量添加">×</button></div><p class="muted">每行一个词，先预览再添加。每次最多 1,000 行、100,000 字符；重复词跳过，不覆盖已有释义或学习记录。</p><label>支持纯英文、英文＋中文，或从表格粘贴四列<textarea id="myBatchText" rows="9" maxlength="100000" placeholder="resilient&#10;orbit | 轨道；绕轨道运行 | n. / v. | /ˈɔːbɪt/&#10;take into account 考虑到"></textarea></label><p class="neb-tip">四列顺序：英文｜中文｜词性｜音标（可用 Tab 或 | 分隔）。中文义项中的分号不会被拆开。缺失内容尝试用离线词典补全；未匹配的词保留待补释义，不会出题。</p><button type="button" class="secondary-btn" id="myBatchCheck">预览并检查</button><div id="myBatchPreview"></div><p id="myBatchError" class="neb-error" role="alert"></p><div class="modal-actions"><button type="button" class="secondary-btn" id="myBatchCancel">取消</button><button type="submit" class="primary-btn" id="myBatchSave" disabled>添加预览中的新词</button></div></form></dialog>
   </main>
   <script src="full-ocr-data.js"></script>
   <script src="external-dictionary.js"></script>
@@ -117,5 +123,8 @@
   <script src="nebula-core.js"></script>
   <script src="nebula-store.js"></script>
   <script src="nebula.js"></script>
+  <script src="mywords-core.js"></script>
+  <script src="mywords-store.js"></script>
+  <script src="mywords.js"></script>
 </body>
 </html>
