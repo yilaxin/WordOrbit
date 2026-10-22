@@ -7,6 +7,7 @@ const {chromium}=require('playwright'),assert=require('node:assert/strict'),path
  const page=await browser.newPage({viewport:{width:1320,height:1000},reducedMotion:'reduce'}),errors=[],requests=[];
  page.on('pageerror',err=>errors.push(err.message));page.on('request',r=>{if(/^https?:/.test(r.url()))requests.push(r.url());});page.on('dialog',dialog=>dialog.accept());
  await page.goto(pathToFileURL(path.resolve(__dirname,'../src/VocabDesk/Website/index.html')).href+'?desktop=1');await page.waitForFunction(()=>window.WordOrbitMyWords&&WordOrbitConstellation.snapshot().nodes.length===22);
+ assert.equal((await page.locator('.primary-nav [data-view=mywords]').innerText()).replace('◎','').trim(),'我的星球');
  const baseline=await page.evaluate(()=>JSON.stringify({words:state.words,records:state.records,attempts:state.attempts,favorites:state.favorites,lastSession:state.lastSession}));
  const originalStar=await page.evaluate(()=>WordOrbitConstellation.snapshot().nodes.find(n=>n.star).chapter);
  const action=name=>page.locator(`#myWordsContent [data-my-action="${name}"]`),open=async()=>{await page.locator('.primary-nav [data-view=mywords]').click();await page.locator('#mySearch').waitFor();};
