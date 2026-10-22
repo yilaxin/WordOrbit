@@ -201,6 +201,38 @@ public partial class MainWindow : Window
                 }
                 if (!myWordsReady) throw new InvalidOperationException("My Words persistence self-test failed: " + await Browser.ExecuteScriptAsync("JSON.stringify(window.__myWordsSelfTest)"));
                 testResult["myWordsLocalPersistence"] = true;
+                await Browser.ExecuteScriptAsync("""
+                    window.__cometsSelfTest = null;
+                    (async () => {
+                      try {
+                        if (!window.WordOrbitComets || !document.querySelector('.primary-nav [data-view="comets"]')) throw Error('Comets did not load');
+                        const sample = CometsCore.clean({id:'comet-native-self-test',date:CometsCore.localDate(),time:'08:40',title:'Synthetic native moment',context:'Synthetic scene only',english:'Could I have it with oat milk?',meaning:'合成测试译文'});
+                        await CometsStore.commit({puts:[sample]});
+                        const restored = await CometsStore.page(sample.date,0,12);
+                        if (restored.find(e=>e.id===sample.id)?.english !== sample.english) throw Error('Private comet persistence failed');
+                        showView('comets');
+                        for(let i=0;i<50&&!WordOrbitComets.snapshot().scene;i++)await new Promise(resolve=>setTimeout(resolve,50));
+                        if(WordOrbitComets.snapshot().scene?.count!==1)throw Error('Native comet scene did not mount');
+                        if(document.querySelector('.cf-english'))throw Error('Recall answer leaked');
+                        showView('home');
+                        if(WordOrbitComets.snapshot().scene||WordOrbitComets.snapshot().loadedRecords)throw Error('Native comet resources not released');
+                        await CometsStore.commit({removes:[sample.id]});
+                        window.__cometsSelfTest = {passed:true};
+                      } catch(error) { window.__cometsSelfTest = {passed:false,error:String(error)}; }
+                    })();
+                    """);
+                var cometsReady = false;
+                for (var attempt = 0; attempt < 70; attempt++)
+                {
+                    if (await Browser.ExecuteScriptAsync("window.__cometsSelfTest !== null") == "true")
+                    {
+                        cometsReady = await Browser.ExecuteScriptAsync("window.__cometsSelfTest?.passed === true") == "true";
+                        break;
+                    }
+                    await Task.Delay(100);
+                }
+                if (!cometsReady) throw new InvalidOperationException("Comets native self-test failed: " + await Browser.ExecuteScriptAsync("JSON.stringify(window.__cometsSelfTest)"));
+                testResult["cometsLocalPersistenceAndDisposal"] = true;
                 try { testResult["memoryUsageTarget"] = Browser.CoreWebView2.MemoryUsageTargetLevel.ToString(); }
                 catch { testResult["memoryUsageTarget"] = "runtime default"; }
                 testResult["maxThemeImageWidth"] = JsonSerializer.Deserialize<int>(await Browser.ExecuteScriptAsync("Math.max(...[...document.querySelectorAll('.celestial-object img')].map(image => image.naturalWidth))"));

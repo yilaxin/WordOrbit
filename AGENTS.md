@@ -20,3 +20,4 @@
 - 原始主题插画位于 `Website/assets/constellation/`，运行时使用其 `display/` 显示资源；用 `scripts/Build-DisplayAssets.ps1` 生成，不覆盖原图。
 - 星云文章正文、笔记、佳句、生词、阅读位置和私人练习只保存在本机 IndexedDB `wordorbit-nebula-private-v1`。不得写进词库、源码、截图、Release 或自动同步到 GitHub；星云备份仅由用户手动导出。测试只使用合成文章和隔离上下文。雅思题库的导出、清空和练习不应顺带改动星云数据。
 - “我的词库”内容及其学习记录只存本机 IndexedDB `wordorbit-mywords-private-v1`，不得同步到 GitHub 或打进 Release。首页星图只读取私人词库的汇总数字；正文词条按需加载。使用独立备份，原题库的导出、清空、原书遍历和星云练习不应修改它。批量添加不得静默覆盖已有私人释义和记录。
+- 生活彗星只存本机 IndexedDB `wordorbit-comets-private-v1`，私人场景、英语、日期和备份不得同步到 GitHub 或 Release。独立备份合并恢复不覆盖既有内容；其他板块导出与清空不得影响它。仅进入彗星页面加载当天分片（每片最多 12 条）及绘图资源，离开时销毁图形、监听和私有正文。测试仅使用合成生活片段。

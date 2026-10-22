@@ -13,6 +13,7 @@ $allowedTargets = @($exe, (Join-Path $projectRoot 'artifacts\WordOrbit-win-arm64
 $allowedTargets += Join-Path $projectRoot 'artifacts\WordOrbit-win-arm64-v1.4.0\VocabDesk.exe'
 $allowedTargets += Join-Path $projectRoot 'artifacts\WordOrbit-win-arm64-v1.4.1\VocabDesk.exe'
 $allowedTargets += Join-Path $projectRoot 'artifacts\WordOrbit-win-arm64-v1.4.2\VocabDesk.exe'
+$allowedTargets += Join-Path $projectRoot 'artifacts\WordOrbit-win-arm64-v1.4.3\VocabDesk.exe'
 if (-not (Test-Path -LiteralPath $exe -PathType Leaf)) { throw "程序不存在：$exe" }
 if (-not (Test-Path -LiteralPath $icon -PathType Leaf)) { throw "图标不存在：$icon" }
 $shell = New-Object -ComObject WScript.Shell

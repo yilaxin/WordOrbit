@@ -17,3 +17,6 @@ nebula-data/
 wordorbit-mywords-backup*.json
 mywords-private*/
 mywords-data/
+wordorbit-comets-backup*.json
+comets-private*/
+comets-data/

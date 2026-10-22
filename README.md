@@ -6,7 +6,7 @@
 
 ## 下载与运行
 
-当前发布版：**[v1.4.3，仅支持 Windows ARM64](https://github.com/yilaxin/WordOrbit/releases/tag/v1.4.3)**。在 GitHub Releases 下载 `WordOrbit-v1.4.3-win-arm64.zip`，完整解压后打开其中的 `VocabDesk.exe`。请保留解压后的整个文件夹；程序需要同目录下的 `Website`、`Assets` 和其他运行文件。系统还需安装 Microsoft Edge WebView2 Runtime。
+当前发布版：**[v1.5.0，仅支持 Windows ARM64](https://github.com/yilaxin/WordOrbit/releases/tag/v1.5.0)**。在 GitHub Releases 下载 `WordOrbit-v1.5.0-win-arm64.zip`，完整解压后打开其中的 `VocabDesk.exe`。请保留解压后的整个文件夹；程序需要同目录下的 `Website`、`Assets` 和其他运行文件。系统还需安装 Microsoft Edge WebView2 Runtime。
 
 这不是手机 App，也尚未提供 Windows x64、macOS 或 Linux 安装包。程序使用 .NET 10 WPF 和 WebView2；词库与例句随程序放在本机，练习时不需要登录账号。
 
@@ -25,6 +25,19 @@
 | 备份与迁移 | 在词库页导出 JSON；桌面版右上角 `⋯` 可导入旧网页版 JSON，导入前会备份当前记录。 |
 | 星云文章学习 | 粘贴英文文章，分类收藏、点词查离线词典、记阅读笔记与佳句，从文章生词开始原句填空和中译英回忆。私人文章数据独立保存。 |
 | 我的词库 | 单个添加单词或短语、批量粘贴并预览去重；加入独立私人星球，支持英选中、中选英、混合练习及独立备份。 |
+| 生活彗星 | 记录生活场景及对应英语，在当天三维星空自由飞行；按日期回想，英文默认隐藏，支持编辑、删除及独立私人备份。 |
+
+## v1.5.0：生活彗星，把今天留在星空中
+
+点击顶部 **彗星 → 记录一颗彗星**，填写生活片段标题和对应英语，可补充日期、时间、场景提示、中文释义与场景标签。每次保存生成一颗属于你的生活彗星；不自动联网翻译、识图或生成句子，不会插入预览的示例记录。
+
+- **三维星空**：白炽彗核与青蓝—淡紫长尾在有远近的三维空间自由飞行，拖动旋转视角，滚轮、双指或按钮缩放。悬停只暂停指向的彗星，点击后全场停泊，回忆卡出现在旁边。轨迹按记录编号固定生成，不依赖主题或书中顺序。
+- **先回忆，再确认**：回忆卡先显示生活场景，不把对应英语放入可见/隐藏答案 DOM。点击“想一想，再展开英文”才显示英语及中文释义；可以收起再想一次，或按 Escape 返回星空。当天清单也可定位不在视野内的彗星。
+- **按天回看**：日期选择、前后一天、“回到今天”及“有记录的日期”用于找回过去的生活片段。每片星空最多 12 颗，同一天更多记录可翻页，避免重叠与资源增长。
+- **独立私人备份**：彗星只存本机 IndexedDB `wordorbit-comets-private-v1`，不写入公开词库、代码、Release、统计或其他备份。点击“独立备份”导出 `wordorbit-comets-backup-日期-partXX.json`；大备份约每 18 MB 分卷，恢复时逐个导入（每卷最多 20 MB）。恢复前校验整卷，确认后一次事务写入；重复编号或相同内容跳过，不覆盖已有内容。只接受彗星专用格式，不混用题库、星云或我的词库备份。最多 10,000 条生活记录。
+- **资源按需运行**：只在进入彗星页面时加载当前片段记录并创建 WebGL 资源；离开时销毁缓冲、绘图上下文、观察器和全局监听，并释放记录正文。页面不可见时暂停，暂停飞行后不维持持续绘图；适配系统减少动态效果偏好。WebGL 不可用时使用相同三维坐标的 Canvas 兼容绘制，不引入三维框架或外部材质下载。
+
+升级不清空原有学习记录。**更换电脑前，请分别备份题库、我的词库、星云和彗星；任何一种备份都不代替另外三种。** 删除单颗彗星需确认，只能从手动备份恢复。定期回归/间隔复习尚未加入本版。
 
 ## v1.4.3：导航显示“我的星球”
 
@@ -129,6 +142,8 @@
 星云逻辑测试：`node --test tests/nebula-core.test.cjs`；隔离浏览器回归：`node tests/nebula.browser.cjs`；本地服务器离线缓存测试：`node tests/nebula-offline.browser.cjs`。浏览器测试需要 Playwright 与 Microsoft Edge，所有文章均为合成测试内容。
 
 私人词库逻辑测试：`node --test tests/mywords-core.test.cjs`；隔离浏览器回归：`node tests/mywords.browser.cjs`。离线缓存测试同时覆盖私人词库和星云，桌面隔离自检覆盖两者的本地持久化；所有私人词条样例均为合成测试，不读取日常学习数据。
+
+彗星逻辑测试：`node --test tests/comets-core.test.cjs`；隔离交互测试：`node tests/comets.browser.cjs`；渲染生命周期/兼容测试：`node tests/comets-renderer.browser.cjs`。`tests/nebula-offline.browser.cjs` 同时验证彗星素材断网缓存及私人持久化。桌面隔离自检覆盖彗星保存和离开页面释放资源。所有场景均为合成数据，不接触日常使用目录。
 
 待核验修订数据测试：`node --test tests/reviewed-dictionary.test.cjs`；全量出题与旧数据升级测试：`node tests/reviewed-dictionary.browser.cjs`。后者检查 104 条修订、当前 4,247 词正式资格、双向选项、OCR 残片隔离、100 题双阶段、笔记/收藏/记录/题目选项保留及两个私人数据库独立性。
 
