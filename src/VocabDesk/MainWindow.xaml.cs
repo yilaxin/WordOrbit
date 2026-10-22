@@ -233,6 +233,56 @@ public partial class MainWindow : Window
                 }
                 if (!cometsReady) throw new InvalidOperationException("Comets native self-test failed: " + await Browser.ExecuteScriptAsync("JSON.stringify(window.__cometsSelfTest)"));
                 testResult["cometsLocalPersistenceAndDisposal"] = true;
+                // Real browser pointer/wheel input catches drag-layer interception that element.click() misses.
+                async Task<double[]> SelfTestPointAsync(string selector)
+                {
+                    var encoded = await Browser.ExecuteScriptAsync("(()=>{const e=document.querySelector(" + JsonSerializer.Serialize(selector) + ");if(!e)throw Error('Missing self-test control');e.scrollIntoView({block:'center',behavior:'instant'});const r=e.getBoundingClientRect();return JSON.stringify([r.x+r.width/2,r.y+r.height/2]);})()");
+                    return JsonSerializer.Deserialize<double[]>(JsonSerializer.Deserialize<string>(encoded) ?? "[]")
+                        ?? throw new InvalidOperationException("Empty pointer position.");
+                }
+                async Task SelfTestClickAsync(string selector)
+                {
+                    var point = await SelfTestPointAsync(selector);
+                    await Browser.CoreWebView2.CallDevToolsProtocolMethodAsync("Input.dispatchMouseEvent", JsonSerializer.Serialize(new { type="mousePressed", x=point[0], y=point[1], button="left", clickCount=1 }));
+                    await Browser.CoreWebView2.CallDevToolsProtocolMethodAsync("Input.dispatchMouseEvent", JsonSerializer.Serialize(new { type="mouseReleased", x=point[0], y=point[1], button="left", clickCount=1 }));
+                }
+                async Task SelfTestWheelAsync(string selector, double delta)
+                {
+                    var point = await SelfTestPointAsync(selector);
+                    await Browser.CoreWebView2.CallDevToolsProtocolMethodAsync("Input.dispatchMouseEvent", JsonSerializer.Serialize(new { type="mouseWheel", x=point[0], y=point[1], deltaX=0, deltaY=delta }));
+                    await Task.Delay(250);
+                }
+                await Browser.ExecuteScriptAsync("showView('comets')");
+                for (var attempt=0;attempt<50;attempt++)
+                {
+                    if (await Browser.ExecuteScriptAsync("!!document.querySelector('.comets-empty button')") == "true") break;
+                    await Task.Delay(100);
+                }
+                await SelfTestPointAsync(".cf-space");
+                var scrollBefore = JsonSerializer.Deserialize<double>(await Browser.ExecuteScriptAsync("scrollY"));
+                await SelfTestWheelAsync(".cf-space",-180);
+                var scrollAfter = JsonSerializer.Deserialize<double>(await Browser.ExecuteScriptAsync("scrollY"));
+                if (scrollAfter>=scrollBefore) throw new InvalidOperationException("Comet scene blocked native page wheel.");
+                await SelfTestClickAsync(".comets-empty button");
+                if (await Browser.ExecuteScriptAsync("document.querySelector('#cometsEditor').open") != "true") throw new InvalidOperationException("Comet drag layer blocked the add button.");
+                await SelfTestWheelAsync("#cometsEditor",420);
+                if (await Browser.ExecuteScriptAsync("document.querySelector('#cometsEditor').scrollTop>0") != "true") throw new InvalidOperationException("Comet editor blocked native wheel.");
+                await Browser.ExecuteScriptAsync("document.querySelector('#cometsField_title').value='Synthetic native pointer moment';document.querySelector('#cometsField_english').value='I missed my stop.';");
+                await SelfTestClickAsync("#cometsSave");
+                for (var attempt=0;attempt<50;attempt++)
+                {
+                    if (await Browser.ExecuteScriptAsync("WordOrbitComets.snapshot().loadedRecords===1") == "true") break;
+                    await Task.Delay(100);
+                }
+                if (await Browser.ExecuteScriptAsync("WordOrbitComets.snapshot().loadedRecords===1&&!document.querySelector('#cometsEditor').open") != "true") throw new InvalidOperationException("Native pointer record save failed.");
+                await Browser.ExecuteScriptAsync("window.__pointerClean=false;CometsStore.all().then(entries=>CometsStore.commit({removes:entries.filter(e=>e.title==='Synthetic native pointer moment').map(e=>e.id)})).then(()=>{window.__pointerClean=true;showView('home');});");
+                for (var attempt=0;attempt<50;attempt++)
+                {
+                    if (await Browser.ExecuteScriptAsync("window.__pointerClean===true") == "true") break;
+                    await Task.Delay(100);
+                }
+                if (await Browser.ExecuteScriptAsync("window.__pointerClean===true") != "true") throw new InvalidOperationException("Native pointer cleanup failed.");
+                testResult["cometsNativePointerAndWheel"] = true;
                 try { testResult["memoryUsageTarget"] = Browser.CoreWebView2.MemoryUsageTargetLevel.ToString(); }
                 catch { testResult["memoryUsageTarget"] = "runtime default"; }
                 testResult["maxThemeImageWidth"] = JsonSerializer.Deserialize<int>(await Browser.ExecuteScriptAsync("Math.max(...[...document.querySelectorAll('.celestial-object img')].map(image => image.naturalWidth))"));

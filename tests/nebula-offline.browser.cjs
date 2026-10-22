@@ -6,7 +6,7 @@ const server=http.createServer((req,res)=>{const target=path.resolve(site,'.'+de
  try{
  browser=await chromium.launch({executablePath:'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',headless:true});const context=await browser.newContext({reducedMotion:'reduce'}),page=await context.newPage(),errors=[];
  page.on('pageerror',err=>errors.push(err.message));await page.goto('http://127.0.0.1:'+server.address().port+'/index.html');await page.waitForFunction(()=>!!navigator.serviceWorker.controller);
- const assets=await page.evaluate(async()=>{const cache=await caches.open('wordorbit-reviewed-v31');return(await cache.keys()).map(r=>new URL(r.url).pathname);});
+ const assets=await page.evaluate(async()=>{const cache=await caches.open('wordorbit-reviewed-v32');return(await cache.keys()).map(r=>new URL(r.url).pathname);});
  assert.equal((await page.locator('.primary-nav [data-view=mywords]').innerText()).replace('◎','').trim(),'我的星球');assert.ok(assets.includes('/reviewed-dictionary.js'));assert.ok(assets.includes('/catalog-repairs.js'));assert.equal(await page.evaluate(()=>qEligibleWords().length),4247);assert.equal(await page.evaluate(()=>state.words.filter(qReview).length),1);
  for(const name of ['nebula-core.js','nebula-store.js','nebula.js','nebula.css'])assert.ok(assets.includes('/'+name));assert.equal(assets.filter(p=>p.includes('/assets/constellation/display/')).length,22);
  for(const name of ['mywords-core.js','mywords-store.js','mywords.js','mywords.css'])assert.ok(assets.includes('/'+name));
@@ -14,7 +14,7 @@ const server=http.createServer((req,res)=>{const target=path.resolve(site,'.'+de
  await page.locator('.primary-nav [data-view=nebula]').click();await page.locator('[data-neb-action=new]').first().waitFor();
  await page.evaluate(async()=>{await NebulaStore.save(NebulaCore.cleanArticle({id:'neb-offline-test',title:'Synthetic offline test',body:'We explore space without a network connection.',notes:'Private synthetic note'}));});
  await page.reload();await page.locator('.primary-nav [data-view=nebula]').click();await page.locator('[data-neb-action=open]').click();assert.equal(await page.locator('#nebNotes').inputValue(),'Private synthetic note');
- const cached=await page.evaluate(async()=>{const cache=await caches.open('wordorbit-reviewed-v31');return(await cache.keys()).map(r=>r.url);});assert.ok(!cached.some(url=>/neb-offline-test|Private%20synthetic/.test(url)),'Private bodies are never placed in the app asset cache');
+ const cached=await page.evaluate(async()=>{const cache=await caches.open('wordorbit-reviewed-v32');return(await cache.keys()).map(r=>r.url);});assert.ok(!cached.some(url=>/neb-offline-test|Private%20synthetic/.test(url)),'Private bodies are never placed in the app asset cache');
  await page.evaluate(async()=>{const sample=MyWordsCore.clean({word:'offline-private-word',meaning:'离线私人测试词'});await MyWordsStore.commit({puts:[sample],round:null,summary:MyWordsCore.summary([sample])});});
  await page.reload();await page.waitForFunction(()=>WordOrbitConstellation.snapshot().nodes.length===23);await page.locator('.primary-nav [data-view=mywords]').click();await page.locator('.my-word-row').waitFor();assert.match(await page.locator('.my-word-row').innerText(),/离线私人测试词/);
  await page.locator('#myMode').selectOption('reverse');await page.locator('[data-my-action=start]').click();await page.locator('.my-question').waitFor();assert.equal(await page.locator('.my-option').count(),4);assert.equal(await page.locator('.my-pronunciation').count(),0);
