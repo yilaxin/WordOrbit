@@ -38,13 +38,13 @@ function qMeaningClean(value){
   const s=value.replace(/\s+/g,'').trim();
   if(!s||s==='—'||/待核验/.test(s)||s.length>180||/[。！？!?]/.test(s))return false;
   if(!/[\u4e00-\u9fff]/.test(s)||/[<>\u0000-\u001f]/.test(s))return false;
-  if(!qReviewedMeanings)qReviewedMeanings=new Set(Object.values(window.REVIEWED_DICTIONARY?.entries||{}).map(entry=>entry.meaning.replace(/\s+/g,'')));
+  if(!qReviewedMeanings)qReviewedMeanings=new Set([...Object.values(window.REVIEWED_DICTIONARY?.entries||{}),...Object.values(window.CATALOG_REPAIRS?.entries||{})].filter(entry=>entry.meaning).map(entry=>entry.meaning.replace(/\s+/g,'')));
   if(qReviewedMeanings.has(s))return true;
   if(/^(她|他|它|我|你|我们|你们|他们|她们|这|那|某|自己|自己的|他的|她的|它的|一个|一种|可以|能够|因为|所以|在|从|对|向|将|被|使|与|和)/.test(s))return false;
   if(/(你的|前途|不要|查阅|付款|分期|一期|行动计划|句中|例句|就少不了|查阅图|球体|假想的环绕|唯一途径|泪水润湿|太阳升起|作为对|水是维持|大坏蛋|一辆|一根|一只|一有|一恶|海浪侵)/.test(s))return false;
   return (s.match(/[\u4e00-\u9fff]/g)||[]).length>=2;
 }
-function qVerified(w){return !!w&&(w.status==='verified'||w.source==='seed'||w.source==='family')&&qMeaningClean(qFullMeaning(w))}
+function qVerified(w){return !!w&&!w.referenceOnly&&!qExternalEntry(w)?.referenceOnly&&(w.status==='verified'||w.source==='seed'||w.source==='family')&&qMeaningClean(qFullMeaning(w))}
 function qReview(w){return !qVerified(w)}
 function qEligibleWords(){return state.words.filter(qVerified)}
 function qSessionId(){return `round-${Date.now()}-${Math.random().toString(36).slice(2,9)}`}
@@ -155,13 +155,14 @@ makeOptions=function(w,reverse=false){
 };
 function qMultiOptions(w){
   const values=[qFullMeaning(w)].filter(Boolean);
-  const used=new Set(values);
-  const distractors=state.words.filter(x=>x.id!==w.id&&qVerified(x)&&!used.has(qFullMeaning(x))).sort(()=>Math.random()-.5).slice(0,Math.max(1,4-values.length)).map(qFullMeaning);
+  const distractors=qChoicePool(w,'meaning');
   return {values:[...values,...distractors].sort(()=>Math.random()-.5),correct:values};
 }
-function qOptionsStale(type,options){
+function qOptionsStale(type,options,word){
   if(!Array.isArray(options))return false;
-  if(type==='single'||type==='multi')return options.some(option=>!qMeaningClean(option));
+  if(new Set(options).size!==options.length)return true;
+  if(type==='single'||type==='multi')return (!!word&&!options.includes(qFullMeaning(word)))||options.some(option=>!qMeaningClean(option)||!state.words.some(candidate=>qVerified(candidate)&&qFullMeaning(candidate)===option));
+  if(word&&!options.includes(word.word))return true;
   return options.some(option=>!state.words.some(candidate=>candidate.word===option&&qWholeWord(candidate)));
 }
 
@@ -171,9 +172,11 @@ renderAnswerArea=function(w,item){
   const choice=['single','multi','listen','reverse'].includes(type);
   $('#questionLabel').textContent=type==='reverse'?'MEANING / 看中文选英文':type==='multi'?'MULTI / 选择全部释义':type==='fill'?'FILL IN / 语境填空':type==='spell'?'SPELL / 听音写词':type==='listen'?'LISTEN / 听音选英文':'MEANING / 选择释义';
   if(choice){
-    if(item.optionKind!==type||!item.options||!item.options.length||qOptionsStale(type,item.options)){
+    if(item.optionKind!==type||!item.options||!item.options.length||qOptionsStale(type,item.options,w)){
+      if(item.checked&&item.options)item.catalogUpdated=true;
       if(type==='multi'){const pack=qMultiOptions(w);item.options=pack.values;item.correctValues=pack.correct}else{item.options=makeOptions(w,reverse);item.correctValues=null}
       item.optionKind=type;
+      if(!item.checked&&item.selected&&!Array.isArray(item.selected)&&!item.options.includes(item.selected))item.selected=null;
     }
     const selected=type==='multi'?(Array.isArray(item.selected)?item.selected:[]):item.selected;
     const target=type==='listen'||type==='reverse'?w.word:qFullMeaning(w);
@@ -218,7 +221,7 @@ renderQuestion=function(){
   $('#questionPrompt').textContent=w.word;
   const type=answerType();
   const chapterBadge=item.checked?`<span class="badge badge-blue">${qEscape(w.chapter||'待分章')}</span> `:'';
-  const pronunciationBadge=type==='reverse'&&!item.checked?'':`<span class="badge ipa-badge"><span class="ipa-label">音标</span>${qEscape(w.ipa||'—')} · ${qEscape(w.pos||'待核验')}</span>`;
+  const pronunciationBadge=type==='reverse'&&!item.checked?'':`<span class="badge ipa-badge"><span class="ipa-label">音标${w.accent==='US'?' · 美':''}</span>${qEscape(w.ipa||'—')} · ${qEscape(w.pos||'待核验')}</span>`;
   $('#questionContext').innerHTML=`${chapterBadge}<span class="badge source-page">p.${qEscape(w.source_page||'—')}</span>${pronunciationBadge}`;
   $('#favoriteQuestionBtn').innerHTML=`${state.favorites.includes(w.id)?'★':'☆'} <span>${state.favorites.includes(w.id)?'已收藏':'收藏'}</span>`;
   $('#favoriteQuestionBtn').onclick=()=>toggleFavorite(w.id);$('#speakBtn').onclick=()=>speak(w.word);$('#explanation').classList.add('hidden');
@@ -277,11 +280,14 @@ function qDerivatives(w){
 }
 function qExplanationHtml(w,ok){
   const example=qExample(w),derivatives=qDerivatives(w);
+  const pronunciationNote=qExternalEntry(w)?.pronunciationNote||w.pronunciationNote||'';
+  const pronunciationHtml=pronunciationNote?`<div class="answer-example answer-pronunciation"><b>读音与用法</b><p>${qEscape(pronunciationNote)}</p></div>`:'';
   const derivativeHtml=derivatives.length?derivatives.map(candidate=>`<li><strong>${qEscape(candidate.word)}</strong><span>${qEscape(qPartOfSpeech(candidate))}</span><em>${qEscape(qFullMeaning(candidate))}</em></li>`).join(''):'<li class="muted">暂未找到可确认的衍生词</li>';
   const tatoebaId=Number(example?.sourceId);
   const sourceLabel=example?.source==='Tatoeba'&&Number.isSafeInteger(tatoebaId)&&tatoebaId>0?` · <a href="https://tatoeba.org/en/sentences/show/${tatoebaId}" target="_blank" rel="noopener noreferrer">Tatoeba 原句 ↗</a>`:example?.source==='Wikimedia'?' · Wikimedia':example?.source==='curated'?' · 按词义编写':'';
   const exampleHtml=example?`<div class="answer-example"><b>例句${sourceLabel}</b><p>${qEscape(example.en)}</p><p>${qEscape(example.zh)}</p></div>`:'<div class="answer-example"><b>例句</b><p>暂未找到与该词义对应的可靠例句，可在词库中自行补充。</p></div>';
-  return `<div class="answer-result ${ok?'is-correct':'is-wrong'}"><strong>${ok?'✓ 答对了，继续保持':'✕ 需要再复习一次'}</strong><div class="answer-word"><b>${qEscape(w.word)}</b><span>${qEscape(qPartOfSpeech(w))}</span></div><div class="answer-meaning">${qEscape(qFullMeaning(w)||'释义待核验')}</div>${exampleHtml}<div class="answer-derivatives"><b>衍生词</b><ul>${derivativeHtml}</ul></div><small>来源：第 ${qEscape(w.source_page||'—')} 页 · ${qEscape(w.chapter||'—')}</small></div>`;
+  const historyNote=currentItem()?.catalogUpdated?'<p class="muted">本题词典内容已更新，选项按新版释义显示；历史作答统计保留，不会重新计分。</p>':'';
+  return `<div class="answer-result ${ok?'is-correct':'is-wrong'}"><strong>${ok?'✓ 答对了，继续保持':'✕ 需要再复习一次'}</strong><div class="answer-word"><b>${qEscape(w.word)}</b><span>${qEscape(qPartOfSpeech(w))}</span></div><div class="answer-meaning">${qEscape(qFullMeaning(w)||'释义待核验')}</div>${pronunciationHtml}${historyNote}${exampleHtml}<div class="answer-derivatives"><b>衍生词</b><ul>${derivativeHtml}</ul></div><small>来源：第 ${qEscape(w.source_page||'—')} 页 · ${qEscape(w.chapter||'—')}</small></div>`;
 }
 checkAnswer=function(){
   const item=currentItem(),w=currentWord();if(!item||!w)return;
@@ -412,7 +418,7 @@ renderLibrary=function(requestedPage){
   const first=qLibraryPage*Q_LIBRARY_PAGE_SIZE;
   const pageWords=words.slice(first,first+Q_LIBRARY_PAGE_SIZE);
   const table=$('#wordTable');
-  table.innerHTML=words.length?pageWords.map(w=>`<div class="word-row"><div class="word-main"><strong>${qEscape(w.word)}</strong><small>${qEscape(w.ipa||'—')} · ${qEscape(w.pos||'待核验')} · ${qEscape(w.chapter||'待分章')} · p.${qEscape(w.source_page||'—')}</small></div><div class="word-detail">${qEscape(qFullMeaning(w)||'释义待核验')}<small>${qEscape(w.notes||w.example||'')}</small></div><div class="word-actions"><button class="mini-btn fav-toggle" data-id="${qEscape(w.id)}">${state.favorites.includes(w.id)?'★':'☆'}</button><button class="mini-btn edit-word" data-id="${qEscape(w.id)}">编辑</button></div></div>`).join(''):'<div class="panel"><p class="muted">没有符合条件的词条。可以清空筛选，或选择待核验状态。</p></div>';
+  table.innerHTML=words.length?pageWords.map(w=>`<div class="word-row"><div class="word-main"><strong>${qEscape(w.word)}</strong><small>${qEscape(w.ipa||'—')} · ${qEscape(w.pos||'待核验')} · ${qEscape(w.chapter||'待分章')} · p.${qEscape(w.source_page||'—')}</small></div><div class="word-detail">${qEscape(qFullMeaning(w)||'释义待核验')}<small>${qEscape([w.referenceOnly?'原书疑词 · '+w.reviewReason:'',w.notes||w.example||''].filter(Boolean).join(' · '))}</small></div><div class="word-actions"><button class="mini-btn fav-toggle" data-id="${qEscape(w.id)}">${state.favorites.includes(w.id)?'★':'☆'}</button><button class="mini-btn edit-word" data-id="${qEscape(w.id)}">编辑</button></div></div>`).join(''):'<div class="panel"><p class="muted">没有符合条件的词条。可以清空筛选，或选择待核验状态。</p></div>';
   table.onclick=event=>{const favorite=event.target.closest('.fav-toggle'),edit=event.target.closest('.edit-word');if(favorite)toggleFavorite(favorite.dataset.id);else if(edit)openEdit(edit.dataset.id)};
   let pager=$('#libraryPager');
   if(!pager){pager=document.createElement('nav');pager.id='libraryPager';pager.className='library-pager';pager.setAttribute('aria-label','词库分页');table.after(pager)}
@@ -437,29 +443,88 @@ save=function(){
     localStorage.setItem(KEY,JSON.stringify(compact));
   }catch(error){if(!save.storageWarned){save.storageWarned=true;toast('浏览器存储空间不足，请先导出学习数据')}}
 };
+// Remap only a confirmed OCR duplicate, not a legitimate user-entered acronym.
+function qMergeCatalogDuplicate(from,to){
+  if(from.id!==to.id){
+    const previous=state.records[from.id],current=state.records[to.id];
+    if(previous){
+      if(!current)state.records[to.id]={...previous};
+      else{
+        const count=(record,key)=>Math.max(0,Number(record[key])||0);
+        const merged={...previous,...current};
+        for(const key of ['seen','correct','wrong'])merged[key]=count(previous,key)+count(current,key);
+        merged.level=Math.max(count(previous,'level'),count(current,'level'));
+        const last=[previous.lastSeen,current.lastSeen].filter(value=>value!=null&&Number.isFinite(new Date(value).getTime())).sort((a,b)=>new Date(b)-new Date(a));
+        const due=[previous.due,current.due].filter(value=>value!=null&&Number.isFinite(new Date(value).getTime())).sort((a,b)=>new Date(a)-new Date(b));
+        merged.lastSeen=last[0]||null;merged.due=due[0]||null;state.records[to.id]=merged;
+      }
+      delete state.records[from.id];
+    }
+    state.favorites=[...new Set(state.favorites.map(id=>id===from.id?to.id:id))];
+    if(Array.isArray(state.wholeBook?.completedIds))state.wholeBook.completedIds=[...new Set(state.wholeBook.completedIds.map(id=>id===from.id?to.id:id))];
+    state.attempts.forEach(attempt=>{if(attempt.id===from.id)attempt.id=to.id;if(attempt.wordId===from.id)attempt.wordId=to.id});
+    for(const round of new Set([state.lastSession,state.recentSession,session])){
+      round?.queue?.forEach(item=>{if(item.wordId!==from.id)return;item.wordId=to.id;
+        const oldMeaning=from.fullMeaning||from.meaning,newMeaning=qFullMeaning(to);
+        if(Array.isArray(item.options))item.options=item.options.map(value=>value===oldMeaning?newMeaning:value===from.word?to.word:value);
+        if(item.selected===oldMeaning)item.selected=newMeaning;else if(item.selected===from.word)item.selected=to.word;
+      });
+    }
+    (state.catalogAliases||= {})[from.id]=to.id;
+  }
+  to.aliases=[...new Set([...(to.aliases||[]),...(from.aliases||[]),from.word])];
+  to.source_pages=[...new Set([...(to.source_pages||[]),...(from.source_pages||[]),from.source_page,to.source_page].filter(Boolean).map(String))];
+  to.notes=[...new Set([to.notes,from.notes].filter(Boolean).flatMap(value=>String(value).split(/\r?\n/)))].join('\n');
+  to.tags=[...new Set([...(to.tags||[]),...(from.tags||[])])];
+}
+function qRefreshSavedMeanings(changes){
+  if(!changes.length)return;
+  const byId=new Map(changes.map(change=>[change.id,change])),byText=new Map();
+  changes.forEach(({from,to})=>{if(!byText.has(from))byText.set(from,new Set());byText.get(from).add(to)});
+  const replace=value=>byText.get(value)?.size===1?[...byText.get(value)][0]:value;
+  for(const round of new Set([state.lastSession,state.recentSession,session])){
+    round?.queue?.forEach(item=>{
+      const own=byId.get(item.wordId),update=value=>own&&value===own.from?own.to:replace(value);
+      if(Array.isArray(item.options)){const previous=item.options;item.options=previous.map(update);if(item.checked&&previous.some((value,index)=>value!==item.options[index]))item.catalogUpdated=true;}
+      item.selected=Array.isArray(item.selected)?item.selected.map(update):update(item.selected);
+      if(Array.isArray(item.correctValues))item.correctValues=item.correctValues.map(update);
+    });
+  }
+}
 function qApplyExternalDictionary(){
   let changed=false;
+  const meaningChanges=[];
   const byCanonical=new Map(state.words.map(word=>[qWordKey(word.word),word]));
   const removed=new Set();
   state.words.forEach(word=>{
-    const originalKey=qWordKey(word.word),canonical=qCanonicalWord(originalKey);
+    const originalKey=qWordKey(word.word),canonical=word.id==='ocr-pil'&&word.source==='ocr'&&originalKey==='pil'?'pill':qCanonicalWord(originalKey);
     if(canonical!==originalKey){
       const existing=byCanonical.get(canonical);
-      if(existing&&existing!==word){removed.add(word);return;}
+      if(existing&&existing!==word){if(word.id==='ocr-pil')qMergeCatalogDuplicate(word,existing);removed.add(word);return;}
       word.word=canonical;changed=true;
     }
     const external=qExternalEntry(word);
     if(!external?.meaning)return;
+    const oldMeaning=word.fullMeaning||word.meaning;
+    if(oldMeaning&&oldMeaning!==external.meaning)meaningChanges.push({id:word.id,from:oldMeaning,to:external.meaning});
     if(word.meaning!==external.meaning){word.meaning=external.meaning;changed=true}
     if(word.fullMeaning!==external.meaning){word.fullMeaning=external.meaning;changed=true}
     const needsIpa=!word.ipa||word.ipa==='—'||/待核验/.test(String(word.ipa));
-    if(external.ipa&&(external.reviewed||word.source==='ocr'||word.source==='index'||needsIpa)&&word.ipa!==external.ipa){word.ipa=external.ipa;changed=true}
+    const externalIpa=external.ipa?.replace(/^\/\./,'/ˌ');
+    if(externalIpa&&(external.reviewedIpa||external.reviewed||word.source==='ocr'||word.source==='index'||needsIpa)&&word.ipa!==externalIpa){word.ipa=externalIpa;changed=true}
+    // ECDICT's leading dot is its old secondary-stress convention.
+    // Convert notation after lookup; do not infer lexical pronunciation changes.
+    if(/^\/\./.test(word.ipa||'')){word.ipa=word.ipa.replace(/^\/\./,'/ˌ');changed=true}
     if(external.pos&&word.pos!==external.pos){word.pos=external.pos;changed=true}
+    if(external.pronunciationNote&&word.pronunciationNote!==external.pronunciationNote){word.pronunciationNote=external.pronunciationNote;changed=true}
+    for(const key of ['referenceOnly','reviewReason','meaningSourceUrl','pronunciationSourceUrl','pronunciationBasis','accent'])if(external[key]!=null&&word[key]!==external[key]){word[key]=external[key];changed=true}
     const translationSource=external.reviewSource||'ECDICT';
     if(word.translationSource!==translationSource){word.translationSource=translationSource;changed=true}
-    if(word.status!=='verified'){word.status='verified';changed=true}
+    const status=external.referenceOnly?'reference':'verified';
+    if(word.status!==status){word.status=status;changed=true}
   });
   if(removed.size){state.words=state.words.filter(word=>!removed.has(word));changed=true}
+  qRefreshSavedMeanings(meaningChanges);
   if(changed)save();
 }
 function qApplyMeaningFixes(){
@@ -491,7 +556,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   if(saved?.type==='whole'&&Array.isArray(saved.queue)){
     let changed=false;
     const originalFocus=saved.queue[saved.index];
-    const knownIds=new Set(state.words.map(word=>word.id));
+    const knownIds=new Set(state.words.filter(qVerified).map(word=>word.id));
     const previousBaseLength=qWholeBaseLength(saved);
     const missingBase=saved.queue.slice(0,previousBaseLength).filter(item=>!knownIds.has(item.wordId)).length;
     const present=saved.queue.filter(item=>knownIds.has(item.wordId));
@@ -527,7 +592,7 @@ document.addEventListener('click',event=>{
 // 全书遍历：从全书随机抽词，优先抽尚未背过的词，再把同一批词拆成两个随机区段。
 // 第 1 区段为英文选中文，第 2 区段为中文选英文，避免同一个词连续出现两次。
 function qWholeWord(w){
-  return !!w && /^[A-Za-z][A-Za-z -]*$/.test(String(w.word||'')) && qMeaningClean(qFullMeaning(w));
+  return qVerified(w) && /^[A-Za-z][A-Za-z -]*$/.test(String(w.word||''));
 }
 wholeBookWords=function(){
   const seen=new Set();

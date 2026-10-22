@@ -20,7 +20,7 @@ const { pathToFileURL } = require('node:url');
   await page.locator('#topicExplorer').scrollIntoViewIfNeeded();
   await page.waitForFunction(() => [...document.querySelectorAll('.celestial-object img')].every(i => i.complete && i.naturalWidth > 0));
   const initial = await page.evaluate(() => WordOrbitConstellation.snapshot());
-  assert.equal(initial.nodes.reduce((sum, n) => sum + n.count, 0), 4249);
+  assert.equal(initial.nodes.reduce((sum, n) => sum + n.count, 0), 4247);
   assert.equal(initial.nodes.find(n => n.star).chapter, '身心健康');
   assert.equal(initial.nodes.find(n => n.star).count, Math.max(...initial.nodes.map(n => n.count)));
   assert.equal(await page.locator('.celestial-body.is-star .stellar-theme-mark img').count(), 1);
@@ -160,6 +160,6 @@ const { pathToFileURL } = require('node:url');
   }
   assert.deepEqual(overflows, []);
   assert.deepEqual(errors, []);
-  console.log(JSON.stringify({ ok: true, themes: 22, words: 4249, rings: [3, 5, 6, 7], checks: ['local artwork', 'live counts/mastery', 'adaptive star', 'label layout', 'topic practice', 'animation/pause', 'camera', 'modal focus', 'persistent list', 'responsive'] }, null, 2));
+  console.log(JSON.stringify({ ok: true, themes: 22, words: 4247, rings: [3, 5, 6, 7], checks: ['local artwork', 'live counts/mastery', 'adaptive star', 'label layout', 'topic practice', 'animation/pause', 'camera', 'modal focus', 'persistent list', 'responsive'] }, null, 2));
   await browser.close();
 })().catch(error => { console.error(error); process.exit(1); });

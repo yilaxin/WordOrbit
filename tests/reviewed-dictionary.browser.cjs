@@ -20,7 +20,7 @@ const glossary=require('../src/VocabDesk/Website/reviewed-dictionary.js');
    const queue=makeWholeQueue();
    return {total:state.words.length,official:qEligibleWords().length,review:state.words.filter(qReview).length,reviewed:reviewed.length,failures,cleanRejects,wholeCount:queue.length,first:new Set(queue.slice(0,50).map(q=>q.wordId)).size,second:new Set(queue.slice(50).map(q=>q.wordId)).size,phases:queue.slice(0,50).every(q=>q.variant===0)&&queue.slice(50).every(q=>q.variant===1),sameWords:queue.slice(0,50).every(q=>queue.slice(50).some(other=>q.wordId===other.wordId))};
   });
-  assert.deepEqual(audit,{total:4249,official:4249,review:0,reviewed:104,failures:[],cleanRejects:true,wholeCount:100,first:50,second:50,phases:true,sameWords:true});
+  assert.deepEqual(audit,{total:4248,official:4247,review:1,reviewed:104,failures:[],cleanRejects:true,wholeCount:100,first:50,second:50,phases:true,sameWords:true});
   // Simulate upgrading a persisted older catalog, including original IDs and user notes.
   const before=await page.evaluate(async()=>{
    const w=state.words.find(w=>w.word==='jeopardise');w.meaning='使受危险；危及；危害';w.fullMeaning=w.meaning;w.ipa="/'d3epadaiz/";w.pos='vt.';w.translationSource='ECDICT';w.notes='Synthetic personal note';w.tags=['synthetic'];
@@ -34,7 +34,7 @@ const glossary=require('../src/VocabDesk/Website/reviewed-dictionary.js');
    const entry=MyWordsCore.clean({word:'jeopardise',meaning:'我自己的私人释义',notes:'Synthetic private note'});await MyWordsStore.commit({puts:[entry],round:null,summary:MyWordsCore.summary([entry])});
    return {id:w.id,records:state.records,attempts:state.attempts,favorites:state.favorites,settings:state.settings,lastSession:state.lastSession,wholeBook:state.wholeBook,nebula:await NebulaStore.get(article.id),mywords:await MyWordsStore.load()};
   });
-  await page.reload();await page.waitForFunction(()=>window.WordOrbitMyWords&&qEligibleWords().length===4249);
+  await page.reload();await page.waitForFunction(()=>window.WordOrbitMyWords&&qEligibleWords().length===4247);
   const after=await page.evaluate(async()=>{const w=state.words.find(w=>w.word==='jeopardise');return {id:w.id,records:state.records,attempts:state.attempts,favorites:state.favorites,settings:state.settings,lastSession:state.lastSession,wholeBook:state.wholeBook,nebula:await NebulaStore.get('neb-review-upgrade'),mywords:await MyWordsStore.load(),word:w};});
   const {word,...retained}=after;assert.deepEqual(retained,before,'Upgrade preserves original progress, sessions, favorites and both private databases');
   assert.equal(word.notes,'Synthetic personal note');assert.deepEqual(word.tags,['synthetic']);assert.equal(word.meaning,glossary.entries.jeopardise.meaning);assert.equal(word.ipa,glossary.entries.jeopardise.ipa);

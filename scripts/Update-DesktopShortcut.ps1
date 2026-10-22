@@ -11,6 +11,7 @@ $shortcutPath = Join-Path $desktopFolder '词轨 WordOrbit.lnk'
 $oldShortcutPath = Join-Path $desktopFolder '词汇真经.lnk'
 $allowedTargets = @($exe, (Join-Path $projectRoot 'artifacts\WordOrbit-win-arm64-v1.3.0\VocabDesk.exe'), (Join-Path $projectRoot 'artifacts\WordOrbit-win-arm64-v1.2.1\VocabDesk.exe'), (Join-Path $projectRoot 'artifacts\WordOrbit-win-arm64-v1.2.0\VocabDesk.exe'), (Join-Path $projectRoot 'artifacts\WordOrbit-win-arm64-v1.1.1\VocabDesk.exe'), (Join-Path $projectRoot 'artifacts\WordOrbit-win-arm64-v1.1.0\VocabDesk.exe'), (Join-Path $projectRoot 'artifacts\VocabDesk-win-arm64\VocabDesk.exe'), (Join-Path $projectRoot 'artifacts\VocabDesk-win-arm64-v1.0.1\VocabDesk.exe'))
 $allowedTargets += Join-Path $projectRoot 'artifacts\WordOrbit-win-arm64-v1.4.0\VocabDesk.exe'
+$allowedTargets += Join-Path $projectRoot 'artifacts\WordOrbit-win-arm64-v1.4.1\VocabDesk.exe'
 if (-not (Test-Path -LiteralPath $exe -PathType Leaf)) { throw "程序不存在：$exe" }
 if (-not (Test-Path -LiteralPath $icon -PathType Leaf)) { throw "图标不存在：$icon" }
 $shell = New-Object -ComObject WScript.Shell

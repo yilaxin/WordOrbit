@@ -6,7 +6,7 @@
 
 ## 下载与运行
 
-当前发布版：**[v1.4.1，仅支持 Windows ARM64](https://github.com/yilaxin/WordOrbit/releases/tag/v1.4.1)**。在 GitHub Releases 下载 `WordOrbit-v1.4.1-win-arm64.zip`，完整解压后打开其中的 `VocabDesk.exe`。请保留解压后的整个文件夹；程序需要同目录下的 `Website`、`Assets` 和其他运行文件。系统还需安装 Microsoft Edge WebView2 Runtime。
+当前发布版：**[v1.4.2，仅支持 Windows ARM64](https://github.com/yilaxin/WordOrbit/releases/tag/v1.4.2)**。在 GitHub Releases 下载 `WordOrbit-v1.4.2-win-arm64.zip`，完整解压后打开其中的 `VocabDesk.exe`。请保留解压后的整个文件夹；程序需要同目录下的 `Website`、`Assets` 和其他运行文件。系统还需安装 Microsoft Edge WebView2 Runtime。
 
 这不是手机 App，也尚未提供 Windows x64、macOS 或 Linux 安装包。程序使用 .NET 10 WPF 和 WebView2；词库与例句随程序放在本机，练习时不需要登录账号。
 
@@ -26,9 +26,19 @@
 | 星云文章学习 | 粘贴英文文章，分类收藏、点词查离线词典、记阅读笔记与佳句，从文章生词开始原句填空和中译英回忆。私人文章数据独立保存。 |
 | 我的词库 | 单个添加单词或短语、批量粘贴并预览去重；加入独立私人星球，支持英选中、中选英、混合练习及独立备份。 |
 
-## v1.4.1：待核验词查证入库
+## v1.4.2：全库释义与音标复查
 
-本版将原先被误判的 **102 个有效单词**纳入正式练习，随附词库共有 **4,249 个正式可练习词，待核验 0 个**。这是对当前随附词库的核对结果，不代表任何新导入的未知字符串都能自动通过审核，也不是重新声称全书零遗漏。
+全量筛查随附词库并针对疑点查证，调整 148 条中文释义、118 条词性，修订或规范化 811 条正式词音标。正式题库缺失/明显乱码音标及缺失词性的结构检查均为 0，不代表语义零错误。
+
+- 补充 `mall` 的购物中心义、`discipline` 的学科义等，清理旧命令说明，修复截断读音并补充常见异读词的提交后说明。
+- PDF 原页确认 `pil` 应为 `pill`，与已有词合并，保留合并后的学习记录、收藏、笔记与旧 ID 映射。`revoltive` 原书确有其形，但本轮未能核实标准义项与发音，保留为原书疑词，不参与正式题目。
+- 当前 **4,248 条总词目 / 4,247 条正式可练习 / 1 条原书疑词**。旧续练选项按新版完整释义更新，已答题历史不重新计分；中选英仍在提交后显示音标。无新增联网功能，私人词库及星云不受改写。
+
+范围、逐词来源与验证见 [v1.4.2 复查说明](docs/VOCABULARY_AUDIT_v1.4.2.md)。
+
+## v1.4.1：待核验词查证入库（历史版本）
+
+该历史版本将原先被误判的 **102 个有效单词**纳入正式练习，随附词库共有 **4,249 个正式可练习词，待核验 0 个**。这是对当前随附词库的核对结果，不代表任何新导入的未知字符串都能自动通过审核，也不是重新声称全书零遗漏。
 
 - 查证有效拼写，保留 `jeopardise`、`fertilise`、`mesmerise` 等英式形式；更新 102 词的学习用完整释义、词性与音标。另外修正 `hybridise`、`hybridisation` 两词原先只引用美式拼写、没有实际译义的问题。
 - 修正“使…”“对…”开头、包含“查阅”“分期付款”及单字“酶”等正常释义被 OCR 规则误拒的问题。只有本次编辑核对过的**完整释义精确值**可以通过这一例外；句子残片、占位文字和标签代码仍被排除。
@@ -116,10 +126,12 @@
 
 私人词库逻辑测试：`node --test tests/mywords-core.test.cjs`；隔离浏览器回归：`node tests/mywords.browser.cjs`。离线缓存测试同时覆盖私人词库和星云，桌面隔离自检覆盖两者的本地持久化；所有私人词条样例均为合成测试，不读取日常学习数据。
 
-待核验修订数据测试：`node --test tests/reviewed-dictionary.test.cjs`；全量出题与旧数据升级测试：`node tests/reviewed-dictionary.browser.cjs`。后者检查 104 条修订、全书 4,249 词资格、双向选项、OCR 残片隔离、100 题双阶段、笔记/收藏/记录/题目选项保留及两个私人数据库独立性。
+待核验修订数据测试：`node --test tests/reviewed-dictionary.test.cjs`；全量出题与旧数据升级测试：`node tests/reviewed-dictionary.browser.cjs`。后者检查 104 条修订、当前 4,247 词正式资格、双向选项、OCR 残片隔离、100 题双阶段、笔记/收藏/记录/题目选项保留及两个私人数据库独立性。
 
 源码、程序与资料受各自权利人及相应许可约束；书籍扫描件的发布依据为项目发布者提供的再分发授权声明。
 
 ## 项目更新与发布
 
 本项目已按用户要求采用“完成更新后同步 GitHub”的维护流程，详见 `AGENTS.md`。应用更新需先通过测试，再提交源码与版本标签、上传下载包和校验文件，核对后公开新 Release。`scripts/Publish-GitHubRelease.ps1` 读取项目版本号和已经推送的提交；不带 `-Publish` 时仅准备本地包，带 `-Publish` 才向本仓库发布。脚本不保存凭据，也不上传个人学习记录。
+
+本轮数据与全库双向选项测试：`node --test tests/catalog-repairs.test.cjs`、`node tests/catalog-repairs.browser.cjs`；隔离全库结构审计：`node scripts/Audit-Vocabulary.cjs`。报告只保存在未发布的 `.build`。
