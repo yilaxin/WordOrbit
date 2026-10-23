@@ -213,6 +213,9 @@ public partial class MainWindow : Window
                         showView('comets');
                         for(let i=0;i<50&&!WordOrbitComets.snapshot().scene;i++)await new Promise(resolve=>setTimeout(resolve,50));
                         if(WordOrbitComets.snapshot().scene?.count!==1)throw Error('Native comet scene did not mount');
+                        for(let i=0;i<50;i++){const image=document.querySelector('.cf-sky-image');if(image?.complete&&image.naturalWidth>0)break;await new Promise(resolve=>setTimeout(resolve,50));}
+                        const sky=document.querySelector('.cf-sky-image');
+                        if(!sky?.complete||!sky.naturalWidth||sky.naturalWidth>1536)throw Error('Native bounded sky background did not load');
                         if(document.querySelector('.cf-english'))throw Error('Recall answer leaked');
                         showView('home');
                         if(WordOrbitComets.snapshot().scene||WordOrbitComets.snapshot().loadedRecords)throw Error('Native comet resources not released');

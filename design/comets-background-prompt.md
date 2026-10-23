@@ -1,0 +1,9 @@
+# WordOrbit · 生活彗星银河背景 v1
+
+日期：2026-10-23。使用内置 image_gen 生成新图，用户参考图只用于理解蓝紫夜空、密集星点与银河质感；未将参考图直接打包。背景中不包含固定彗星，交互彗星由原有三维场景绘制。
+
+原图：`design/comets-milkyway-v1.png`。显示资源：`src/VocabDesk/Website/assets/comets/milkyway-v1-768.webp` 与 `milkyway-v1-1536.webp`；仅做等比例缩放及 WebP 格式压缩，不改变构图。开发者可用 `scripts/Build-CometBackground.cjs`（需要 sharp）重建；App 无 Node/sharp 运行依赖。
+
+## 最终生成提示词
+
+Use case: photorealistic-natural. Asset type: original static background texture for WordOrbit's interactive life-comet star field, landscape 16:9. Primary request: a believable richly textured blue-violet night sky like a long-exposure astrophotograph, dense tiny sharp white and ice-blue stars of varied brightness, luminous but restrained Milky Way dust lanes and faint lavender/indigo nebula clouds. The user's reference shows a dark sapphire night sky with a cloudy galaxy band, countless fine stars and a very low nearly black distant mountain silhouette. Create a NEW original sky in that atmosphere, not a reproduction. Composition: wide 2048x1152 landscape, galaxy cloud band crossing the upper-left to upper-middle region, translucent irregular dust textures, deeper midnight-blue regions still full of fine stars, gentle brighter blue-lavender haze near the far lower-right. Subtle nearly black low rolling mountain silhouettes occupy only the bottom 3 percent. Sky must remain richly detailed across the entire canvas, not a mostly empty gradient. Lighting: dark but visibly layered and luminous, believable astrophotography, subtle natural grain, not electric neon or blown out. Intended UI: independent animated luminous comets and small white labels will overlay this image, so no single huge bright star and no blinding galactic core. Constraints: NO comet, NO meteor, NO shooting star, NO light streak or star trail, NO planet, NO spaceship, NO artificial lens flare, NO people, NO text or watermark, NO UI. Background only; all stars are tiny static pinpoints. Opaque background.

@@ -11,6 +11,8 @@ design/*
 !design/constellation-prompts.json
 !design/constellation-art-overview.png
 !design/constellation-ui-dark.png
+!design/comets-milkyway-v1.png
+!design/comets-background-prompt.md
 wordorbit-nebula-backup*.json
 nebula-private*/
 nebula-data/

@@ -8,7 +8,7 @@
   .comets-day-info label{display:flex;gap:8px;align-items:center;font-size:12px}
   #cometsDates{max-width:190px;padding:7px}
   #cometsContent #cometsMessage{min-height:24px;margin:12px 0;overflow-wrap:anywhere}
-  #cometsContent .comets-empty{position:absolute;inset:80px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;color:#dceaff;pointer-events:none}
+  #cometsContent .comets-empty{position:absolute;z-index:4;inset:80px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;color:#e7f2ff;pointer-events:none;background:radial-gradient(ellipse,#081023a8,transparent 68%);text-shadow:0 2px 12px #030817}
   #cometsContent .comets-empty strong{font-size:22px;font-weight:500}
   #cometsContent .comets-empty p{color:#aebed8;max-width:390px}
   #cometsContent .comets-empty button{pointer-events:auto;background:linear-gradient(120deg,#cbbaff,#abd9ff);color:#172139;border:0}
@@ -46,7 +46,12 @@
   #wo-comets-luminous .cf-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;align-items:stretch}
   #wo-comets-luminous .cf-layout.cf-has-selection{grid-template-columns:minmax(0,1fr) 292px}
   #wo-comets-luminous .cf-space{position:relative;min-width:0;height:504px;background:radial-gradient(ellipse at 18% 34%,#3428603b,transparent 52%),radial-gradient(ellipse at 84% 74%,#15465835,transparent 56%),#080f21;border:1px solid var(--cf-border);border-radius:14px;overflow:hidden;touch-action:none}
-  #wo-comets-luminous canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
+  #wo-comets-luminous .cf-sky-backdrop{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;user-select:none;background:#071125}
+  #wo-comets-luminous .cf-sky-image{display:block;width:100%;height:100%;object-fit:cover;object-position:center 60%;pointer-events:none}
+  #wo-comets-luminous .cf-sky-backdrop::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,#030a1b3d,transparent 28%,#040b1d0a 65%,#03091680),radial-gradient(ellipse at center,transparent 38%,#02071833);pointer-events:none}
+  #wo-comets-luminous canvas{position:relative;z-index:1;display:block;width:100%;height:100%;touch-action:none;cursor:grab}
+  #wo-comets-luminous .cf-canvas-label,#wo-comets-luminous .cf-status{padding:7px 10px;border-radius:8px;background:#071024b8;text-shadow:0 1px 4px #000}
+  #wo-comets-luminous .cf-scene-bottom>span{padding:6px 10px;border-radius:8px;background:#071024b8;text-shadow:0 1px 4px #000}
   #wo-comets-luminous .cf-space.cf-dragging canvas{cursor:grabbing}
   #wo-comets-luminous .cf-canvas-label{position:absolute;top:17px;left:18px;pointer-events:none;z-index:2;display:flex;flex-direction:column;gap:5px}
   #wo-comets-luminous .cf-canvas-label strong{font-weight:400;font-size:11px;letter-spacing:2px;color:#c2d8ff}
@@ -57,7 +62,7 @@
   #wo-comets-luminous .cf-hit{position:absolute;width:44px;height:44px;padding:0;border:0;border-radius:50%;background:transparent;pointer-events:auto;transform:translate(-50%,-50%);touch-action:none}
   #wo-comets-luminous .cf-hit:hover:not(:disabled){background:#a7eaff0b;border:0}
   #wo-comets-luminous .cf-hit[aria-pressed=true]{box-shadow:inset 0 0 0 1px #c7b1ff99}
-  #wo-comets-luminous .cf-hit-name{position:absolute;top:46px;left:50%;transform:translateX(-50%);width:154px;text-align:center;pointer-events:none;white-space:nowrap;font-size:12px;color:#e5f3ff;text-shadow:0 1px 5px #060c1f,0 0 12px #060c1f;transition:opacity .15s;opacity:0}
+  #wo-comets-luminous .cf-hit-name{position:absolute;top:46px;left:50%;transform:translateX(-50%);width:154px;padding:4px 7px;border-radius:8px;background:#061027a8;text-align:center;pointer-events:none;white-space:nowrap;font-size:12px;color:#f0f7ff;text-shadow:0 1px 5px #060c1f,0 0 12px #060c1f;transition:opacity .15s;opacity:0}
   #wo-comets-luminous .cf-hit-name small{display:block;font-size:11px;font-weight:400;color:#b3c8e2;margin-top:1px}
   #wo-comets-luminous .cf-hit-name.cf-label-visible{opacity:1}
   #wo-comets-luminous .cf-scene-bottom{position:absolute;bottom:15px;left:17px;right:17px;display:flex;justify-content:space-between;align-items:center;gap:10px;pointer-events:none;z-index:4;color:#b5c6de;font-size:11px}
