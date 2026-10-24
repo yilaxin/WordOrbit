@@ -1,30 +1,21 @@
-/* Interactive topic system. Artwork is local; counts and mastery come from the live catalog. */
-(() => {
+/* Perspective topic universe. Lightweight models and local art; no private word bodies. */
+(()=>{
   'use strict';
-  const ART = window.WORDORBIT_TOPIC_ART || [];
-  const WORLD = { width: 1240, height: 760 };
-  const RINGS = [
-    { count: 3, rx: 170, ry: 110, period: 180, phase: -.8 },
-    { count: 5, rx: 280, ry: 170, period: 240, phase: .33 },
-    { count: 6, rx: 400, ry: 240, period: 320, phase: -.23 },
-    { count: 7, rx: 530, ry: 310, period: 420, phase: .24 }
-  ];
-  const $map = selector => document.querySelector(selector);
-  const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
-  const esc = value => String(value ?? '').replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
-  let root, viewport, camera, bodies, model = [], nodeViews = [], signature = '';
-  let selected = null, view = 'map', elapsed = 0, fit = 1, zoom = 1, pan = { x: 0, y: 0 };
-  let dimensions = { width: 1000, height: 600 }, frame = null, lastFrame = null;
-  let keyboardFocus = false, visible = false, expanded = false, drag = null;
-  let savedCamera = null, previousOverflow = '', returnFocus = null, manualPause = false;
-
+  const G=OrbitSpace,ART=window.WORDORBIT_TOPIC_ART||[],WORLD={width:1240,height:760},RINGS=[{count:3,phase:-.8},{count:5,phase:.33},{count:6,phase:-.23},{count:7,phase:.24}];
+  const $map=s=>document.querySelector(s),clamp=G.clamp,esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  let root,viewport,camera,bodies,lanes,ctx,model=[],nodeViews=[],signature='',mounted=false;
+  let hovered=null,selected=null,view='map',elapsed=0,fit=1,zoom=1,visible=false,expanded=false,keyboardFocus=false,manualPause=false,frame=null,lastFrame=null,drag=null,pinch=0,overview=null;
+  let dimensions={width:1000,height:600},previousOverflow='',returnFocus=null,search='',filter='all',lastPoints=[];
+  const cam={yaw:.12,pitch:.85,zoom:1,target:[0,0,0]},wanted={yaw:.12,pitch:.85,zoom:1,target:[0,0,0]},pointers=new Map();
   function readModel() {
-    const buckets = new Map(CHAPTERS.map(chapter => [chapter, { count: 0, done: 0 }]));
+    const buckets = new Map(CHAPTERS.map(chapter => [chapter, { count: 0, done: 0, due:0, unseen:0 }]));
     state.words.forEach(word => {
       const bucket = buckets.get(word.chapter);
       if (!bucket || !qVerified(word)) return;
       bucket.count++;
       if (mastered(word)) bucket.done++;
+      if (isDue(word)) bucket.due++;
+      if (!(state.records[word.id]?.seen>0)) bucket.unseen++;
     });
     const rows = ART.map((art, index) => ({ ...art, index, ...buckets.get(art.chapter) }));
     const previousStar = model.find(row => row.star)?.chapter;
@@ -53,95 +44,9 @@
     if (personal?.total > 0) {
       const outer = rows.filter(row => !row.star && row.ring === 3);
       outer.forEach((row,index) => { row.angle = RINGS[3].phase + index * Math.PI * 2 / (outer.length + 1); });
-      rows.push({id:'mywords-private',chapter:'我的词库',title:'私人词汇星球',kind:'personal',color:'#74d4f8',src:'assets/display-brand.png',fit:1.15,index:rows.length,count:personal.total,ready:personal.ready,done:personal.done,percent:personal.ready?Math.round(personal.done/personal.ready*100):0,personal:true,star:false,size:Math.min(72,40+Math.sqrt(personal.total)*.6),ring:3,angle:RINGS[3].phase+outer.length*Math.PI*2/(outer.length+1)});
+      rows.push({id:'mywords-private',chapter:'我的词库',title:'私人词汇星球',kind:'personal',color:'#74d4f8',src:'assets/display-brand.png',fit:1.15,index:rows.length,count:personal.total,ready:personal.ready,done:personal.done,percent:personal.ready?Math.round(personal.done/personal.ready*100):0,due:personal.due,unseen:0,personal:true,star:false,size:Math.min(72,40+Math.sqrt(personal.total)*.6),ring:3,angle:RINGS[3].phase+outer.length*Math.PI*2/(outer.length+1)});
     }
-    return rows;
-  }
-
-  function ensureMounted() {
-    if (root) return true;
-    root = $map('#topicExplorer');
-    if (!root) return false;
-    viewport = $map('#constellationViewport');
-    camera = $map('#constellationCamera');
-    bodies = $map('#constellationBodies');
-    view = state.settings?.constellationView === 'list' ? 'list' : 'map';
-    manualPause = state.settings?.constellationPaused === true;
-    $map('#starMapViewBtn').onclick = () => setView('map');
-    $map('#starListViewBtn').onclick = () => setView('list');
-    $map('#starMapZoomIn').onclick = () => setZoom(zoom * 1.2);
-    $map('#starMapZoomOut').onclick = () => setZoom(zoom / 1.2);
-    $map('#starMapReset').onclick = resetCamera;
-    $map('#starMapExpand').onclick = () => setExpanded(!expanded);
-    $map('#starMapPlayBtn').onclick = () => {
-      manualPause = !manualPause;
-      state.settings.constellationPaused = manualPause;
-      save();
-      synchronizeAnimation();
-    };
-    $map('#constellationStart').onclick = launchTopic;
-    viewport.addEventListener('focusin', event => {
-      keyboardFocus = event.target.matches(':focus-visible');
-      synchronizeAnimation();
-    });
-    viewport.addEventListener('focusout', event => {
-      if (!viewport.contains(event.relatedTarget)) { keyboardFocus = false; synchronizeAnimation(); }
-    });
-    viewport.addEventListener('pointerdown', event => {
-      if (event.pointerType === 'mouse' && keyboardFocus) { keyboardFocus = false; synchronizeAnimation(); }
-      if (event.button !== 0 || event.target.closest('.celestial-body')) return;
-      drag = { pointer: event.pointerId, x: event.clientX, y: event.clientY, panX: pan.x, panY: pan.y };
-      viewport.setPointerCapture(event.pointerId);
-      viewport.classList.add('is-dragging');
-    });
-    viewport.addEventListener('pointermove', event => {
-      if (!drag || event.pointerId !== drag.pointer) return;
-      pan.x = drag.panX + event.clientX - drag.x;
-      pan.y = drag.panY + event.clientY - drag.y;
-      draw();
-    });
-    const endDrag = event => {
-      if (!drag || event.pointerId !== drag.pointer) return;
-      drag = null;
-      viewport.classList.remove('is-dragging');
-      if (viewport.hasPointerCapture(event.pointerId)) viewport.releasePointerCapture(event.pointerId);
-    };
-    viewport.addEventListener('pointerup', endDrag);
-    viewport.addEventListener('pointercancel', endDrag);
-    viewport.addEventListener('wheel', event => {
-      if (!event.ctrlKey) return;
-      event.preventDefault();
-      const rect = viewport.getBoundingClientRect();
-      setZoom(zoom * Math.exp(-event.deltaY * .002), event.clientX - rect.left, event.clientY - rect.top);
-    }, { passive: false });
-    viewport.addEventListener('keydown', event => {
-      if (event.target !== viewport) return;
-      const moves = { ArrowLeft: [40, 0], ArrowRight: [-40, 0], ArrowUp: [0, 40], ArrowDown: [0, -40] };
-      if (moves[event.key]) { event.preventDefault(); pan.x += moves[event.key][0]; pan.y += moves[event.key][1]; draw(); }
-      else if (event.key === '+' || event.key === '=') { event.preventDefault(); setZoom(zoom * 1.2); }
-      else if (event.key === '-') { event.preventDefault(); setZoom(zoom / 1.2); }
-      else if (event.key === '0') { event.preventDefault(); resetCamera(); }
-    });
-    root.addEventListener('keydown', event => {
-      if (!expanded) return;
-      if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); setExpanded(false); }
-      if (event.key === 'Tab') {
-        const controls = [...root.querySelectorAll('button:not(:disabled), [tabindex="0"]')].filter(element => element.getClientRects().length);
-        const first = controls[0], last = controls[controls.length - 1];
-        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
-        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
-      }
-    });
-    new ResizeObserver(resize).observe(viewport);
-    new IntersectionObserver(entries => {
-      visible = entries[0]?.isIntersecting || false;
-      synchronizeAnimation();
-    }, { threshold: .02 }).observe(viewport);
-    new MutationObserver(synchronizeAnimation).observe(document.body, { attributes: true, attributeFilter: ['data-motion', 'data-active-view'] });
-    window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', synchronizeAnimation);
-    document.addEventListener('visibilitychange', synchronizeAnimation);
-    applyView();
-    return true;
+    return G.prepare(rows);
   }
 
   function decorateList() {
@@ -171,220 +76,60 @@
     });
   }
 
-  function rebuildBodies() {
-    const starArt = ART.find(row => row.kind === 'star');
-    bodies.innerHTML = model.map(row => {
-      const starImage = row.star ? starArt?.src || row.src : row.src;
-      const imageArt = row.star ? starArt || row : row;
-      return '<button class="celestial-body ' + (row.star ? 'is-star' : '') + '" data-topic="' + esc(row.chapter) + '" data-kind="' + row.kind + '" style="--body-color:' + row.color + '" aria-pressed="false">' +
-        (row.star ? '<span class="stellar-corona" aria-hidden="true"></span>' : '') +
-        '<span class="celestial-object" aria-hidden="true"><img src="' + esc(starImage) + '" alt="" draggable="false" style="--art-fit:' + (imageArt.fit || 1) + ';--art-offset-x:' + (imageArt.offsetX || '0%') + ';--art-offset-y:' + (imageArt.offsetY || '0%') + '"/></span>' +
-        '<svg class="celestial-progress" viewBox="0 0 120 120" aria-hidden="true"><circle class="celestial-progress-track" cx="60" cy="60" r="53"/><circle class="celestial-progress-value" cx="60" cy="60" r="53" pathLength="100" stroke-dasharray="' + row.percent + ' 100"/></svg>' +
-        (row.star && row.kind !== 'star' ? '<span class="stellar-theme-mark"><img src="' + esc(row.src) + '" alt=""/></span>' : '') +
-        '<span class="celestial-label"><strong>' + esc(row.chapter) + '</strong>' + (row.star ? '<small>中央恒星</small>' : '') + '</span></button>';
-    }).join('');
-    nodeViews = [...bodies.querySelectorAll('.celestial-body')].map((element, index) => {
-      const row = model[index];
-      element.onclick = () => selectTopic(row.chapter);
-      element.setAttribute('aria-label', row.chapter + '，' + (row.personal ? row.count+' 个私人词条，'+row.ready+' 个可练习词' : row.count+' 个可练习词') + '，已掌握 ' + row.done + ' 个，' + (row.star ? '中央恒星' : '第 ' + (row.ring + 1) + ' 轨道'));
-      element.title = row.chapter + ' · ' + row.count + ' 词 · 已掌握 ' + row.percent + '%';
-      element.querySelector('.celestial-object img').onerror = () => element.classList.add('asset-missing');
-      return { row, element, object: element.querySelector('.celestial-object'), progress: element.querySelector('.celestial-progress'), label: element.querySelector('.celestial-label') };
-    });
+  function home(){return !!$map('#view-home')?.classList.contains('active');}
+  function ensureMounted(){if(root)return true;root=$map('#topicExplorer');if(!root)return false;viewport=$map('#constellationViewport');camera=$map('#constellationCamera');bodies=$map('#constellationBodies');
+    view=state.settings?.constellationView==='list'?'list':'map';manualPause=state.settings?.constellationPaused===true;
+    $map('#starMapViewBtn').onclick=()=>setView('map');$map('#starListViewBtn').onclick=()=>setView('list');$map('#starMapZoomIn').onclick=()=>setZoom(zoom*1.2);$map('#starMapZoomOut').onclick=()=>setZoom(zoom/1.2);$map('#starMapReset').onclick=()=>clearSelection(true);$map('#starMapExpand').onclick=()=>setExpanded(!expanded);
+    $map('#starMapPlayBtn').onclick=()=>{if(selected){clearSelection();manualPause=false;}else manualPause=!manualPause;state.settings.constellationPaused=manualPause;save();synchronizeAnimation();};
+    $map('#constellationStart').onclick=launchTopic;$map('#constellationBrowse').onclick=browseTopic;$map('#constellationReturn').onclick=()=>clearSelection();
+    $map('#constellationSearch').addEventListener('input',event=>{search=event.target.value.trim();draw();updateLocator();});
+    $map('#constellationSearch').addEventListener('keydown',event=>{if(event.key==='Enter'){const row=model.find(matches);if(row)selectTopic(row.chapter,true);}});
+    $map('#constellationFilter').onchange=event=>{filter=event.target.value;draw();updateLocator();};$map('#constellationLocator').onchange=event=>{if(event.target.value)selectTopic(event.target.value,true);};
+    viewport.addEventListener('focusin',event=>{keyboardFocus=event.target.matches(':focus-visible');synchronizeAnimation();});viewport.addEventListener('focusout',event=>{if(!viewport.contains(event.relatedTarget)){keyboardFocus=false;synchronizeAnimation();}});
+    viewport.addEventListener('pointerdown',event=>{if(event.pointerType==='mouse')keyboardFocus=false;const control=event.target.closest('button,input,select,textarea,a,[contenteditable]');if(control||event.button!==0)return;pointers.set(event.pointerId,{x:event.clientX,y:event.clientY});if(pointers.size===2){const p=[...pointers.values()];pinch=Math.hypot(p[0].x-p[1].x,p[0].y-p[1].y);return;}drag={id:event.pointerId,x:event.clientX,y:event.clientY};viewport.setPointerCapture(event.pointerId);viewport.classList.add('is-dragging');});
+    viewport.addEventListener('pointermove',event=>{if(!pointers.has(event.pointerId))return;pointers.set(event.pointerId,{x:event.clientX,y:event.clientY});if(pointers.size===2){const p=[...pointers.values()],distance=Math.hypot(p[0].x-p[1].x,p[0].y-p[1].y);if(pinch>0)setZoom(zoom*distance/pinch);pinch=distance;return;}if(!drag||drag.id!==event.pointerId)return;wanted.yaw-=(event.clientX-drag.x)*.005;wanted.pitch=clamp(wanted.pitch+(event.clientY-drag.y)*.004,-.2,1.45);drag.x=event.clientX;drag.y=event.clientY;cam.yaw=wanted.yaw;cam.pitch=wanted.pitch;draw();});
+    const end=event=>{pointers.delete(event.pointerId);pinch=0;if(drag?.id===event.pointerId){drag=null;viewport.classList.remove('is-dragging');if(viewport.hasPointerCapture(event.pointerId))viewport.releasePointerCapture(event.pointerId);}};viewport.addEventListener('pointerup',end);viewport.addEventListener('pointercancel',end);
+    viewport.addEventListener('wheel',event=>{if(!event.ctrlKey)return;event.preventDefault();setZoom(zoom*Math.exp(-event.deltaY*.002));},{passive:false});
+    viewport.addEventListener('keydown',event=>{if(event.target!==viewport)return;const moves={ArrowLeft:[.12,0],ArrowRight:[-.12,0],ArrowUp:[0,.08],ArrowDown:[0,-.08]};if(moves[event.key]){event.preventDefault();wanted.yaw+=moves[event.key][0];wanted.pitch=clamp(wanted.pitch+moves[event.key][1],-.2,1.45);cam.yaw=wanted.yaw;cam.pitch=wanted.pitch;draw();}else if(['+','='].includes(event.key)){event.preventDefault();setZoom(zoom*1.2);}else if(event.key==='-'){event.preventDefault();setZoom(zoom/1.2);}else if(event.key==='0'){event.preventDefault();clearSelection(true);}});
+    root.addEventListener('keydown',event=>{if(event.key==='Escape'&&selected){event.preventDefault();event.stopPropagation();clearSelection();return;}if(!expanded)return;if(event.key==='Escape'){event.preventDefault();setExpanded(false);}if(event.key==='Tab'){const controls=[...root.querySelectorAll('button:not(:disabled),input,select,[tabindex="0"]')].filter(e=>e.getClientRects().length&&e.tabIndex>=0),first=controls[0],last=controls[controls.length-1];if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}}});
+    new ResizeObserver(resize).observe(viewport);new IntersectionObserver(entries=>{visible=!!entries[0]?.isIntersecting;synchronizeAnimation();},{threshold:.01}).observe(viewport);
+    new MutationObserver(synchronizeAnimation).observe(document.body,{attributes:true,attributeFilter:['data-motion','data-active-view']});matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change',synchronizeAnimation);document.addEventListener('visibilitychange',synchronizeAnimation);window.addEventListener('pagehide',disposeGraphics);applyView();return true;
   }
-
-  function render() {
-    if (!ensureMounted()) return;
-    const rows = readModel();
-    const nextSignature = rows.map(row => [row.chapter, row.count, row.done, row.star, row.ready || 0].join(':')).join('|');
-    if (nextSignature !== signature) {
-      model = rows;
-      signature = nextSignature;
-      rebuildBodies();
+  function matches(row){return (!search||(row.chapter+' '+row.title).includes(search))&&(filter==='all'||filter==='due'&&row.due>0||filter==='unseen'&&row.unseen>0);}
+  function updateLocator(){const locator=$map('#constellationLocator');if(!locator)return;locator.innerHTML='<option value="">定位目的地</option>'+model.filter(matches).map(r=>`<option value="${esc(r.chapter)}">${esc(r.chapter)} · ${r.count} 词</option>`).join('');locator.value=model.some(r=>r.chapter===selected&&matches(r))?selected:'';$map('#constellationFilterCount').textContent=model.filter(matches).length+'/'+model.length+' 个目的地';}
+  function mountGraphics(){if(mounted||view!=='map'||!home())return;mounted=true;$map('.constellation-background').innerHTML='<img class="topic-galaxy" src="assets/comets/milkyway-v1-1536.webp" srcset="assets/comets/milkyway-v1-768.webp 768w, assets/comets/milkyway-v1-1536.webp 1536w" sizes="(max-width:600px) 100vw,1200px" width="1536" height="864" alt="" loading="lazy" decoding="async"/>';lanes=document.createElement('canvas');lanes.className='constellation-lanes';lanes.setAttribute('aria-hidden','true');camera.prepend(lanes);ctx=lanes.getContext('2d');rebuildBodies();resize();}
+  function disposeGraphics(){if(frame!==null)cancelAnimationFrame(frame);frame=null;lastFrame=null;pointers.clear();drag=null;viewport?.classList.remove('is-dragging');nodeViews.forEach(v=>{if(v.mesh)v.mesh.width=v.mesh.height=0;});if(lanes){lanes.width=lanes.height=0;lanes.remove();}lanes=ctx=null;nodeViews=[];lastPoints=[];bodies?.replaceChildren();$map('.constellation-background')?.replaceChildren();mounted=false;}
+  function rebuildBodies(){if(!mounted)return;const starArt=ART.find(r=>r.kind==='star');bodies.innerHTML=model.map(row=>{const image=row.star?starArt||row:row,mesh=!row.star&&['explorer','transport','patrol','satellite','station'].includes(row.behavior);return `<button type="button" class="celestial-body ${row.star?'is-star':''} ${mesh?'has-fleet-model':''}" data-topic="${esc(row.chapter)}" data-kind="${row.kind}" data-behavior="${row.behavior}" style="--body-color:${row.color}" aria-pressed="false">${row.star?'<span class="stellar-corona" aria-hidden="true"></span>':''}<span class="celestial-object" aria-hidden="true"><img src="${esc(image.src)}" alt="" draggable="false" style="--art-fit:${image.fit||1};--art-offset-x:${image.offsetX||'0%'};--art-offset-y:${image.offsetY||'0%'}"/>${mesh?'<canvas class="celestial-model"></canvas>':''}</span><svg class="celestial-progress" viewBox="0 0 120 120" aria-hidden="true"><circle class="celestial-progress-track" cx="60" cy="60" r="53"/><circle class="celestial-progress-value" cx="60" cy="60" r="53" pathLength="100" stroke-dasharray="${row.percent} 100"/></svg>${row.star&&row.kind!=='star'?`<span class="stellar-theme-mark"><img src="${esc(row.src)}" alt=""/></span>`:''}<span class="celestial-label"><strong>${esc(row.chapter)}</strong>${row.star?'<small>中央恒星</small>':''}</span></button>`;}).join('');nodeViews=[...bodies.children].map((element,index)=>{const row=model[index];element.onclick=()=>selectTopic(row.chapter);element.onpointerenter=element.onfocus=()=>{hovered=row.chapter;draw();};element.onpointerleave=element.onblur=()=>{if(hovered===row.chapter)hovered=null;draw();};element.setAttribute('aria-label',`${row.chapter}，${row.count} 个${row.personal?'私人词条':'可练习词'}，已掌握 ${row.done} 个，${row.behaviorLabel}`);element.title=`${row.chapter} · ${row.count} 词 · ${row.behaviorLabel}`;element.querySelector('.celestial-object img').onerror=()=>element.classList.add('asset-missing');return {row,element,object:element.querySelector('.celestial-object'),progress:element.querySelector('.celestial-progress'),label:element.querySelector('.celestial-label'),mesh:element.querySelector('canvas')};});updateSelection();}
+  function render(){if(!ensureMounted())return;const rows=readModel(),key=rows.map(r=>[r.chapter,r.count,r.done,r.due,r.unseen,r.star,r.ready||0].join(':')).join('|');if(key!==signature){model=rows;signature=key;if(selected&&!model.some(r=>r.chapter===selected)){selected=null;overview=null;}if(mounted)rebuildBodies();}decorateList();const star=model.find(r=>r.star),personal=model.find(r=>r.personal);$map('#constellationSummary').textContent=`22 个主题 · ${model.filter(r=>!r.personal).reduce((s,r)=>s+r.count,0).toLocaleString('zh-CN')} 个可练习词${personal?' · 私人 '+personal.count+' 词':''}`;$map('#constellationCenterLabel').textContent=star.chapter+' · 中央恒星';updateLocator();updateSelection();if(view==='map'&&home())mountGraphics();resize();synchronizeAnimation();}
+  function resize(){if(!viewport||view!=='map'||!viewport.clientWidth)return;dimensions={width:viewport.clientWidth,height:viewport.clientHeight};fit=Math.max(.22,Math.min((dimensions.width-70)/WORLD.width,(dimensions.height-100)/WORLD.height));if(lanes){const dpr=Math.min(devicePixelRatio||1,1.5);lanes.width=Math.round(dimensions.width*dpr);lanes.height=Math.round(dimensions.height*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);}draw();}
+  function overlap(a,b){return Math.max(0,Math.min(a.x+a.w,b.x+b.w)-Math.max(a.x,b.x))*Math.max(0,Math.min(a.y+a.h,b.y+b.h)-Math.max(a.y,b.y));}
+  function drawLanes(items,prepared){if(!ctx)return;ctx.clearRect(0,0,dimensions.width,dimensions.height);ctx.lineWidth=1;
+    for(const item of items){const row=item.row;if(['star','explorer','transport','patrol','station'].includes(row.behavior))continue;ctx.strokeStyle=row.chapter===selected?'#c6b3ffb0':row.hostId?'#82cfe840':'#b3b6ee29';ctx.setLineDash(row.behavior==='comet'?[2,7]:[]);ctx.beginPath();let started=false;
+      for(let j=0;j<=80;j++){let p;if(row.hostId){const a=j*Math.PI/40,r=row.hostRadius;p=G.add(item.host,[r*Math.cos(a),r*.36*Math.sin(a+.6),r*.73*Math.sin(a)]);}else if(row.behavior==='comet'){const a=j*Math.PI/40;p=[650*Math.cos(a)+80,80*Math.sin(a+.8),290*Math.sin(a)];}else p=G.orbit(row,elapsed,j*Math.PI/40);const v=G.project(p,cam,fit,dimensions.width,dimensions.height,prepared);if(!v){started=false;continue;}if(!started){ctx.moveTo(v.x,v.y);started=true;}else ctx.lineTo(v.x,v.y);}ctx.stroke();}
+    ctx.setLineDash([]);for(const item of items.filter(i=>i.row.behavior==='satellite')){if(Math.floor(elapsed/8)%2!==item.row.index%2)continue;const p=G.project(item.position,cam,fit,dimensions.width,dimensions.height,prepared),h=G.project(item.host,cam,fit,dimensions.width,dimensions.height,prepared);if(p&&h){ctx.strokeStyle='#8ed9f53d';ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(h.x,h.y);ctx.stroke();}}
+  }
+  function draw(){if(!mounted||view!=='map'||!model.length)return;const items=G.frame(model,elapsed),prepared=G.basis(cam);drawLanes(items,prepared);const star=model.find(r=>r.star),starProjection=G.project([0,0,0],cam,fit,dimensions.width,dimensions.height,prepared),starSize=clamp(star.size*(starProjection?.scale||fit),dimensions.width<600?92:128,260);
+    const points=items.map(item=>({...item,screen:G.project(item.position,cam,fit,dimensions.width,dimensions.height,prepared)}));lastPoints=points;
+    const occupied=[],obstacles=points.filter(p=>p.screen).map(p=>{const s=p.row.star?starSize:clamp(p.row.size*p.screen.scale,26,Math.min(94,starSize*.43));p.size=s;return {id:p.row.id,x:p.screen.x-s/2,y:p.screen.y-s/2,w:s,h:s};});
+    const ordered=points.filter(p=>p.screen).sort((a,b)=>Number(b.row.chapter===selected)-Number(a.row.chapter===selected)||Number(b.row.chapter===hovered)-Number(a.row.chapter===hovered)||Number(b.row.star)-Number(a.row.star)||a.screen.depth-b.screen.depth),labels=new Map();
+    for(const point of ordered){const {row,screen:p}=point,r=point.size/2+9,w=Math.max(67,row.chapter.length*11+16),h=row.star?37:25;let best=null,score=Infinity;
+      for(const [dx,dy] of [[-w/2,r],[-w/2,-r-h],[r,-h/2],[-r-w,-h/2],[r*.6,r*.7],[-r*.6-w,r*.7],[-w/2,r+29],[-w/2,-r-h-29]]){const candidate={x:clamp(p.x+dx,8,dimensions.width-w-8),y:clamp(p.y+dy,64,dimensions.height-h-48),w,h};const value=occupied.reduce((s,o)=>s+overlap(candidate,o)*20,0)+obstacles.filter(o=>o.id!==row.id).reduce((s,o)=>s+overlap(candidate,o)*4,0)+Math.hypot(candidate.x-(p.x+dx),candidate.y-(p.y+dy))*6;if(value<score){score=value;best=candidate;}}
+      const priority=row.chapter===selected||row.chapter===hovered||row.star,inside=p.x>=-20&&p.x<=dimensions.width+20&&p.y>=35&&p.y<=dimensions.height-35,show=inside&&(priority||score<20);if(show){occupied.push(best);labels.set(row.id,best);}
     }
-    decorateList();
-    const star = model.find(row => row.star);
-    const personal = model.find(row => row.personal);
-    viewport.setAttribute('aria-label', model.length+' 个可选择目的地。拖动空白处移动星图，使用放大缩小按钮调整视野。');
-    $map('#constellationSummary').textContent = ART.length + ' 个主题 · ' + model.filter(row=>!row.personal).reduce((total, row) => total + row.count, 0).toLocaleString('zh-CN') + ' 个可练习词' + (personal ? ' · 私人 '+personal.count+' 词' : '');
-    $map('#constellationCenterLabel').textContent = (star?.chapter || '') + ' · 中央恒星';
-    updateSelection();
-    resize();
-    synchronizeAnimation();
+    points.forEach((point,index)=>{const item=nodeViews[index];if(!item)return;const p=point.screen,row=point.row;item.element.hidden=!p||p.x< -160||p.x>dimensions.width+160||p.y< -160||p.y>dimensions.height+160;if(!p)return;item.element.tabIndex=p.x>=24&&p.x<dimensions.width-24&&p.y>=48&&p.y<dimensions.height-48?0:-1;const title=row.chapter+' · '+point.activity+' · '+row.count+' 词';if(item.element.title!==title)item.element.title=title;const size=point.size||26,hit=Math.max(48,size);item.element.style.width=item.element.style.height=hit+'px';item.element.style.transform=`translate(${p.x-hit/2}px,${p.y-hit/2}px)`;item.element.style.zIndex=String(row.chapter===selected?4000:Math.round(3000-p.depth));item.element.style.opacity=selected&&row.chapter!==selected?'.42':matches(row)?'1':'.22';item.object.style.width=item.object.style.height=size+'px';item.progress.style.width=item.progress.style.height=size+13+'px';
+      if(item.mesh){if(['explorer','transport','patrol'].includes(row.behavior)){const dt=elapsed-(item.headingTime??elapsed);item.heading=item.heading&&dt>=0&&dt<.5?G.turn(item.heading,point.heading,dt*(row.behavior==='patrol'?.6:1.1)):point.heading;item.headingTime=elapsed;point.heading=item.heading;}OrbitFleet.draw(item.mesh,point,cam,elapsed,size*1.55);}else {const b=G.basis(cam),angle=row.star?elapsed*.25:row.kind==='comet'?Math.atan2(-G.dot(point.heading,b.up),G.dot(point.heading,b.right))*180/Math.PI-25:elapsed*(row.kind==='asteroid'?.6:.16);item.object.querySelector('img').style.rotate=angle+'deg';if(row.star)item.element.querySelector('.stellar-corona').style.opacity=String(.70+.10*Math.sin(elapsed*.4));}
+      const label=labels.get(row.id);item.label.hidden=!label;item.element.classList.toggle('label-visible',!!label);if(label){item.label.style.width=label.w+'px';item.label.style.height=label.h+'px';item.label.style.transform=`translate(${label.x-p.x}px,${label.y-p.y}px)`;}
+    });camera.style.setProperty('--camera-yaw',cam.yaw);camera.style.setProperty('--camera-pitch',cam.pitch);$map('#starMapZoomValue').textContent=Math.round(zoom*100)+'%';$map('#starMapZoomOut').disabled=zoom<=.66;$map('#starMapZoomIn').disabled=zoom>=2.79;
   }
-
-  function resize() {
-    if (!viewport || view !== 'map' || !viewport.clientWidth) return;
-    dimensions = { width: viewport.clientWidth, height: viewport.clientHeight };
-    fit = Math.min((dimensions.width - 36) / WORLD.width, (dimensions.height - 28) / WORLD.height);
-    fit = Math.max(.22, fit);
-    draw();
+  function canAnimate(){return mounted&&view==='map'&&visible&&home()&&!document.hidden&&document.body.dataset.motion!=='off'&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&!keyboardFocus&&!manualPause&&!selected;}
+  function cameraMoving(){return Math.abs(cam.yaw-wanted.yaw)+Math.abs(cam.pitch-wanted.pitch)+Math.abs(cam.zoom-wanted.zoom)+Math.hypot(...G.sub(cam.target,wanted.target))>.06;}
+  function animate(now){frame=null;if(!mounted||!visible||!home()||document.hidden)return;if(lastFrame===null)lastFrame=now;const dt=now-lastFrame;if(dt>=1000/25){if(canAnimate())elapsed+=Math.min(dt,100)/1000;lastFrame=now;const ease=.22;cam.yaw+=(wanted.yaw-cam.yaw)*ease;cam.pitch+=(wanted.pitch-cam.pitch)*ease;cam.zoom+=(wanted.zoom-cam.zoom)*ease;cam.target=G.add(cam.target,G.mul(G.sub(wanted.target,cam.target),ease));if(!cameraMoving()){cam.yaw=wanted.yaw;cam.pitch=wanted.pitch;cam.zoom=wanted.zoom;cam.target=wanted.target.slice();}draw();}if(canAnimate()||cameraMoving())frame=requestAnimationFrame(animate);else lastFrame=null;}
+  function synchronizeAnimation(){if(!root)return;if(!home()||view!=='map'){if(expanded&&!home())setExpanded(false);disposeGraphics();return;}mountGraphics();const globalOff=document.body.dataset.motion==='off'||matchMedia('(prefers-reduced-motion: reduce)').matches,paused=!canAnimate();root.dataset.paused=String(paused);$map('#constellationMotionStatus').textContent=selected?'聚焦停泊 · Esc 返回星系':globalOff?'静态浏览 · 已跟随动效设置':manualPause?'已暂停 · 点击继续航行':keyboardFocus?'键盘定位 · 航行暂停':'自主航行 · 悬停时继续';const button=$map('#starMapPlayBtn');button.textContent=selected||manualPause||globalOff?'▶':'Ⅱ';button.disabled=globalOff&&!selected;button.title=selected?'返回星系并继续航行':manualPause?'继续航行':'暂停航行';button.setAttribute('aria-label',button.title);
+    if((!visible||document.hidden||(!canAnimate()&&!cameraMoving()))&&frame!==null){cancelAnimationFrame(frame);frame=null;lastFrame=null;}if(visible&&!document.hidden&&(canAnimate()||cameraMoving())&&frame===null)frame=requestAnimationFrame(animate);
   }
-
-  function positions(scale) {
-    const tilt = -Math.PI / 18;
-    const points = model.map(row => {
-      if (row.star) return { row, x: 0, y: 0, anchorX: 0, anchorY: 0 };
-      const ring = RINGS[row.ring];
-      const angle = row.angle + elapsed * Math.PI * 2 / ring.period;
-      const x = ring.rx * Math.cos(angle), y = ring.ry * Math.sin(angle);
-      const rotatedX = x * Math.cos(tilt) - y * Math.sin(tilt);
-      const rotatedY = x * Math.sin(tilt) + y * Math.cos(tilt);
-      return { row, x: rotatedX, y: rotatedY, anchorX: rotatedX, anchorY: rotatedY };
-    });
-    // Small offsets preserve the orbital structure while keeping neighboring targets distinct.
-    for (let step = 0; step < 5; step++) {
-      for (let a = 0; a < points.length; a++) for (let b = a + 1; b < points.length; b++) {
-        const first = points[a], second = points[b];
-        const dx = second.x - first.x, dy = second.y - first.y;
-        const distance = Math.hypot(dx, dy) || .01;
-        const required = (Math.max(first.row.size, 48 / scale) + Math.max(second.row.size, 48 / scale)) / 2 + 9 / scale;
-        if (distance >= required) continue;
-        const displacement = (required - distance) * .52;
-        const nx = dx / distance, ny = dy / distance;
-        if (!first.row.star) { first.x -= nx * displacement; first.y -= ny * displacement; }
-        if (!second.row.star) { second.x += nx * displacement; second.y += ny * displacement; }
-      }
-      points.forEach(point => {
-        if (point.row.star) return;
-        point.x = clamp(point.x, point.anchorX - 48, point.anchorX + 48);
-        point.y = clamp(point.y, point.anchorY - 40, point.anchorY + 40);
-      });
-    }
-    return points;
-  }
-
-  function overlap(first, second) {
-    return Math.max(0, Math.min(first.x + first.w, second.x + second.w) - Math.max(first.x, second.x)) *
-      Math.max(0, Math.min(first.y + first.h, second.y + second.h) - Math.max(first.y, second.y));
-  }
-
-  function draw() {
-    if (!camera || !model.length || view !== 'map') return;
-    const scale = fit * zoom;
-    const center = { x: dimensions.width / 2 + pan.x, y: dimensions.height / 2 + pan.y };
-    camera.style.transform = 'translate(' + center.x + 'px,' + center.y + 'px) scale(' + scale + ')';
-    const points = positions(scale);
-    const obstacles = points.map(point => ({ id: point.row.id, x: center.x + point.x * scale - point.row.size * scale / 2 - 3, y: center.y + point.y * scale - point.row.size * scale / 2 - 3, w: point.row.size * scale + 6, h: point.row.size * scale + 6 }));
-    const labels = new Map(), occupied = [];
-    const priority = points.slice().sort((a, b) => Number(b.row.chapter === selected) - Number(a.row.chapter === selected) || Number(b.row.star) - Number(a.row.star) || b.y - a.y);
-    priority.forEach(point => {
-      const x = center.x + point.x * scale, y = center.y + point.y * scale;
-      const radius = point.row.size * scale / 2 + 8;
-      const w = Math.max(64, point.row.chapter.length * 11 + 18), h = point.row.star ? 37 : 24;
-      const candidates = [
-        { x: x - w / 2, y: y + radius }, { x: x - w / 2, y: y - radius - h },
-        { x: x + radius, y: y - h / 2 }, { x: x - radius - w, y: y - h / 2 },
-        { x: x + radius * .7, y: y + radius * .65 }, { x: x - radius * .7 - w, y: y + radius * .65 },
-        { x: x + radius * .7, y: y - radius * .65 - h }, { x: x - radius * .7 - w, y: y - radius * .65 - h },
-        { x: x - w / 2, y: y + radius + 27 }, { x: x - w / 2, y: y - radius - h - 27 }
-      ];
-      let best, bestScore = Infinity;
-      candidates.forEach((candidate, index) => {
-        const rect = { ...candidate, w, h };
-        let score = index * 5;
-        occupied.forEach(other => { score += overlap(rect, other) * 20; });
-        obstacles.forEach(other => { if (other.id !== point.row.id) score += overlap(rect, other) * 6; });
-        if (zoom <= 1.05) {
-          score += Math.max(0, 12 - rect.x) * 200 + Math.max(0, rect.x + w - dimensions.width + 12) * 200;
-          score += Math.max(0, 35 - rect.y) * 200 + Math.max(0, rect.y + h - dimensions.height + 30) * 200;
-        }
-        if (score < bestScore) { best = rect; bestScore = score; }
-      });
-      occupied.push(best);
-      labels.set(point.row.id, { x: (best.x - x) / scale, y: (best.y - y) / scale, w: w / scale, h: h / scale });
-    });
-    points.forEach((point, index) => {
-      const item = nodeViews[index], row = point.row;
-      const hit = Math.max(row.size, 48 / scale);
-      item.element.style.width = hit + 'px';
-      item.element.style.height = hit + 'px';
-      item.element.style.transform = 'translate(' + (point.x - hit / 2) + 'px,' + (point.y - hit / 2) + 'px)';
-      item.element.style.zIndex = row.chapter === selected ? 2000 : String(600 + Math.round(point.y));
-      item.object.style.width = item.object.style.height = row.size + 'px';
-      const angle = row.ring >= 0 ? row.angle + elapsed * Math.PI * 2 / RINGS[row.ring].period : 0;
-      item.object.querySelector('img').style.rotate = (row.kind === 'ship' || row.kind === 'comet' ? Math.sin(angle) * 9 : 0) + 'deg';
-      item.progress.style.width = item.progress.style.height = row.size + 13 / scale + 'px';
-      const label = labels.get(row.id);
-      item.label.style.width = label.w + 'px';
-      item.label.style.height = label.h + 'px';
-      item.label.style.fontSize = 11 / scale + 'px';
-      item.label.style.padding = 3 / scale + 'px ' + 6 / scale + 'px';
-      item.label.style.borderRadius = 7 / scale + 'px';
-      item.label.style.transform = 'translate(' + label.x + 'px,' + label.y + 'px)';
-      item.label.querySelector('small')?.style.setProperty('font-size', 8 / scale + 'px');
-    });
-    $map('#starMapZoomValue').textContent = Math.round(zoom * 100) + '%';
-    $map('#starMapZoomOut').disabled = zoom <= .66;
-    $map('#starMapZoomIn').disabled = zoom >= 2.79;
-  }
-
-  function canAnimate() {
-    return view === 'map' && visible && !document.hidden && document.body.dataset.activeView !== 'practice' &&
-      $map('#view-home')?.classList.contains('active') && document.body.dataset.motion !== 'off' &&
-      !window.matchMedia('(prefers-reduced-motion: reduce)').matches && !keyboardFocus && !manualPause;
-  }
-
-  function animate(timestamp) {
-    frame = null;
-    if (!canAnimate()) { lastFrame = null; return; }
-    if (lastFrame === null) lastFrame = timestamp;
-    const delta = timestamp - lastFrame;
-    if (delta >= 1000 / 30) { elapsed += Math.min(delta, 100) / 1000; lastFrame = timestamp; draw(); }
-    frame = requestAnimationFrame(animate);
-  }
-
-  function synchronizeAnimation() {
-    if (!root) return;
-    const globalOff = document.body.dataset.motion === 'off' || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const paused = !canAnimate();
-    const status = globalOff ? '静态浏览 · 已跟随动效设置' : manualPause ? '已手动暂停 · 点击选择主题' : keyboardFocus ? '键盘选择中 · 已暂停公转' : '缓慢公转 · 悬停时继续';
-    const label = $map('#constellationMotionStatus');
-    if (label.textContent !== status) label.textContent = status;
-    const button = $map('#starMapPlayBtn');
-    button.textContent = manualPause || globalOff ? '▶' : 'Ⅱ';
-    button.disabled = globalOff;
-    button.title = globalOff ? '全局动效已关闭' : manualPause ? '继续公转' : '暂停公转';
-    button.setAttribute('aria-label', button.title);
-    root.dataset.paused = String(paused);
-    if (paused && frame !== null) { cancelAnimationFrame(frame); frame = null; lastFrame = null; }
-    if (!paused && frame === null) { lastFrame = null; frame = requestAnimationFrame(animate); }
-  }
-
-  function selectTopic(chapter, scroll = false) {
-    if (!model.some(row => row.chapter === chapter)) return;
-    selected = chapter;
-    nodeViews.forEach(item => {
-      const active = item.row.chapter === selected;
-      item.element.classList.toggle('selected', active);
-      item.element.setAttribute('aria-pressed', String(active));
-    });
-    decorateList();
-    updateSelection();
-    draw();
-    if (scroll && !expanded) $map('#constellationSelection').scrollIntoView({ block: 'nearest', behavior: document.body.dataset.motion === 'off' ? 'instant' : 'smooth' });
-  }
-
-  function updateSelection() {
-    nodeViews.forEach(item => {
-      const active = item.row.chapter === selected;
-      item.element.classList.toggle('selected', active);
-      item.element.setAttribute('aria-pressed', String(active));
-    });
-    const row = model.find(item => item.chapter === selected);
-    $map('#constellationEmpty').hidden = !!row;
-    $map('#constellationSelectedInfo').hidden = !row;
-    $map('#constellationStart').disabled = !row || !row.count;
-    $map('#constellationStart').textContent = row?.personal && !row.ready ? '补充我的词库释义 ↗' : '开始练习 ↗';
-    if (!row) return;
-    $map('#selectedTopicImage').src = row.src;
-    $map('#selectedTopicKind').textContent = (row.star ? '中央恒星 · ' : '第 ' + (row.ring + 1) + ' 轨道 · ') + row.title;
-    $map('#selectedTopicName').textContent = row.chapter;
-    $map('#selectedTopicCounts').textContent = row.personal ? row.count+' 个私人词条 · 可练习 '+row.ready+' 个 · 已掌握 '+row.done+' 个' : row.count + ' 个可练习词 · 已掌握 ' + row.done + ' 个';
-    $map('#selectedTopicPercent').textContent = row.percent + '%';
-    $map('#selectedTopicProgress').style.width = row.percent + '%';
-  }
-
+  function selectTopic(chapter,scroll=false){const row=model.find(r=>r.chapter===chapter);if(!row)return;if(!selected)overview={yaw:cam.yaw,pitch:cam.pitch,zoom,target:cam.target.slice()};selected=chapter;const point=G.frame(model,elapsed).find(p=>p.row.chapter===chapter);wanted.target=point.position.slice();wanted.zoom=zoom=Math.max(zoom,1.25);if(matchMedia('(prefers-reduced-motion: reduce)').matches||document.body.dataset.motion==='off'){cam.target=wanted.target.slice();cam.zoom=zoom;}updateSelection();decorateList();updateLocator();draw();synchronizeAnimation();if(scroll&&!expanded)(view==='map'?viewport:$map('#constellationSelection')).scrollIntoView({block:'nearest',behavior:'instant'});}
+  function clearSelection(reset=false){selected=null;const goal=!reset&&overview?overview:{yaw:.12,pitch:.85,zoom:1,target:[0,0,0]};Object.assign(wanted,{...goal,target:goal.target.slice()});zoom=goal.zoom;overview=null;if(matchMedia('(prefers-reduced-motion: reduce)').matches||document.body.dataset.motion==='off'){Object.assign(cam,{...wanted,target:wanted.target.slice()});}updateSelection();decorateList();updateLocator();draw();synchronizeAnimation();}
+  function updateSelection(){nodeViews.forEach(item=>{const chosen=item.row.chapter===selected;item.element.classList.toggle('selected',chosen);item.element.setAttribute('aria-pressed',String(chosen));});const row=model.find(r=>r.chapter===selected);$map('#constellationEmpty').hidden=!!row;$map('#constellationSelectedInfo').hidden=!row;$map('#constellationStart').disabled=!row||!row.count;$map('#constellationBrowse').hidden=!row;$map('#constellationReturn').hidden=!row;$map('#constellationStart').textContent=row?.personal&&!row.ready?'补充我的词库释义 ↗':'开始练习 ↗';if(!row)return;$map('#selectedTopicImage').src=row.src;const host=model.find(r=>r.id===row.hostId);$map('#selectedTopicKind').textContent=row.behaviorLabel+' · '+G.frame(model,elapsed).find(p=>p.row.id===row.id).activity+' · '+row.title+(host?' · 环绕 '+host.chapter+'（仅空间关系）':'');$map('#selectedTopicName').textContent=row.chapter;$map('#selectedTopicCounts').textContent=row.personal?`${row.count} 个私人词条 · 可练习 ${row.ready} 个 · 已掌握 ${row.done} 个`:`${row.count} 个可练习词 · 已掌握 ${row.done} 个 · 待复习 ${row.due} 个 · 未开始 ${row.unseen} 个`;$map('#selectedTopicPercent').textContent=row.percent+'%';$map('#selectedTopicProgress').style.width=row.percent+'%';}
   function launchTopic() {
     const row = model.find(item => item.chapter === selected);
     if (!row?.count) return;
@@ -401,68 +146,11 @@
     document.querySelectorAll('#orderChoices .choice').forEach(button => button.classList.toggle('active', button.dataset.order === 'smart'));
   }
 
-  function applyView() {
-    if (!root) return;
-    viewport.hidden = view !== 'map';
-    $map('#chapterGrid').hidden = view !== 'list';
-    root.dataset.topicView = view;
-    ['map', 'list'].forEach(mode => {
-      const button = $map(mode === 'map' ? '#starMapViewBtn' : '#starListViewBtn');
-      button.classList.toggle('active', view === mode);
-      button.setAttribute('aria-pressed', String(view === mode));
-    });
-    $map('.constellation-controls').hidden = view !== 'map';
-    resize();
-    synchronizeAnimation();
-  }
-
-  function setView(next) {
-    view = next;
-    state.settings.constellationView = view;
-    save();
-    applyView();
-  }
-
-  function setZoom(value, focalX = dimensions.width / 2, focalY = dimensions.height / 2) {
-    const next = clamp(value, .65, 2.8), ratio = next / zoom;
-    pan.x = focalX - dimensions.width / 2 - (focalX - dimensions.width / 2 - pan.x) * ratio;
-    pan.y = focalY - dimensions.height / 2 - (focalY - dimensions.height / 2 - pan.y) * ratio;
-    zoom = next;
-    draw();
-  }
-
-  function resetCamera() { zoom = 1; pan = { x: 0, y: 0 }; draw(); }
-
-  function setExpanded(value) {
-    if (expanded === value) return;
-    expanded = value;
-    root.classList.toggle('is-expanded', expanded);
-    $map('#starMapExpand').setAttribute('aria-expanded', String(expanded));
-    $map('#starMapExpand').textContent = expanded ? '⤡' : '⤢';
-    $map('#starMapExpand').title = expanded ? '收起星图（Esc）' : '展开星图';
-    $map('#starMapExpand').setAttribute('aria-label', expanded ? '收起星图' : '展开星图');
-    if (expanded) {
-      savedCamera = { zoom, pan: { ...pan } };
-      previousOverflow = document.body.style.overflow;
-      returnFocus = document.activeElement;
-      root.setAttribute('role', 'dialog');
-      root.setAttribute('aria-modal', 'true');
-      document.body.style.overflow = 'hidden';
-      zoom = 1; pan = { x: 0, y: 0 };
-      viewport.focus({ preventScroll: true });
-    } else {
-      root.removeAttribute('role'); root.removeAttribute('aria-modal');
-      document.body.style.overflow = previousOverflow;
-      if (savedCamera) { zoom = savedCamera.zoom; pan = savedCamera.pan; }
-      returnFocus?.focus({ preventScroll: true });
-    }
-    resize();
-  }
-
-  window.WordOrbitConstellation = {
-    render,
-    select: selectTopic,
-    snapshot: () => ({ selected, view, expanded, zoom, elapsed, paused: !canAnimate(), nodes: model.map(row => ({ chapter: row.chapter, count: row.count, done: row.done, size: row.size, star: row.star, ring: row.ring, src: row.src, personal:!!row.personal, ready:row.ready })) })
-  };
-  document.addEventListener('DOMContentLoaded', render);
+  function browseTopic(){const row=model.find(r=>r.chapter===selected);if(!row)return;if(expanded)setExpanded(false);if(row.personal){showView('mywords');return;}showView('library');$map('#searchInput').value='';$map('#libraryStatus').value='all';$map('#libraryChapter').value=row.chapter;$map('#libraryChapter').dispatchEvent(new Event('change'));}
+  function applyView(){if(!root)return;viewport.hidden=view!=='map';$map('#chapterGrid').hidden=view!=='list';root.dataset.topicView=view;for(const mode of ['map','list']){const button=$map(mode==='map'?'#starMapViewBtn':'#starListViewBtn');button.classList.toggle('active',view===mode);button.setAttribute('aria-pressed',String(view===mode));}$map('.constellation-controls').hidden=view!=='map';resize();synchronizeAnimation();}
+  function setView(next){view=next;state.settings.constellationView=view;save();applyView();}
+  function setZoom(value){zoom=clamp(value,.65,2.8);cam.zoom=wanted.zoom=zoom;draw();}
+  function setExpanded(value){if(expanded===value)return;expanded=value;root.classList.toggle('is-expanded',expanded);$map('#starMapExpand').setAttribute('aria-expanded',String(expanded));$map('#starMapExpand').textContent=expanded?'⤡':'⤢';$map('#starMapExpand').title=expanded?'收起星图（Esc）':'展开星图';if(expanded){previousOverflow=document.body.style.overflow;returnFocus=document.activeElement;root.setAttribute('role','dialog');root.setAttribute('aria-modal','true');document.body.style.overflow='hidden';keyboardFocus=false;viewport.focus({preventScroll:true});}else{root.removeAttribute('role');root.removeAttribute('aria-modal');document.body.style.overflow=previousOverflow;returnFocus?.focus({preventScroll:true});}resize();synchronizeAnimation();}
+  window.WordOrbitConstellation={render,select:selectTopic,clear:clearSelection,snapshot:()=>({selected,view,expanded,zoom,elapsed,paused:!canAnimate(),mounted,scheduled:frame!==null,camera:{...cam,target:cam.target.slice()},nodes:model.map(row=>({chapter:row.chapter,id:row.id,count:row.count,done:row.done,size:row.size,star:row.star,ring:row.ring,src:row.src,personal:!!row.personal,ready:row.ready,behavior:row.behavior,hostId:row.hostId,hostRadius:row.hostRadius,...(()=>{const p=lastPoints.find(p=>p.row.id===row.id);return p?{xyz:p.position.slice(),heading:p.heading.slice(),screen:p.screen,activity:p.activity}:{};})()}))})};
+  document.addEventListener('DOMContentLoaded',render);
 })();

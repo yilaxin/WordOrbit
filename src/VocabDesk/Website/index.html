@@ -75,17 +75,18 @@
           <button type="button" class="text-btn mywords-home-entry" data-view="mywords" title="添加私人词条后，将在星图中出现独立星球">＋ 我的词库</button>
           <div class="constellation-controls" role="group" aria-label="星图控制"><button id="starMapPlayBtn" aria-label="暂停公转" title="暂停公转">Ⅱ</button><span class="map-control-divider"></span><button id="starMapZoomOut" aria-label="缩小星图" title="缩小">−</button><span id="starMapZoomValue" class="zoom-value">100%</span><button id="starMapZoomIn" aria-label="放大星图" title="放大">＋</button><button id="starMapReset" aria-label="复位星图" title="复位">⌖</button><button id="starMapExpand" aria-label="展开星图" aria-expanded="false" title="展开星图">⤢</button></div>
         </div>
-        <div id="constellationViewport" class="constellation-viewport" tabindex="0" role="group" aria-label="22 个可选择主题。拖动空白处移动星图，使用放大缩小按钮调整视野。">
+        <div class="constellation-discovery"><label class="topic-search-label">寻找主题<input id="constellationSearch" type="search" maxlength="80" placeholder="搜索主题，Enter 聚焦" /></label><select id="constellationLocator" aria-label="定位主题目的地"><option value="">定位目的地</option></select><select id="constellationFilter" aria-label="突出主题范围"><option value="all">全部主题</option><option value="due">有待复习</option><option value="unseen">公共主题有未开始词</option></select><span id="constellationFilterCount" class="muted"></span><button id="constellationReturn" type="button" class="secondary-btn" hidden>← 返回星系</button></div>
+        <div id="constellationViewport" class="constellation-viewport" tabindex="0" role="group" aria-label="三维主题星系。拖动旋转视角，普通滚轮滚动页面，Ctrl 加滚轮缩放。也可使用定位目的地或列表选择主题。">
           <div class="constellation-background" aria-hidden="true"></div>
           <div class="constellation-corner map-corner-top" aria-hidden="true"><span>WORDORBIT / TOPIC SYSTEM</span><span id="constellationCenterLabel">知识恒星</span></div>
-          <div id="constellationCamera" class="constellation-camera"><svg class="constellation-orbits" viewBox="0 0 1240 760" aria-hidden="true"><defs><radialGradient id="constellationNebula"><stop stop-color="#8664d8" stop-opacity=".16"/><stop offset="1" stop-color="#8664d8" stop-opacity="0"/></radialGradient></defs><ellipse cx="620" cy="380" rx="270" ry="190" fill="url(#constellationNebula)"/><g transform="rotate(-10 620 380)"><ellipse cx="620" cy="380" rx="170" ry="110"/><ellipse cx="620" cy="380" rx="280" ry="170"/><ellipse cx="620" cy="380" rx="400" ry="240"/><ellipse cx="620" cy="380" rx="530" ry="310"/></g><path class="map-coordinate" d="M612 380h16m-8-8v16"/></svg><div id="constellationBodies"></div></div>
-          <div class="constellation-corner map-corner-bottom"><span id="constellationMotionStatus" role="status">缓慢公转 · 悬停时继续</span><span class="map-gesture-hint">拖动平移 · 放大探索 · 点击选择</span></div>
+          <div id="constellationCamera" class="constellation-camera"><div id="constellationBodies"></div></div>
+          <div class="constellation-corner map-corner-bottom"><span id="constellationMotionStatus" role="status">自主航行 · 悬停时继续</span><span class="map-gesture-hint">拖动旋转 · Ctrl＋滚轮缩放 · 点击聚焦</span></div>
         </div>
         <div id="chapterGrid" class="chapter-grid constellation-list" hidden></div>
         <div id="constellationSelection" class="constellation-selection" aria-live="polite">
           <div class="selection-empty" id="constellationEmpty"><span aria-hidden="true">◎</span><div><strong>选择一处目的地，开始今天的探索。</strong><p>元素大小代表词量，外侧光弧代表掌握进度。</p></div></div>
           <div id="constellationSelectedInfo" class="selected-topic-info" hidden><img id="selectedTopicImage" src="orbit-earth.svg" alt="" width="60" height="60"/><div class="selected-topic-description"><span id="selectedTopicKind" class="eyebrow"></span><h3 id="selectedTopicName"></h3><p id="selectedTopicCounts"></p></div><div class="selected-topic-progress"><div><span>掌握进度</span><strong id="selectedTopicPercent">0%</strong></div><div class="progress-track"><span id="selectedTopicProgress"></span></div></div></div>
-          <button id="constellationStart" class="primary-btn" disabled>开始练习 <span aria-hidden="true">↗</span></button>
+          <button id="constellationBrowse" class="secondary-btn" hidden>浏览单词</button><button id="constellationStart" class="primary-btn" disabled>开始练习 <span aria-hidden="true">↗</span></button>
         </div>
       </section>
     </section>
@@ -123,6 +124,8 @@
   <script src="app.js"></script>
   <script src="quality-overrides.js"></script>
   <script src="constellation-art.js"></script>
+  <script src="constellation-space.js"></script>
+  <script src="constellation-fleet.js"></script>
   <script src="constellation.js"></script>
   <script src="desktop-controls.js"></script>
   <script src="orbit-ui.js"></script>

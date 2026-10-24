@@ -40,7 +40,7 @@ const { pathToFileURL } = require('node:url');
   // Default view fits every name/body on desktop without conflicting labels.
   const geometry = await page.evaluate(() => {
     const viewport = document.querySelector('#constellationViewport').getBoundingClientRect();
-    const boxes = [...document.querySelectorAll('.celestial-label')].map(e => ({ name: e.innerText, r: e.getBoundingClientRect().toJSON() }));
+    const boxes = [...document.querySelectorAll('.celestial-label')].filter(e=>e.getClientRects().length).map(e => ({ name: e.innerText, r: e.getBoundingClientRect().toJSON() }));
     const overlap = (a, b) => Math.max(0, Math.min(a.right, b.right) - Math.max(a.left, b.left)) * Math.max(0, Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top));
     return { outside: boxes.filter(b => b.r.left < viewport.left || b.r.right > viewport.right || b.r.top < viewport.top || b.r.bottom > viewport.bottom), conflicts: boxes.flatMap((a, i) => boxes.slice(i + 1).filter(b => overlap(a.r, b.r) > 1).map(b => [a.name, b.name])), targets: [...document.querySelectorAll('.celestial-body')].map(e => e.getBoundingClientRect().width) };
   });
@@ -58,19 +58,21 @@ const { pathToFileURL } = require('node:url');
   await page.locator('#themeBtn').click();
 
   await page.locator('#starMapZoomIn').click();
-  assert.equal(await page.locator('#starMapZoomValue').textContent(), '120%');
+  assert.equal(await page.locator('#starMapZoomValue').textContent(), '150%');
   await page.locator('#constellationViewport').focus();
   const beforePan = await page.locator('#constellationCamera').getAttribute('style');
   await page.keyboard.press('ArrowLeft');
   assert.notEqual(await page.locator('#constellationCamera').getAttribute('style'), beforePan);
   await page.keyboard.press('0');
   assert.equal(await page.locator('#starMapZoomValue').textContent(), '100%');
+  await page.evaluate(()=>WordOrbitConstellation.select('自然地理'));
   await page.locator('#starMapExpand').click();
   assert.equal(await page.locator('#topicExplorer').getAttribute('aria-modal'), 'true');
   await page.locator('#topicExplorer').screenshot({ path: path.join(output, 'constellation-expanded.png') });
   await page.locator('#constellationStart').focus();
   await page.keyboard.press('Tab');
   assert.equal(await page.evaluate(() => document.activeElement.id), 'starMapViewBtn', 'Modal traps focus');
+  await page.keyboard.press('Escape');
   await page.keyboard.press('Escape');
   assert.equal(await page.locator('#topicExplorer').getAttribute('aria-modal'), null);
   assert.equal(await page.evaluate(() => document.body.style.overflow), '');
@@ -115,6 +117,8 @@ const { pathToFileURL } = require('node:url');
   await page.evaluate(() => { state.words = window.constellationTestBackup.words; state.records = window.constellationTestBackup.records; setup = window.constellationTestBackup.setup; state.lastSession = null; session = null; save(); renderHome(); });
   assert.equal(await page.evaluate(() => WordOrbitConstellation.snapshot().nodes.find(n => n.star).chapter), '身心健康');
 
+  // Focus pauses the scene; return to the overview before checking hover continuation.
+  await page.evaluate(()=>WordOrbitConstellation.clear(true));
   // Hovering empty space or a topic keeps moving; explicit pause still freezes all bodies.
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.locator('#topicExplorer').scrollIntoViewIfNeeded();

@@ -140,6 +140,8 @@ public partial class MainWindow : Window
                 var constellationReady = await Browser.ExecuteScriptAsync("window.WordOrbitConstellation?.snapshot().nodes.length === 22 && document.querySelectorAll('.celestial-object img').length === 22 && [...document.querySelectorAll('.celestial-object img')].every(image => image.complete && image.naturalWidth > 0)");
                 if (constellationReady != "true")
                     throw new InvalidOperationException("The 22 local constellation images did not load correctly.");
+                var universeReady = await Browser.ExecuteScriptAsync("(()=>{const s=WordOrbitConstellation.snapshot();return s.mounted&&s.nodes.every(n=>n.xyz?.every(Number.isFinite))&&s.nodes.filter(n=>n.behavior==='satellite'&&n.hostId).length===2&&s.nodes.filter(n=>n.behavior==='station'&&n.hostId).length===4&&document.querySelectorAll('.celestial-model').length===10;})()");
+                if (universeReady != "true") throw new InvalidOperationException("The 3D topic behavior contracts did not load.");
                 var result = await Browser.ExecuteScriptAsync("JSON.stringify({title:document.title,wordCount:state.words.length,homeVisible:document.querySelector('#view-home')?.classList.contains('active'),desktopMenu:!!document.querySelector('#desktopMenuButton'),exampleCount:Object.keys(window.EXAMPLE_SENTENCES||{}).length,offline:!document.querySelector('script[src^=\"http\"]'),attemptCount:state.attempts.length,importedSeen:state.records['seed-1-1']?.seen||0,constellationCount:WordOrbitConstellation.snapshot().nodes.length,constellationImages:[...document.querySelectorAll('.celestial-object img')].filter(image=>image.complete&&image.naturalWidth>0).length,constellationStar:WordOrbitConstellation.snapshot().nodes.find(node=>node.star)?.chapter})");
                 var testResult = JsonSerializer.Deserialize<Dictionary<string, object?>>(JsonSerializer.Deserialize<string>(result) ?? "{}")
                     ?? throw new InvalidOperationException("Empty self-test result.");
@@ -147,6 +149,13 @@ public partial class MainWindow : Window
                 var vocabularyResult = JsonSerializer.Deserialize<Dictionary<string, object?>>(JsonSerializer.Deserialize<string>(vocabularyAudit) ?? "{}")
                     ?? throw new InvalidOperationException("Empty vocabulary self-test result.");
                 foreach (var entry in vocabularyResult) testResult[entry.Key] = entry.Value;
+                testResult["topicUniverse3D"] = true;
+                await Browser.ExecuteScriptAsync("WordOrbitConstellation.select('语言演化')");
+                if (await Browser.ExecuteScriptAsync("WordOrbitConstellation.snapshot().selected==='语言演化'&&WordOrbitConstellation.snapshot().paused&&document.querySelector('#selectedTopicKind').textContent.includes('自然地理')") != "true") throw new InvalidOperationException("Native topic focus failed.");
+                await Browser.ExecuteScriptAsync("WordOrbitConstellation.clear(true);document.querySelector('#starListViewBtn').click();");
+                if (await Browser.ExecuteScriptAsync("!WordOrbitConstellation.snapshot().mounted&&document.querySelectorAll('#topicExplorer canvas').length===0") != "true") throw new InvalidOperationException("Native topic scene disposal failed.");
+                await Browser.ExecuteScriptAsync("document.querySelector('#starMapViewBtn').click();");
+                testResult["topicFocusAndDisposal"] = true;
                 // Only the explicitly requested self-test creates this synthetic article.
                 // Its WebView2 profile is isolated by --data-dir in the validation workflow.
                 await Browser.ExecuteScriptAsync("""
