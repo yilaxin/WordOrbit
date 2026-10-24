@@ -74,7 +74,7 @@ body.dark .celestial-label{background:rgb(15 23 42 / 80%);border-color:rgb(127 1
 .topic-explorer.is-expanded .constellation-toolbar,.topic-explorer.is-expanded .constellation-selection{flex-shrink:0}
 .topic-explorer.is-expanded .constellation-viewport{height:auto;min-height:0;flex:1}
 .topic-explorer.is-expanded .constellation-list{flex:1;min-height:0;max-height:none}
-/* Three-dimensional scene overrides: transparent labels, bounded native polygon models. */
+/* Three-dimensional scene: readable labels and single, full-size original artwork. */
 .constellation-discovery{display:flex;align-items:center;gap:10px;padding:12px 18px;flex-wrap:wrap;border-bottom:1px solid var(--line);background:var(--card);position:relative;z-index:5}
 .constellation-discovery label{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted)}
 .constellation-discovery input{width:190px;min-width:0;padding:8px;font-size:11px}.constellation-discovery select{max-width:230px;padding:8px;font-size:11px}.constellation-discovery .muted{font-size:10px}.constellation-discovery button{padding:8px 12px;font-size:11px;margin-left:auto}
@@ -86,7 +86,6 @@ body.dark .celestial-label{background:rgb(15 23 42 / 80%);border-color:rgb(127 1
 .celestial-body{pointer-events:auto;will-change:auto}.celestial-body .celestial-label{font-size:11px;padding:3px 7px;border-radius:7px;color:#e9f3ff;background:#081327dc;border-color:#94afe43b}.celestial-body .celestial-label small{font-size:8px;color:#f0d294}
 .celestial-body .celestial-progress{--cyan:#9de2f4}.celestial-body.selected .celestial-label,.celestial-body:hover .celestial-label,.celestial-body:focus-visible .celestial-label{color:#e4d4ff;background:#14213be8;border-color:#c2aaff}
 .constellation-corner{z-index:4;color:#c5d6ee;opacity:1}.constellation-corner>span{padding:7px 10px;border-radius:8px;background:#091326bf;text-shadow:0 1px 4px #000}
-.celestial-model{position:absolute;left:50%;top:50%;width:155%;height:155%;transform:translate(-50%,-50%);pointer-events:none}.has-fleet-model .celestial-object>img{position:absolute;width:24px;height:24px;right:-14px;bottom:-12px;opacity:.88;transform:none;border-radius:50%;background:#091326;border:1px solid #8ea6c754}
 .stellar-corona{width:170%;height:170%;animation:none;opacity:.7}.stellar-theme-mark{background:#102039}
 .constellation-selection{flex-wrap:wrap}.constellation-selection>#constellationBrowse{font-size:12px;flex-shrink:0}.selected-topic-description{max-width:470px}.selected-topic-description p{line-height:1.7}.topic-explorer.is-expanded .constellation-discovery{flex-shrink:0}
 @media(max-width:1000px){

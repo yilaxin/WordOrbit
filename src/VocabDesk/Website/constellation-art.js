@@ -33,6 +33,7 @@ window.WORDORBIT_TOPIC_ART = Object.freeze([
   {
     "number": "04",
     "id": "space-exploration",
+    "artHeading": -38,
     "chapter": "太空探索",
     "title": "深空探测飞船",
     "kind": "ship",
@@ -53,6 +54,7 @@ window.WORDORBIT_TOPIC_ART = Object.freeze([
   {
     "number": "06",
     "id": "technology-invention",
+    "artHeading": 15,
     "chapter": "科技发明",
     "title": "科研飞船",
     "kind": "ship",
@@ -73,6 +75,7 @@ window.WORDORBIT_TOPIC_ART = Object.freeze([
   {
     "number": "08",
     "id": "language-evolution",
+    "artHeading": -45,
     "chapter": "语言演化",
     "title": "通信卫星",
     "kind": "satellite",
@@ -133,6 +136,7 @@ window.WORDORBIT_TOPIC_ART = Object.freeze([
   {
     "number": "14",
     "id": "transport-travel",
+    "artHeading": -35,
     "chapter": "交通旅行",
     "title": "星际运输飞船",
     "kind": "ship",
@@ -163,6 +167,7 @@ window.WORDORBIT_TOPIC_ART = Object.freeze([
   {
     "number": "17",
     "id": "laws-regulations",
+    "artHeading": 0,
     "chapter": "法律法规",
     "title": "守衡卫星",
     "kind": "satellite",
@@ -173,6 +178,7 @@ window.WORDORBIT_TOPIC_ART = Object.freeze([
   {
     "number": "18",
     "id": "battle-conflict",
+    "artHeading": 135,
     "chapter": "沙场争锋",
     "title": "防御巡航舰",
     "kind": "ship",
