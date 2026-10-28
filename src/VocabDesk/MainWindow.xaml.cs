@@ -215,13 +215,15 @@ public partial class MainWindow : Window
                     (async () => {
                       try {
                         if (!window.WordOrbitComets || !document.querySelector('.primary-nav [data-view="comets"]')) throw Error('Comets did not load');
-                        const sample = CometsCore.clean({id:'comet-native-self-test',date:CometsCore.localDate(),time:'08:40',title:'Synthetic native moment',context:'Synthetic scene only',english:'Could I have it with oat milk?',meaning:'合成测试译文'});
+                        const sample = CometsCore.clean({id:'comet-native-self-test',date:CometsCore.localDate(),time:'08:40',title:'Synthetic native moment',context:'Synthetic scene only',english:'Could I have it with oat milk?',meaning:'合成测试译文',appearance:'rose'});
                         await CometsStore.commit({puts:[sample]});
                         const restored = await CometsStore.page(sample.date,0,12);
                         if (restored.find(e=>e.id===sample.id)?.english !== sample.english) throw Error('Private comet persistence failed');
+                        if(restored.find(e=>e.id===sample.id)?.appearance!=='rose'||CometLooks.catalog.length!==6)throw Error('Six comet looks or saved appearance failed');
                         showView('comets');
                         for(let i=0;i<50&&!WordOrbitComets.snapshot().scene;i++)await new Promise(resolve=>setTimeout(resolve,50));
                         if(WordOrbitComets.snapshot().scene?.count!==1)throw Error('Native comet scene did not mount');
+                        if(WordOrbitComets.snapshot().scene.objects[0]?.appearance!=='rose')throw Error('Native comet look did not render');
                         for(let i=0;i<50;i++){const image=document.querySelector('.cf-sky-image');if(image?.complete&&image.naturalWidth>0)break;await new Promise(resolve=>setTimeout(resolve,50));}
                         const sky=document.querySelector('.cf-sky-image');
                         if(!sky?.complete||!sky.naturalWidth||sky.naturalWidth>1536)throw Error('Native bounded sky background did not load');
@@ -280,6 +282,10 @@ public partial class MainWindow : Window
                 await SelfTestWheelAsync("#cometsEditor",420);
                 if (await Browser.ExecuteScriptAsync("document.querySelector('#cometsEditor').scrollTop>0") != "true") throw new InvalidOperationException("Comet editor blocked native wheel.");
                 await Browser.ExecuteScriptAsync("document.querySelector('#cometsField_title').value='Synthetic native pointer moment';document.querySelector('#cometsField_english').value='I missed my stop.';");
+                await SelfTestClickAsync("#cometsLookOptions summary");
+                if (await Browser.ExecuteScriptAsync("document.querySelectorAll('#cometsLookChoices input').length===6&&document.querySelector('#cometsLookOptions').open") != "true") throw new InvalidOperationException("Native six-look selector did not open.");
+                await SelfTestClickAsync("#cometsLookChoices input[value='amber']");
+                if (await Browser.ExecuteScriptAsync("document.querySelector('#cometsField_appearance').value==='amber'") != "true") throw new InvalidOperationException("Native comet look choice failed.");
                 await SelfTestClickAsync("#cometsSave");
                 for (var attempt=0;attempt<50;attempt++)
                 {
@@ -287,6 +293,8 @@ public partial class MainWindow : Window
                     await Task.Delay(100);
                 }
                 if (await Browser.ExecuteScriptAsync("WordOrbitComets.snapshot().loadedRecords===1&&!document.querySelector('#cometsEditor').open") != "true") throw new InvalidOperationException("Native pointer record save failed.");
+                if (await Browser.ExecuteScriptAsync("WordOrbitComets.snapshot().scene.objects[0]?.appearance==='amber'&&!WordOrbitComets.snapshot().appearancePreview.scheduled&&document.querySelector('#cometsLookPreview').width===0") != "true") throw new InvalidOperationException("Native saved look or preview disposal failed.");
+                testResult["cometsSixLooks"] = true;
                 await Browser.ExecuteScriptAsync("window.__pointerClean=false;CometsStore.all().then(entries=>CometsStore.commit({removes:entries.filter(e=>e.title==='Synthetic native pointer moment').map(e=>e.id)})).then(()=>{window.__pointerClean=true;showView('home');});");
                 for (var attempt=0;attempt<50;attempt++)
                 {
