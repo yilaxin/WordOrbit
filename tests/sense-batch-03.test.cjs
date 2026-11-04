@@ -64,7 +64,7 @@ test('100 real words create two different 50-word batches with all chosen senses
 test('new cross-word equivalents are excluded and the data load offline in a browser context',()=>{
   for(const [a,b]of [[get('research','study'),get('scholarship','study')],[get('cushion','protection'),get('mitigate','lessen')],[get('surrender','give-up'),get('yield','give-way')],[get('contemporary','modern'),get('current','now')],[get('organism','system'),get('ecosystem','network')],[get('evidence','proof'),get('testimony','proof')]])assert.equal(core.overlaps(a,b),true);
   const site=path.join(__dirname,'../src/VocabDesk/Website'),window={},context={window};vm.createContext(context);
-  for(const name of ['sense-batch-03.js','sense-batch-04.js','sense-catalog.js'])vm.runInContext(fs.readFileSync(path.join(site,name),'utf8'),context);
+  for(const name of ['sense-batch-03.js','sense-batch-04.js','sense-batch-05.js','sense-catalog.js'])vm.runInContext(fs.readFileSync(path.join(site,name),'utf8'),context);
   assert.equal(Object.values(window.WORDORBIT_SENSE_CATALOG.entries).filter(e=>e.batch<='03').length,130);
   assert.equal(JSON.stringify(window.WORDORBIT_SENSE_CATALOG),JSON.stringify(pack));
   // The production UI remains on its existing training system until integration.

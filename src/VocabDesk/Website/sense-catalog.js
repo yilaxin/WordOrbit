@@ -1,4 +1,4 @@
-/* Editorial batches 01-04. Definitions checked against the named dictionary entries.
+/* Editorial batches 01-05. Definitions checked against the named dictionary entries.
  * Chinese grouping and all bilingual teaching examples are written for WordOrbit.
  * complete means the explicitly declared learning scope, NOT all dictionary senses.
  * This pack is not yet loaded by the desktop app. No user data is included.
@@ -249,6 +249,10 @@
   const registerBatch04=typeof module==='object'&&module.exports?require('./sense-batch-04.js'):scope.WordOrbitSenseBatch04;
   if(typeof registerBatch04!=='function')throw Error('Missing editorial batch 04');
   registerBatch04(add);
+  editorialBatch='05';
+  const registerBatch05=typeof module==='object'&&module.exports?require('./sense-batch-05.js'):scope.WordOrbitSenseBatch05;
+  if(typeof registerBatch05!=='function')throw Error('Missing editorial batch 05');
+  registerBatch05(add);
   // Per-sense references point to the page that actually supports that use.
   for(const id of ['accepted','trend'])entries.current.senses.find(s=>s.id===id).source='https://www.collinsdictionary.com/us/dictionary/english/current';
   entries.spring.senses.find(s=>s.id==='elasticity').source='https://www.collinsdictionary.com/us/dictionary/english/spring';
@@ -274,6 +278,6 @@
     if(entry.unresolvedReferences.length){entry.complete=false;entry.pendingReview='常用义项已初审；旧译仍有未决项：'+entry.unresolvedReferences.join('；')+'。整词暂不进入完整覆盖训练。';}
     entry.sources=[...new Set([...entry.sources,...entry.senses.map(s=>s.source),...entry.referenceOnly.map(r=>r.source).filter(Boolean)])];
   }
-  const api={version:4,batches:['01','02','03','04'],reviewDate:date,publicationState:'editorial-development',scope:'declared-learning-scope-not-exhaustive-dictionary',entries};
+  const api={version:5,batches:['01','02','03','04','05'],reviewDate:'2026-11-05',publicationState:'editorial-development',scope:'declared-learning-scope-not-exhaustive-dictionary',entries};
   if(typeof module==='object'&&module.exports)module.exports=api;else scope.WORDORBIT_SENSE_CATALOG=api;
 })(typeof window==='object'?window:globalThis);

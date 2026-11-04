@@ -14,9 +14,9 @@ function containsTarget(word,text){
 }
 
 test('batch 04 adds exactly 200 distinct words and 415 original sense-specific bilingual examples',()=>{
-  assert.equal(entries.length,200);assert.equal(Object.keys(pack.entries).length,330);
+  assert.equal(entries.length,200);assert.equal(Object.values(pack.entries).filter(e=>e.batch<='04').length,330);
   assert.equal(new Set(entries.map(([w])=>w)).size,200);
-  const sentences=new Set(Object.values(pack.entries).filter(e=>e.batch!=='04').flatMap(e=>e.senses.map(s=>s.example.en)));
+  const sentences=new Set(Object.values(pack.entries).filter(e=>e.batch<'04').flatMap(e=>e.senses.map(s=>s.example.en)));
   assert.equal(sentences.size,394);let count=0;
   for(const [word,e]of entries){
     assert.equal(core.validateEntry(e),true,word);assert.equal(e.unresolvedReferences.length,0,word);
@@ -85,7 +85,7 @@ test('200 real words produce four disjoint 50-word batches with complete sense g
 test('cross-word equivalents are excluded and the full pack loads without network or production activation',()=>{
   for(const [a,b]of [[get('adapt','adjust'),get('adjust','adapt')],[get('accurate','precise'),get('precise','exact')],[get('entertainment','amusement'),get('recreation','leisure')],[get('mediate','dispute'),get('intervene','involve')]])assert.equal(core.overlaps(a,b),true);
   const site=path.join(__dirname,'../src/VocabDesk/Website'),window={},context={window};vm.createContext(context);
-  for(const file of ['sense-batch-03.js','sense-batch-04.js','sense-catalog.js'])vm.runInContext(fs.readFileSync(path.join(site,file),'utf8'),context);
+  for(const file of ['sense-batch-03.js','sense-batch-04.js','sense-batch-05.js','sense-catalog.js'])vm.runInContext(fs.readFileSync(path.join(site,file),'utf8'),context);
   assert.equal(JSON.stringify(window.WORDORBIT_SENSE_CATALOG),JSON.stringify(pack));
   assert.doesNotMatch(fs.readFileSync(path.join(site,'index.html'),'utf8'),/src=["'][^"']*sense-(?:batch|catalog|training)/);
 });
