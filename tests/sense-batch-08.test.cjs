@@ -12,9 +12,9 @@ function containsTarget(word,text){
   forms.push(...(irregular[w]||[]));
   return forms.some(f=>new RegExp('\\b'+f.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\b','i').test(text));
 }
-const allowedSource=/^https:\/\/(api\.dictionaryapi\.dev|www\.vocabulary\.com|www\.merriam-webster\.com|developer\.mozilla\.org|learn\.microsoft\.com|docs\.github\.com)\//;
+const allowedSource=/^https:\/\/(api\.dictionaryapi\.dev|www\.vocabulary\.com|www\.merriam-webster\.com|dictionary\.cambridge\.org|www\.collinsdictionary\.com|developer\.mozilla\.org|learn\.microsoft\.com|docs\.github\.com)\//;
 
-test('batch 08 adds 200 distinct words, 499 scoped senses and 499 original bilingual examples',()=>{
+test('reviewed batch 08 has 200 distinct words, 538 scoped senses and 538 original bilingual examples',()=>{
   assert.equal(entries.length,200);assert.equal(Object.values(pack.entries).filter(e=>e.batch<='08').length,1130);
   const older=Object.values(pack.entries).filter(e=>e.batch<'08'),sentences=new Set(older.flatMap(e=>e.senses.map(s=>s.example.en)));
   assert.equal(older.length,930);assert.equal(sentences.size,2288);let count=0;
@@ -35,7 +35,7 @@ test('batch 08 adds 200 distinct words, 499 scoped senses and 499 original bilin
       assert.notEqual(r.decision,'outside-scope-unresolved',word);
     }
   }
-  assert.equal(count,499);assert.equal(sentences.size,2787);
+  assert.equal(count,538);assert.equal(sentences.size,2826);
 });
 
 test('distinct uses, restricted constructions, technical sources and legacy corrections stay explicit',()=>{
@@ -49,16 +49,16 @@ test('distinct uses, restricted constructions, technical sources and legacy corr
   assert.equal(get('flip','flip-through').construction,'flip through');
   assert.match(get('high-definition','high-resolution').source,/api\.dictionaryapi\.dev\/api\/v2\/entries\/en\/high%20definition$/);
   assert.match(get('usage','amount-used').source,/api\.dictionaryapi\.dev/);
-  assert.equal(get('rug','blanket-throw').label,'盖毯；厚毛毯');
+  assert.equal(get('rug','blanket-throw').label,'（主要英式）盖毯；旅行毯');
   assert.equal(get('notify','inform').pos,'vt.');
-  for(const[w,term,decision]of [['heroine','海洛因','scope-excluded'],['surgery','换球术','scope-excluded'],['rug','揭露某人','context-required'],['fringe','附加的','context-required'],['pot','奖杯','scope-excluded'],['tape','窄带','scope-excluded'],['hybridisation','杂化','scope-excluded'],['metabolic','变化的','scope-excluded']]){
+  for(const[w,term,decision]of [['heroine','海洛因','scope-excluded'],['surgery','换球术','scope-excluded'],['rug','揭露某人','scope-excluded'],['fringe','附加的','context-required'],['pot','奖杯','restricted-verified'],['tape','窄带','scope-excluded'],['hybridisation','杂化','scope-excluded'],['metabolic','变化的','scope-excluded']]){
     const ref=pack.entries[w]?.referenceOnly.find(r=>r.terms.includes(term));
     assert.ok(ref,w+':'+term);assert.equal(ref.decision,decision,w+':'+term);
     assert.ok(!pack.entries[w].senses.some(s=>s.aliases.includes(term)),w+':'+term);
   }
 });
 
-test('four disjoint 50-word batches target all 499 senses with fixed safe options and true tail retries',()=>{
+test('four disjoint 50-word batches target all 538 senses with fixed safe options and true tail retries',()=>{
   const words=entries.map(([word])=>({id:'b08-'+word,word})),byId=new Map(words.map(w=>[w.id,w])),done=[],before=JSON.stringify({words,entries});let goals=0;
   for(let n=0;n<4;n++){
     const batch=core.build(words,pack.entries,{date:'2026-11-05',completedIds:done,random:random(809+n*71)});
@@ -81,7 +81,7 @@ test('four disjoint 50-word batches target all 499 senses with fixed safe option
     for(let i=1;i<batch.queue.length;i++)core.grade(batch,i,batch.queue[i].expected);
     assert.equal(core.progress(batch).completed,true);
   }
-  assert.equal(goals,499);assert.equal(new Set(done).size,200);assert.equal(core.build(words,pack.entries,{date:'2026-11-05',completedIds:done}),null);
+  assert.equal(goals,538);assert.equal(new Set(done).size,200);assert.equal(core.build(words,pack.entries,{date:'2026-11-05',completedIds:done}),null);
   assert.equal(JSON.stringify({words,entries}),before);
 });
 

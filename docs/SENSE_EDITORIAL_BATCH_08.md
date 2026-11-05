@@ -1,8 +1,8 @@
 # 第八批：200 词义项结构与原创英汉例句
 
-日期：2026-11-05。本批新增 200 个互不重复的正式公共词，499 个声明学习范围内的义项组，以及 499 组原创英文例句与准确中文对照。与前七批已结构化的 930 词不重复；每个保留义项都有稳定 ID、词性、中文标签、语义排除标记及来源，需要限定的用法附有搭配。不限制每词两个义项。
+日期：2026-11-05。本批新增 200 个互不重复的正式公共词，538 个声明学习范围内的义项组，以及 538 组原创英文例句与准确中文对照。与前七批已结构化的 930 词不重复；每个保留义项都有稳定 ID、词性、中文标签、语义排除标记及来源，需要限定的用法附有搭配。不限制每词两个义项。
 
-累计结构化 1,130 词、2,787 个义项组和 2,787 组双语例句。其中 1,125 词、2,747 个义项组通过各批声明学习范围检查。第二批原有 5 个部分审核词及 10 个未决旧译继续保留阻断。正式公共词表为 4,247 词，其余 3,117 词尚未建立新结构。
+累计结构化 1,130 词、2,826 个义项组和 2,826 组双语例句。其中 1,125 词、2,786 个义项组通过各批声明学习范围检查。第二批原有 5 个部分审核词及 10 个未决旧译继续保留阻断。正式公共词表为 4,247 词，其余 3,117 词尚未建立新结构。
 
 **本批仍是开发中的义项数据，尚未接入正式网页或桌面练习。** 没有替换现有 v1.7.0 桌面程序，也没有为资料整理单独发布安装包。`complete` 表示本批列出的学习范围完成编辑检查，不表示穷尽所有词典、专业术语、习语或雅思可能用法。
 
@@ -33,68 +33,40 @@
 | 身体与医疗 | abdomen, intestine, kidney, womb, muscle, surgeon, surgery, dentist, diabetes, paralyse |
 | 时间与程度 | initially, intermediate, meantime, preceding, precedent, foremost, permanent, punctual, periodically, recent |
 
-## 本批的重点区别
+## 独立复核后的修正
 
-- `crack` 分开裂缝、爆裂声、裂开、（使）发出爆裂声、破解密码/难题、玩笑、第一流的和“试一试”，并写明 `take a crack at` 搭配；`sharp-sound-verb` 与名词声音义不合并成同一答案。
-- `margin` 分开页边空白、湖面边缘、贫困线一类的界限、时间余地、比赛差额、销售利润、交易保证金和动词加旁注。
-- `fringe` 区分流苏饰边、森林南缘、边缘群体、给边缘加饰和非主流形容词；`fringe benefits` 一类固定说法只作参考边界，不单列学习义项。
-- `vice` 分开恶习、邪恶、台钳、用台钳夹住、副职（`vice president`）和“代替”用法（`instead-of`），不把工具义和政治/拉丁前缀义互相等同。
-- `seed` 区分植物种子、起源、后代、播种、结籽和体育种子排名；`stride` 区分大步、步幅、进展、迈步走和跨过，例句使用不规则过去式 `strode`，并写明 `make strides`。
-- `pot` 区分容器、花盆、栽入盆中保存和 `take a pot shot at sth`；`usage` 区分用法、使用量/消耗量和语言惯例，补入常用“用水量、能耗量”义；`rug` 区分小地毯与盖毯/厚毛毯。
-- `steward` 区分庄园管家、轮船乘务员、空乘、工会代表和财务代理人；`flip` 区分翻转、轻抛、翻看（`flip through`）、空翻、轻率态度和失控（`flip out`）。
-- `revolution` 区分起义、根本变革、旋转、单圈转动和循环；`domain` 区分领域、领土、DNS 域名和数学定义域，技术用法按通用词典条目保留，未使用专门技术文档来源。
-- `high-definition` 的来源页按 API 实际地址保存为 `high%20definition` 编码形式；`notify` 词性保留词典的及物动词标记 `vt.`，不统一改写成 `v.`。
-- `hybridisation` 的化学“杂化”、`metabolic` 的“变化的/变形的”、`heroine` 的“海洛因/二醋吗啡”、`surgery` 的“换球术”、`tape` 的“窄带/测量”、`pot` 的“奖杯/坩埚/在锅中煮”、`seed` 的“精液/催…发育/脱…籽”等旧片段逐条写为 `scope-excluded` 边界，不当作学习义项；`rug` 的“揭露某人”只在 `pull the rug out from under sb` 结构中出现，记为 `context-required`。
+初始提交为 200 词、499 义项和 499 组例句。2026-11-05 独立复核逐条阅读本批词义及例句，并对遗漏、词性、搭配、地区用法、技术边界和可疑内容查阅 Cambridge、Collins 等原始条目。最终修正涉及 51 词：新增 42 个义项组、撤并 3 个重复或不宜按单词独立出题的组，净增 39 组。另改写已有 23 条英文例句、25 条中文译句。最终为 **200 词、538 义项组、538 组原创双语例句**。
 
-`referenceOnly` 的 `scope-excluded` 仅声明不纳入本批的边界，并不证明旧译正确。本批旧片段均能追溯到已保留义项或明确说明；第二批的未决状态没有被本批覆盖或清零。
+- 补回 seed 的去籽、种子选手和促使产生；fringe 的刘海、fringe benefits；literature 的宣传资料；functional 的实用设计；Lord 的宗教称呼；brood 的一家孩子；hostel 的集体宿舍等常见用法。不能因为最初使用的一个来源未列出，就直接排除常见义。
+- bench 的替补席与法官席分别建立例句；surgery 分清英式诊所/门诊时间、议员接待和美加手术室；saddle 的备鞍与上马分开。crack 的声音例句仅标名词；vice 的副职用法标 prefix；pledge 的祝酒例句改为对应及物动词；foremost 的副词例句使用 first and foremost。
+- microbe 不无条件等同于细菌，temple 不等于鬓角头发，vice 工具义不是任意手持钳子。diabetes 通常指糖尿病；尿崩症只在完整术语 diabetes insipidus 的限定下训练。旧译仍保留追溯。
+- 修正 rug 的旧译说明：pull the rug out from under someone 是突然撤走支持或使人陷入困境，不能解释成“揭露某人”。修正 invader 只能指人的错误边界；修正 plantation 不能表示种植行为的错误断言。
+- 原 recent.modern-near 合并到 short-while-ago，避免把“新近的”拆成重复目标或误作历史分期；substantial.material-entity 合并到 real-not-illusion；pot.potshot 撤出单词义项目标并保留短语追溯。这三个 ID 均未重分配给其他义，正式桌面尚未使用这些编辑 ID。
+- 增加或明确词义间的保守近义排除：margin/fringe/outskirts 的外围、rug/blanket 的盖毯、steward/hostess 的乘务员、brood/bunch 的人群及 cannon/crack 的撞击，避免这些真实相关义被当成错误选项。
+- 例句按具体含义重写，修复不自然搭配、英汉信息不对应和容易被误解为通用事实的表述。罕用、古旧、专业和地区限制在标签或搭配中明确标识，不冒充普通现代用法。
 
-## 原创例句示例
+详细问题、依据和验证见 [第八批独立复核记录](SENSE_EDITORIAL_BATCH_08_REVIEW.md)。此前关于 fringe benefits、seed 去籽、literature 宣传资料和 Lord 等被排除的说明已经撤回，不应沿用初始核对结论。
 
-**crack：尝试；试一试**
+## 来源与边界
 
-Why not take a crack at the puzzle before checking the answer?
+初始数据主要使用 dictionaryapi.dev（聚合词典数据）及 Vocabulary.com。最初脚本访问部分网站受限，并不能证明原始词典没有相应义项。**本次复核能够查阅 Cambridge、Collins 和 Merriam-Webster 的原始条目**，修正义项逐条保存实际使用的来源 URL；没有声称本次将 200 词全部换成某一家词典的完整词条。中文教学标签和全部英汉例句由 WordOrbit 编写，未摘录词典例句。
 
-为什么不在看答案之前先试着解一下这个谜题？
+少量专业旧译继续明确排除在本批学习范围外，不把“未纳入”写成“不存在”。例如 melon 在碳氮材料研究中确有聚合物用法，不能误称其等于 melamine 或不存在化学含义；本批不训练该专业中文片段，修正说明附原始研究来源。scope-excluded 不是旧译正确性认证，complete 也不等于穷尽所有雅思可能用法。前批五个部分审核词和十个未决片段继续阻断，不因本批通过而清零。
 
-**margin：利润；赚头**
+## 未学筛选和验证
 
-The shop keeps a narrow margin on milk in order to attract customers.
-
-这家店在牛奶上只保留很薄的利润，以吸引顾客。
-
-**stride：进展；进步**
-
-The clinic has made great strides in reducing waiting times this year.
-
-这家诊所今年在缩短等候时间方面取得了很大进展。
-
-**usage：使用量；消耗量**
-
-Household water usage rose sharply during the three-week heatwave.
-
-在三周的热浪期间，家庭用水量急剧上升。
-
-**rug：盖毯；厚毛毯**
-
-He wrapped a thick rug around his shoulders as the wind rose.
-
-风大起来时，他把一条厚毛毯裹在肩上。
-
-## 来源和验证
-
-逐词查阅 [dictionaryapi.dev](https://api.dictionaryapi.dev/api/v2/entries/en/crack) 的英文条目（其数据来自 Wiktionary，CC BY-SA 3.0）；对需要区分搭配或补充义的少数义项，另查 [Vocabulary.com](https://www.vocabulary.com/dictionary/stride) 等公开词条。本机网络环境下 Cambridge、Collins、Oxford 对自动请求返回 HTTP 403，Merriam-Webster 响应被截断，因此本批没有使用这些站点，公开说明中也不声称已核对该三家词典。全部中文教学标签和英汉例句由 WordOrbit 编写，没有摘录词典例句或替换统一模板中的词形。每个义项的实际来源 URL 保存在 `src/VocabDesk/Website/sense-batch-08.js`，并随覆盖核对单导出。
-
-- 筛选时从本机桌面应用读取完整学习状态（只读副本，WebView2 宿主在页面脚本前导出 `localStorage`），检查学习计数、最后学习时间、作答历史及同词不同 ID。200 词无已学命中、无重复、无正式目录外词、无导出缺失词，也不与前七批重叠。此核对不是通过界面导出按钮完成，也未改动学习数据；建议下次正式整理前用应用内导出复核。结论仅适用于该只读快照时点，不宣称实时未学。
-- 导出文件、真实快照时间、候选和筛选证据均只保存在本机忽略目录；公开代码、文档和测试不含私人学习记录。
-- `tests/sense-batch-08.test.cjs` 核对 200 词和 499 个义项、稳定 ID、词性、来源域、对应英汉句、屈折词形，并与前七批 2,288 个例句查重（全库 2,787 组例句无重复）。
-- 四个互不重叠的 50 词测试批次覆盖全部 499 个义项目标，检查动态题量、同词其他真实义排除、反向候选整词语义排除、固定选项、序列化、末尾错题及完成条件；本批固定种子下 892 道题无需降级为自评回忆卡。
-- 跨批近义检查涵盖 crack/essay 的“尝试”、desolate/devastate 的“摧毁/使悲痛”、investigation/inquiry 的“调查”和 oath/pledge 的“誓言”，防止相近真实意义被抽成错误选项。
-- 累计覆盖审计保留原有部分审核状态，确认旧片段未映射数和目录外词数均为 0。八批数据可离线加载；正式入口仍不加载义项训练模块。
+- 原始筛选使用本机学习目录只读副本。本次独立复核通过实际桌面应用公共词库的“导出数据”重新取得完整授权导出，依据导出内的学习计数、最后学习时间、作答历史以及同词不同 ID 核对：200 词均无已学命中，无重复、无目录外词、无导出缺失词；与前七批 930 词不重复。仅对本次完整导出时点成立，不宣称之后仍实时未学。
+- 原始副本证据和本次界面导出、具体时间及筛选证据只保存在本机忽略目录；公共文件不含私人进度。
+- 修正后累计义项相关回归 **48 项通过**。新增 5 项人工编辑语义回归测试，覆盖遗漏常用义、词性/搭配、错误旧译边界、英汉对应及独立判定的近义排除。将这些新增测试用于初始数据时，5 项均失败；用于修正数据时均通过，确认它们能捕捉实际缺陷。
+- 四个互不重叠的 50 词测试批次覆盖全部 538 个新义项目标，固定种子下共生成 942 道基础题，0 道降级回忆卡；检查固定选项、反向整词语义排除、序列化和末尾错题。
+- 累计 2,826 条英文例句无精确重复，全部例句保留原创标识、词性、来源和对应中文。查重与结构验证不能代替人工语义检查。
+- 覆盖审计：旧片段未映射数 0、正式目录外词数 0；原有十个未决片段保留。前七批 930 词的运行时完整条目与复核前基线逐项一致。
+- 八批数据可在离线浏览器环境加载；正式 index.html 仍不加载新义项训练模块，**未替换 v1.7.0 桌面程序，未发布数据资料专用安装包**。
 
 ```text
 node scripts/Audit-SenseCoverage.cjs
 node scripts/Audit-SenseBatchSelection.cjs --progress <本机授权导出.json> --batch 08 --count 200
-node --test tests/sense-catalog.test.cjs tests/sense-training-core.test.cjs tests/sense-selection.test.cjs tests/sense-batch-03.test.cjs tests/sense-batch-04.test.cjs tests/sense-batch-05.test.cjs tests/sense-batch-06.test.cjs tests/sense-batch-07.test.cjs tests/sense-batch-08.test.cjs
+node --test tests/sense-catalog.test.cjs tests/sense-training-core.test.cjs tests/sense-selection.test.cjs tests/sense-batch-03.test.cjs tests/sense-batch-04.test.cjs tests/sense-batch-05.test.cjs tests/sense-batch-06.test.cjs tests/sense-batch-07.test.cjs tests/sense-batch-08.test.cjs tests/sense-batch-08-review.test.cjs
 ```
 
-覆盖审计在本机生成 `.build/sense-batch-08-review.md`，列出全部义项、原创英汉例句、来源及旧译边界。该核对单的生成不需要读取私人学习进度。
+覆盖审计在本机生成 .build/sense-batch-08-review.md，列出全部义项、例句、来源和旧译边界；生成这个公共数据核对单不需要读取私人进度。

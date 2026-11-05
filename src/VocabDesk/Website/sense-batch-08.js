@@ -17,7 +17,7 @@
       ["countryside","乡村的；农村的；与农业有关的","adj.",["乡下的","田园的","乡村风味的","农村的","乡村的","有关农业的"],["rural-countryside-life"],"Life in rural areas is quieter, but the buses run only twice a day.","乡村地区的生活更安静，但公交车每天只来两趟。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/rural"]
     ]);
     entry("outskirts", [
-      ["city-edge","市郊；近郊（城市边缘地带）","n.",["近郊","市郊"],["outskirts-city-periphery"],"The factory was built on the outskirts of the city, where land was cheaper.","这家工厂建在城市近郊，那里地价更便宜。","on the outskirts of","https://api.dictionaryapi.dev/api/v2/entries/en/outskirts"]
+      ["city-edge","市郊；近郊（城市边缘地带）","n.",["近郊","市郊"],["outskirts-city-periphery","geographical-periphery"],"The factory was built on the outskirts of the city, where land was cheaper.","这家工厂建在城市近郊，那里地价更便宜。","on the outskirts of","https://api.dictionaryapi.dev/api/v2/entries/en/outskirts"]
     ]);
     entry("desolate", [
       ["uninhabited","荒凉的；荒无人烟的","adj.",["荒凉的","荒无人烟的"],["desolate-uninhabited-land"],"Only a few stone walls still stand in that desolate valley.","那片荒凉的山谷里只剩下几堵石墙。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/desolate"],
@@ -32,7 +32,7 @@
       ["cascade","瀑布","n.",["瀑布"],["waterfall-river-drop"],"We could hear the waterfall long before we reached the gorge.","还没走到峡谷，我们就听到了瀑布的声音。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/waterfall"]
     ]);
     entry("shady", [
-      ["shaded","荫凉的；成荫的；背阴的","adj.",["荫凉的","成荫的","阴暗的"],["shady-sheltered-from-sun"],"They found a shady spot under the oak and opened their picnic.","他们在橡树下找了个阴凉处，打开野餐。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/shady"],
+      ["shaded","荫凉的；成荫的；背阴的","adj.",["荫凉的","成荫的","阴暗的"],["shady-sheltered-from-sun"],"They found a shady spot under the oak and unpacked their picnic basket.","他们在橡树下找了个阴凉处，打开野餐篮取出食物。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/shady"],
       ["suspicious","可疑的；见不得人的","adj.",["成问题的","令人怀疑的"],["shady-dishonest"],"The deal looked shady, so she asked a lawyer to read the contract.","这笔交易看起来可疑，于是她请律师看了合同。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/shady"]
     ], [
       {"terms":["隐蔽的"],"decision":"scope-excluded","reason":"核对条目中 shady 的阴影义指遮荫、背光，不含“隐蔽、藏匿”义；旧译“隐蔽的”未获条目支持，本批不单列义项。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/shady"}
@@ -44,50 +44,60 @@
     ]);
     entry("margin", [
       ["page-margin","页边空白；页边距","n.",["页边的空白","页边距"],["margin-page-edge"],"The teacher wrote a short comment in the margin of my essay.","老师在我文章的页边空白处写了一句简短评语。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/margin"],
-      ["surface-edge","边缘；边沿","n.",["边缘"],["margin-border-of-surface"],"Small wooden huts stand along the margin of the lake.","小木屋排列在湖边。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/margin"],
-      ["group-limit","界限；临界线","n.",["界限"],["margin-group-limit"],"Families on the margin of poverty often miss such schemes.","处于贫困边缘的家庭常常得不到这类计划的帮助。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/margin"],
+      ["surface-edge","边缘；边沿","n.",["边缘"],["margin-border-of-surface","geographical-periphery"],"Small wooden huts stand along the margin of the lake.","小木屋排列在湖边。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/margin"],
+      ["group-limit","界限；临界线","n.",["界限"],["margin-group-limit"],"The drought pushed small farms to the margins of economic survival.","旱灾把小农场推到了勉强维持生计的边缘。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/margin"],
       ["leeway","余地；余裕","n.",["余裕"],["margin-spare-room"],"The plan allows a margin of two days in case of delays.","该计划留出了两天的余裕，以防延误。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/margin"],
       ["difference","差额；差数","n.",["差数","差额"],["margin-score-gap"],"She won the race by a margin of only three seconds.","她以仅三秒的差额赢得了比赛。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/margin"],
       ["profit","利润；赚头","n.",["利润","赚头"],["margin-seller-profit"],"The shop keeps a narrow margin on milk in order to attract customers.","这家店在牛奶上只保留很薄的利润，以吸引顾客。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/margin"],
-      ["deposit","保证金；按金","n.",["保证金"],["margin-trading-collateral"],"Traders must put up a margin before they can borrow shares.","交易者必须先交纳保证金才能借入股票。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/margin"],
+      ["deposit","保证金；按金","n.",["保证金"],["margin-trading-collateral"],"The broker required additional margin before allowing the trade to proceed.","经纪商要求追加保证金后才允许继续这笔交易。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/margin"],
       ["annotate","在…页边加注；给…加边","v.",["加边于","加旁注于"],["margin-add-notes"],"The editor margined the draft with queries for the writer.","编辑在草稿的页边写下了给作者的问题。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/margin"]
     ]);
     entry("fringe", [
-      ["tassels","流苏；穗；饰边","n.",["流苏","穗"],["fringe-tassel-border"],"Bright red fringe hung from the edge of the dancer's shawl.","舞者披肩的边缘垂着鲜红的流苏。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/fringe"],
-      ["periphery","边缘；外围","n.",["边缘","端"],["fringe-outer-periphery"],"Their house stands on the southern fringe of the forest.","他们的房子位于森林南缘。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/fringe"],
-      ["marginal-group","边缘群体；非主流派别","n.",["边缘群体","非主流派别"],["fringe-marginal-group"],"The party pushed its most extreme members to the fringe.","该党把最极端的成员挤到了边缘位置。",null,"https://www.vocabulary.com/dictionary/fringe"],
-      ["decorate-edge","在…边缘加饰；给…加穗","v.",["加穗于","加饰边于"],["fringe-decorate-edge"],"Pale grass fringed the narrow path that led to the gate.","浅色的草镶在小径的边缘，一直通到大门。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/fringe"],
-      ["nonmainstream","边缘的；非主流的","adj.",["边缘的"],["fringe-nonmainstream"],"Fringe theatre groups in this city rarely fill large halls.","边缘戏剧团体很少能坐满大厅。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/fringe"]
+      ["tassels","流苏；穗；饰边","n.",["流苏","穗"],["fringe-tassel-border"],"Bright red fringe hung from the edge of the dancer's shawl.","舞者披肩的边缘垂着鲜红的流苏。",null,"https://dictionary.cambridge.org/dictionary/english/fringe"],
+      ["periphery","边缘；外围","n.",["边缘","端"],["fringe-outer-periphery","geographical-periphery"],"Their house stands on the southern fringe of the forest.","他们的房子位于森林南缘。",null,"https://dictionary.cambridge.org/dictionary/english/fringe"],
+      ["marginal-group","边缘群体；非主流派别","n.",["边缘群体","非主流派别"],["fringe-marginal-group"],"The party pushed its most extreme members to the fringe.","该党把最极端的成员挤到了边缘位置。",null,"https://dictionary.cambridge.org/dictionary/english/fringe"],
+      ["decorate-edge","沿…边缘排列；为…镶边","v.",["加穗于","加饰边于","为…镶边","沿边排列"],["fringe-decorate-edge","border-along-edge"],"Pale grass fringed the narrow path that led to the gate.","浅色的草镶在小径的边缘，一直通到大门。",null,"https://dictionary.cambridge.org/dictionary/english/fringe"],
+      ["nonmainstream","边缘的；非主流的","adj.",["边缘的"],["fringe-nonmainstream"],"Fringe theatre groups in this city rarely fill large halls.","边缘戏剧团体很少能坐满大厅。",null,"https://www.collinsdictionary.com/dictionary/english/fringe"],
+      ["hair","（英）刘海","n.",["刘海"],["forehead-hair"],"She cut her fringe shorter so that it no longer covered her eyebrows.","她把刘海剪短了些，不再遮住眉毛。",null,"https://dictionary.cambridge.org/dictionary/english/fringe"],
+      ["additional-benefit","附加福利；额外好处（fringe benefit）","n.（搭配）",["附加福利","额外好处"],["employment-perk"],"A free bus pass is one of the fringe benefits of working at the museum.","免费公交月票是在这家博物馆工作的附加福利之一。","fringe benefit(s)","https://dictionary.cambridge.org/dictionary/english/fringe-benefit"]
     ], [
-      {"terms":["附加的"],"decision":"context-required","reason":"“附加的”只出现在 fringe benefits（附加福利）这类固定说法中；本批未把它设为独立形容词义项，以免与“非主流”义混淆。","source":"https://www.vocabulary.com/dictionary/fringe"},
-      {"terms":["初步"],"decision":"scope-excluded","reason":"核对条目中 fringe 无“初步”义；该旧译可能是由“边缘”引申出的汉语猜测，未获词典支持。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/fringe"}
+      {"terms":["初步"],"decision":"scope-excluded","reason":"核对条目中 fringe 无“初步”义；该旧译可能是由“边缘”引申出的汉语猜测，未获词典支持。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/fringe"},
+      {"terms":["附加的"],"decision":"context-required","reason":"fringe benefits 是已核实的常用搭配，现单列附加福利义；不可把 fringe 无条件译为任何事物的“附加的”。","source":"https://dictionary.cambridge.org/dictionary/english/fringe-benefit"}
     ]);
     entry("crack", [
       ["fissure","裂缝；裂口","n.",["裂缝"],["crack-fissure"],"A thin crack ran across the ceiling after the earthquake.","地震后，天花板上横着一条细裂缝。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/crack"],
-      ["sharp-sound","爆裂声；啪的一声","n. / adv.",["爆裂声","啪地一声"],["crack-sharp-report"],"The crack of a breaking branch woke us in the middle of the night.","半夜里树枝断裂的爆裂声把我们吵醒了。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/crack"],
+      ["sharp-sound","爆裂声；啪的一声","n.",["爆裂声"],["crack-sharp-report"],"The crack of a breaking branch woke us in the middle of the night.","半夜里树枝断裂的爆裂声把我们吵醒了。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/crack"],
       ["break-apart","（使）裂开；破裂","v.",["(使)爆裂","(使)裂开"],["crack-split-open"],"The frozen lake cracked under the weight of the sled.","结冰的湖面在雪橇的重压下裂开了。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/crack"],
       ["sharp-sound-verb","（使）发出爆裂声；噼啪作响","v.",["(使)发出爆裂声"],["crack-sharp-sound-verb"],"The driver's whip cracked over the horses and the cart moved off.","车夫的鞭子在马匹上方啪地一响，马车便启程了。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/crack"],
       ["solve","破解（密码、系统）；解决（难题）","v.",["破解","解决"],["crack-solve-code"],"It took the team two years to crack the encryption.","这个团队花了两年时间才破解加密。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/crack"],
       ["joke","玩笑；俏皮话","n.",["玩笑","俏皮话"],["crack-witty-remark"],"He made a crack about my new haircut and everyone laughed.","他拿我的新发型开了个玩笑，大家都笑了。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/crack"],
       ["first-rate","第一流的；顶级的","adj.",["第一流的"],["crack-top-quality"],"She is a crack shot who rarely misses a moving target.","她是个神枪手，很少打不中移动目标。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/crack"],
-      ["attempt","尝试；试一试","n.",["尝试","试一试"],["crack-attempt","attempt-undertaking"],"Why not take a crack at the puzzle before checking the answer?","为什么不在看答案之前先试着解一下这个谜题？","take a crack at","https://api.dictionaryapi.dev/api/v2/entries/en/crack"]
+      ["attempt","尝试；试一试","n.",["尝试","试一试"],["crack-attempt","attempt-undertaking"],"Why not take a crack at the puzzle before checking the answer?","为什么不在看答案之前先试着解一下这个谜题？","take a crack at","https://api.dictionaryapi.dev/api/v2/entries/en/crack"],
+      ["give-way","（因压力）崩溃；屈服","vi.",["崩溃","屈服"],["psychological-breakdown"],"After days of questioning, the suspect finally cracked and revealed the hiding place.","经过数日盘问，嫌疑人终于撑不住了，说出了藏匿地点。","crack under pressure","https://dictionary.cambridge.org/dictionary/english/crack"],
+      ["tell-joke","说（笑话）；开玩笑","vt.",["说笑话","开玩笑"],["tell-joke"],"Maya cracked a joke to ease the tension before the interview.","面试前，玛雅说了个笑话来缓和紧张气氛。","crack a joke","https://dictionary.cambridge.org/dictionary/english/crack"],
+      ["hit","猛击；撞击","v.",["猛击","撞击"],["strike-with-force"],"I slipped on the wet step and cracked my elbow against the rail.","我在湿台阶上滑倒，胳膊肘猛撞到了栏杆上。","crack something against/on something","https://dictionary.cambridge.org/dictionary/english/crack"]
+    ], [
+      {"terms":["啪地一声"],"decision":"context-required","reason":"拟声词用法另有词典记录；当前 sharp-sound 仅训练名词声音义，不以名词例句证明副词用法。","source":"https://www.collinsdictionary.com/dictionary/english/crack"}
     ]);
     entry("seed", [
-      ["plant-seed","种子；籽","n.",["种子","籽"],["seed-plant-ovule"],"She pressed a single seed into each pot of damp soil.","她在每盆湿土里按下一粒种子。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/seed"],
-      ["origin","起源；萌芽（想法等的开端）","n.",["萌芽"],["seed-origin-germ"],"The seed of the quarrel was planted years before anyone noticed.","这场争吵的起因在很多年前就埋下了，当时没人察觉。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/seed"],
-      ["offspring","子孙；后裔","n.",["子孙"],["seed-offspring"],"Their neighbours claim to be the seed of an old royal house.","他们的邻居自称是古老王族的后裔。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/seed"],
-      ["sow","播种；在…播种","v.",["播种","在...播种"],["seed-sow-field"],"Farmers seed the fields in early April, once the frost has gone.","霜冻一过，农民就在四月初播种。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/seed"],
-      ["produce-seed","结籽；结实","v.",["结实"],["seed-produce-seed"],"The lettuces had begun to seed, so the leaves tasted bitter.","生菜已经开始结籽，所以叶子尝起来发苦。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/seed"],
-      ["tournament-ranking","把…列为种子选手（排定种子位）","v.",["列为种子选手","排种子位"],["seed-tournament-ranking"],"The organisers seeded her third, despite her low world ranking.","尽管世界排名不高，主办方仍把她列为三号种子。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/seed"]
+      ["plant-seed","种子；籽","n.",["种子","籽"],["seed-plant-ovule"],"She pressed a single seed into each pot of damp soil.","她在每盆湿土里按下一粒种子。",null,"https://dictionary.cambridge.org/dictionary/english/seed"],
+      ["origin","起源；萌芽（想法等的开端）","n.",["萌芽"],["seed-origin-germ"],"The seed of the quarrel was planted years before anyone noticed.","这场争吵的起因在很多年前就埋下了，当时没人察觉。",null,"https://dictionary.cambridge.org/dictionary/english/seed"],
+      ["offspring","子孙；后裔（文学、古旧）","n.",["子孙"],["seed-offspring"],"Their neighbours claim to be the seed of an old royal house.","他们的邻居自称是古老王族的后裔。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/seed"],
+      ["sow","播种；在…播种","v.",["播种","在...播种"],["seed-sow-field"],"Farmers seed the fields in early April, once the frost has gone.","霜冻一过，农民就在四月初播种。",null,"https://dictionary.cambridge.org/dictionary/english/seed"],
+      ["produce-seed","结籽；结实","v.",["结实"],["seed-produce-seed"],"The lettuces had begun to seed, so the leaves tasted bitter.","生菜已经开始结籽，所以叶子尝起来发苦。",null,"https://dictionary.cambridge.org/dictionary/english/seed"],
+      ["tournament-ranking","把…列为种子选手（排定种子位）","v.",["列为种子选手","排种子位"],["seed-tournament-ranking"],"The organisers seeded her third, despite her low world ranking.","尽管世界排名不高，主办方仍把她列为三号种子。",null,"https://dictionary.cambridge.org/dictionary/english/seed"],
+      ["deseed","去除（果蔬）的籽","vt.",["去籽"],["remove-fruit-seeds"],"She seeded the tomatoes before adding them to the cold soup.","她先去掉番茄籽，再把番茄加入冷汤。",null,"https://dictionary.cambridge.org/dictionary/english/seed"],
+      ["cause-development","播下（想法等）的种子；促使产生","vt.",["促使产生","播下想法的种子"],["seed-origin-germ"],"A visit to the deserted harbour seeded her idea for a novel.","一次废弃港口之行在她心中播下了创作小说的想法。",null,"https://dictionary.cambridge.org/dictionary/english/seed"],
+      ["ranked-player","种子选手","n.",["种子选手"],["seed-tournament-ranking"],"The top seed lost her opening match to an unranked teenager.","头号种子选手在首场比赛中输给了一位没有排名的少年。",null,"https://dictionary.cambridge.org/dictionary/english/seed"]
     ], [
       {"terms":["精液"],"decision":"scope-excluded","reason":"核对条目确实列有 seed 的生理义“精液”，但不适合作为雅思学习义项，本批不收录。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/seed"},
-      {"terms":["催...发育"],"decision":"scope-excluded","reason":"条目中 seed 作动词只有播种、结籽、排种子位等义，没有“催发育”的用法；该旧译未获词典支持。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/seed"},
-      {"terms":["脱...籽"],"decision":"scope-excluded","reason":"核对条目未单列“去籽、脱粒”义；旧译可能来自其他词条，本批不设该义项。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/seed"}
+      {"terms":["脱...籽"],"decision":"context-required","reason":"已核实 seed 作及物动词可表示去除果蔬的籽，现纳入 deseed；不等于所有谷物加工意义的“脱粒”。","source":"https://dictionary.cambridge.org/dictionary/english/seed"},
+      {"terms":["催...发育"],"decision":"context-required","reason":"已核实使想法或事物产生、发展的用法，纳入 cause-development；不是普遍的生物催生长用语。","source":"https://dictionary.cambridge.org/dictionary/english/seed"}
     ]);
     entry("burgeon", [
       ["sprout","（植物）发芽；抽芽","v.",["发芽","萌芽"],["burgeon-sprout-plant"],"The roses burgeon in April and are in full bloom by June.","玫瑰在四月抽芽，到六月便盛开了。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/burgeon"],
-      ["grow-rapidly","迅速发展；激增","v.",["迅速发展","激增"],["burgeon-grow-rapidly"],"Online tutoring burgeoned into a billion-dollar industry within a decade.","在线辅导在十年内迅速发展成数十亿美元的产业。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/burgeon"],
-      ["bud","芽；嫩枝","n.",["芽","嫩枝"],["burgeon-bud-shoot"],"The vine's tender burgeon appeared after the last frost.","最后一场霜过后，藤蔓长出了嫩芽。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/burgeon"]
+      ["grow-rapidly","迅速发展；激增","v.",["迅速发展","激增"],["burgeon-grow-rapidly"],"Online tutoring burgeoned into a billion-dollar industry within a decade.","在线辅导在十年内迅速发展成规模达十亿美元的行业。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/burgeon"],
+      ["bud","芽；嫩芽（罕用名词）","n.",["芽","嫩枝"],["burgeon-bud-shoot"],"The vine's tender burgeon appeared after the last frost.","最后一场霜过后，藤蔓长出了嫩芽。",null,"https://www.collinsdictionary.com/dictionary/english/burgeon"]
     ]);
     entry("fruit", [
       ["edible-fruit","水果；果类","n.",["水果","果类"],["fruit-edible-produce"],"We bought fresh fruit at the market and ate it by the river.","我们在市场买了新鲜水果，在河边吃掉了。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/fruit"],
@@ -99,9 +109,11 @@
       ["decay-process","腐烂；腐败（过程）","n.",["腐烂"],["rot-decay-process"],"Damp had turned the wooden floor of the barn to rot.","潮气使谷仓的木地板腐烂了。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/rot"],
       ["decompose","腐烂；变质","v.",["烂"],["rot-decompose"],"Half the apples rotted before we could sell them.","一半的苹果还没等我们卖出去就烂了。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/rot"],
       ["cause-decay","使腐烂；使腐朽","v.",["使腐烂","使腐朽","腐蚀"],["rot-cause-decay"],"Standing water rots the roots of young trees.","积水会使幼树的根腐烂。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/rot"],
-      ["moral-corruption","腐败；堕落","v.",["败坏","堕落","使堕落"],["rot-moral-corruption"],"He let resentment rot his friendship with his brother.","他任由怨恨败坏了自己与兄弟的友谊。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/rot"]
+      ["moral-corruption","（使）腐化；（使）堕落","v.",["败坏","堕落","使堕落"],["rot-moral-corruption"],"The novelist shows how unchecked power can rot a leader's conscience.","这位小说家描写了不受约束的权力如何腐蚀领导者的良知。",null,"https://www.collinsdictionary.com/dictionary/english/rot"],
+      ["decline","衰败；恶化","n.",["衰败","恶化"],["gradual-deterioration"],"The closure of the library marked the point when the rot set in for the town centre.","图书馆关闭，标志着镇中心开始走向衰败。","the rot sets in / stop the rot","https://www.collinsdictionary.com/dictionary/english/rot"],
+      ["languish","日渐衰弱；在困境中消沉","vi.",["日渐衰弱","消沉"],["languish-in-confinement"],"The novel follows a prisoner left to rot in an isolated fortress.","这部小说描写了一名被遗弃在偏远要塞中日渐消沉的囚犯。","rot in prison","https://www.collinsdictionary.com/dictionary/english/rot"]
     ], [
-      {"terms":["憔悴"],"decision":"scope-excluded","reason":"核对条目中 rot 无“憔悴”义；该词多形容人的面容，与“腐坏、衰退”义不符，本批不设义项。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/rot"}
+      {"terms":["憔悴"],"decision":"context-required","reason":"rot 可在被囚禁等语境中指日渐衰弱、消沉，现纳入 languish；不能无条件译作形容面容的“憔悴”。","source":"https://www.collinsdictionary.com/dictionary/english/rot"}
     ]);
     entry("herb", [
       ["culinary-herb","香草（调味用的草本植物）","n.",["香草"],["herb-culinary-seasoning"],"Chop the fresh herbs finely and stir them into the sauce.","把新鲜香草切碎，拌进酱汁里。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/herb"],
@@ -109,12 +121,12 @@
       ["nonwoody-plant","草本植物","n.",["草","草本"],["herb-nonwoody-plant"],"The meadow is rich in herbs and small flowering plants.","这片草甸上长满了草本植物和小花。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/herb"]
     ]);
     entry("plantation", [
-      ["crop-estate","种植园；大农场","n.",["种植园","大农场"],["plantation-crop-estate"],"Workers on the tea plantation begin picking leaves at dawn.","茶园种植园的工人天一亮就开始采茶。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/plantation"],
+      ["crop-estate","种植园；大农场","n.",["种植园","大农场"],["plantation-crop-estate"],"Workers on the tea plantation begin picking leaves at dawn.","茶叶种植园的工人黎明时就开始采茶。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/plantation"],
       ["tree-farm","人工林；林场","n.",["人工林","林场"],["plantation-commercial-tree-farm"],"A plantation of pines now covers the hillside that was once bare.","曾经光秃的山坡如今覆盖着一片松树人工林。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/plantation"]
     ], [
-      {"terms":["植树造林"],"decision":"scope-excluded","reason":"核对条目中 plantation 均为名词（农场、林场、殖民据点），没有“植树造林”的动作义；该片段保留追溯但不设学习义项。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/plantation"},
-      {"terms":["新开垦地"],"decision":"scope-excluded","reason":"条目中 plantation 指已建成的种植园或林场，不含“新开垦地”这一阶段义；旧译未获支持。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/plantation"},
-      {"terms":["栽植(如牙或其他组织的植入、再植和移植)"],"decision":"scope-excluded","reason":"该片段是医学“植入、移植”的专门义，核对条目未列，且与雅思常用义无关，本批不收录。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/plantation"}
+      {"terms":["栽植(如牙或其他组织的植入、再植和移植)"],"decision":"scope-excluded","reason":"该片段是医学“植入、移植”的专门义，核对条目未列，且与雅思常用义无关，本批不收录。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/plantation"},
+      {"terms":["植树造林"],"decision":"restricted-verified","reason":"Collins 确认 plantation 有名词“种植（行为）”的罕用义；本批只训练种植园和人工林，不再以名词词性为由否定动作名词。","source":"https://api.collinsdictionary.com/dictionary/english/plantation"},
+      {"terms":["新开垦地"],"decision":"context-required","reason":"历史语境的 plantation 可指殖民地或新建定居点；不是任何新开垦农地的通称，本批不训练历史殖民义。","source":"https://www.collinsdictionary.com/us/dictionary/english/plantation"}
     ]);
     entry("hybridisation", [
       ["crossbreeding","杂交；杂交过程","n.",["杂交","杂交过程"],["hybridisation-crossbreeding"],"Hybridisation of two wheat varieties produced a hardier crop.","两个小麦品种的杂交培育出了更耐寒的作物。",null,"https://www.vocabulary.com/dictionary/hybridisation"]
@@ -123,7 +135,7 @@
     ]);
     entry("bunch", [
       ["cluster","串；束（花果、钥匙等）","n.",["串","束"],["bunch-cluster-tied"],"He brought a bunch of grapes and a loaf of bread.","他带来一串葡萄和一条面包。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/bunch"],
-      ["group-of-people","一群人；一伙人","n.",["一群人","一伙人"],["bunch-group-of-people"],"The usual bunch meets at the cafe on Friday evenings.","那伙人每周五晚上在咖啡馆碰面。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/bunch"],
+      ["group-of-people","一群人；一伙人","n.",["一群人","一伙人"],["bunch-group-of-people","human-group"],"The usual bunch meets at the cafe on Friday evenings.","那伙人每周五晚上在咖啡馆碰面。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/bunch"],
       ["gather","使成束；聚拢","v.",["使成束","聚拢"],["bunch-gather-cluster"],"She bunched the herbs together and tied them with string.","她把香草拢成一束，用绳子扎好。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/bunch"]
     ], [
       {"terms":["骨肿块(马)"],"decision":"scope-excluded","reason":"该义为兽医专业用法，核对条目中 bunch 作名词为“串、束、一群”等，未见“马的骨肿块”义，本批不设。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/bunch"}
@@ -155,22 +167,27 @@
       ["young-person","年轻人；毛头小子","n.",["年轻人"],["cub-young-person"],"As a cub of nineteen, he knew almost nothing about the trade.","十九岁的毛头小子，他对这一行几乎一无所知。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/cub"]
     ]);
     entry("brood", [
-      ["clutch","一窝（雏鸟、幼崽）","n.",["一窝"],["brood-young-clutch"],"The hen kept her brood warm beneath her wings.","母鸡把一窝小鸡护在翅膀下取暖。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/brood"],
+      ["clutch","一窝（雏鸟、幼崽）","n.",["一窝"],["brood-young-clutch"],"The hen kept her brood warm beneath her wings.","母鸡把一窝小鸡护在翅膀下取暖。",null,"https://dictionary.cambridge.org/dictionary/english/brood"],
       ["incubate","孵（蛋）","v.",["孵"],["brood-incubate-eggs"],"The male penguin broods the egg for about two months.","雄性企鹅孵蛋大约两个月。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/brood"],
-      ["mull-over","沉思；闷闷不乐地想","v.",["沉思"],["brood-mull-over"],"She sat by the window, brooding on the letter for hours.","她坐在窗边，对着那封信沉思了几个小时。","brood on/over sth","https://api.dictionaryapi.dev/api/v2/entries/en/brood"]
+      ["mull-over","沉思；闷闷不乐地想","v.",["沉思"],["brood-mull-over"],"She sat by the window, brooding on the letter for hours.","她坐在窗边，对着那封信沉思了几个小时。","brood on/over sth","https://dictionary.cambridge.org/dictionary/english/brood"],
+      ["children","（诙谐）一家孩子","n.",["一家的孩子"],["family-children","human-group"],"He arrived at the campsite with his noisy brood and a car full of sleeping bags.","他带着自己那群吵闹的孩子和满车睡袋来到营地。",null,"https://dictionary.cambridge.org/dictionary/english/brood"]
     ], [
-      {"terms":["一伙"],"decision":"scope-excluded","reason":"核对条目中 brood 作名词指一窝幼雏或一家的孩子，没有“一伙（人）”的群体义；该旧译未获支持。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/brood"}
+      {"terms":["一伙"],"decision":"context-required","reason":"brood 可诙谐地指一家的孩子，已纳入 children；不可泛指任意一伙成年人。","source":"https://dictionary.cambridge.org/dictionary/english/brood"}
     ]);
     entry("sting", [
       ["insect-pierce","蜇；叮","v.",["叮"],["sting-insect-pierce"],"A wasp stung her on the wrist while she was gardening.","她做园艺时，一只黄蜂蜇了她的手腕。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/sting"],
       ["painful-wound","蜇伤；刺痛","n.",["刺痛"],["sting-painful-wound"],"The sting left a red mark that itched for days.","蜇伤留下了一个发红的印子，痒了好几天。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/sting"],
       ["cause-distress","使苦恼；使痛苦","v.",["使苦恼"],["sting-cause-distress"],"He was stung by their refusal to help.","他们拒绝帮忙，这使他很痛苦。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/sting"],
-      ["goad","刺激；激励","n.",["刺激"],["sting-goad-incitement"],"He needed the sting of competition to perform at his best.","他需要竞争的刺激才能发挥出最佳水平。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/sting"]
+      ["goad","刺激；激励","n.",["刺激"],["sting-goad-incitement"],"He needed the sting of competition to perform at his best.","他需要竞争的刺激才能发挥出最佳水平。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/sting"],
+      ["smart","引起刺痛；感到刺痛","v.",["引起刺痛","感到刺痛"],["sting-painful-wound"],"Sweat stung her eyes as she climbed the last flight of stairs.","她爬最后一段楼梯时，汗水刺得眼睛生疼。",null,"https://dictionary.cambridge.org/dictionary/english/sting"],
+      ["stinger","（昆虫等的）毒刺","n.",["毒刺"],["venom-injecting-point"],"The diagram shows the sting at the tip of the insect's abdomen.","图中标出了昆虫腹部末端的毒刺。",null,"https://dictionary.cambridge.org/dictionary/english/sting"],
+      ["police-operation","诱捕行动；设圈套侦查","n.",["诱捕行动","设圈套侦查"],["undercover-police-operation"],"An undercover sting led police to the stolen paintings.","一次卧底诱捕行动使警方找到了被盗画作。",null,"https://dictionary.cambridge.org/dictionary/english/sting"],
+      ["overcharge","向…索取过高费用；狠敲一笔","vt.",["索取过高费用","狠敲一笔"],["overcharge-customer"],"The hotel stung us for an extra forty pounds to park overnight.","酒店额外收了我们四十英镑的过夜停车费，真够宰人的。","sting someone for an amount","https://dictionary.cambridge.org/dictionary/english/sting"]
     ], [
       {"terms":["讽刺"],"decision":"scope-excluded","reason":"核对条目中 sting 没有“讽刺”这一独立义项，只有“讽刺短诗结尾的警句”这一冷僻用法；本批不设。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/sting"}
     ]);
     entry("fur", [
-      ["animal-coat","毛皮；软毛","n.",["毛皮"],["fur-animal-coat"],"The fox's fur turns pure white in the northern winter.","在北方冬季，狐狸的毛皮会变成纯白色。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/fur"],
+      ["animal-coat","毛皮；软毛","n.",["毛皮"],["fur-animal-coat"],"The fox's thick fur protects it from the cold wind.","狐狸浓密的毛抵御着寒风。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/fur"],
       ["line-with-pelt","用毛皮衬（或镶）","v.",["以毛皮制作"],["fur-line-with-pelt"],"The heavy cloak was furred inside to keep out the wind.","这件厚斗篷内侧用毛皮衬着以挡风。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/fur"],
       ["scale-deposit","生水垢；积垢","v.",["使生水垢","积水垢"],["fur-scale-deposit"],"The kettle furred up quickly because the water here is hard.","这里的水硬，水壶很快就积了水垢。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/fur"]
     ], [
@@ -185,7 +202,7 @@
       {"terms":["费力地前进"],"decision":"scope-excluded","reason":"核对条目中 paw 并无“费力前进”义，该旧译未获词典支持，本批不设义项。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/paw"}
     ]);
     entry("ivory", [
-      ["tusk","象牙","n.",["象牙"],["ivory-elephant-tusk"],"The trade in ivory was banned to protect wild elephants.","为保护野生大象，象牙贸易被禁止。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/ivory"],
+      ["tusk","象牙","n.",["象牙"],["ivory-elephant-tusk"],"The museum displays an ivory carving beside a sign explaining threats to elephants.","博物馆展出一件象牙雕刻，旁边的说明牌介绍了大象面临的威胁。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/ivory"],
       ["cream-colour-noun","乳白色；象牙色","n.",["乳白色"],["ivory-cream-colour"],"The walls were painted a soft ivory that caught the morning light.","墙被刷成柔和的乳白色，映着晨光。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/ivory"],
       ["made-of-tusk","象牙制的","adj.",["象牙制的"],["ivory-made-of-tusk"],"An ivory comb lay on the dressing table.","梳妆台上放着一把象牙梳子。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/ivory"],
       ["cream-coloured","乳白色的；象牙色的","adj.",["乳白色的"],["ivory-cream-coloured"],"She wore an ivory silk dress to the ceremony.","她在典礼上穿了一条乳白色的丝裙。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/ivory"]
@@ -193,8 +210,9 @@
     entry("saddle", [
       ["rider-seat","马鞍；鞍","n.",["鞍","马鞍"],["saddle-rider-seat"],"He tightened the saddle before leading the horse outside.","他紧了紧马鞍，然后把马牵了出去。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/saddle"],
       ["vehicle-seat","车座；鞍形物","n.",["车座","鞍状物"],["saddle-vehicle-seat"],"The bicycle saddle was far too high for a child.","这个自行车座对孩子来说太高了。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/saddle"],
-      ["put-on-saddle","给…装鞍；跨上马鞍","v.",["装以马鞍","跨上马鞍"],["saddle-put-on-saddle"],"She saddled the mare in the dark and rode off.","她摸黑给母马备好鞍，骑上走了。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/saddle"],
-      ["burden","使负担；使承担","v.",["使负担"],["saddle-burden-someone"],"The new rules saddled small firms with extra paperwork.","新规定给小公司增加了额外的文书负担。","saddle sb with sth","https://api.dictionaryapi.dev/api/v2/entries/en/saddle"]
+      ["put-on-saddle","给（马等）装鞍；备鞍","v.",["装以马鞍"],["saddle-put-on-saddle"],"She saddled the mare in the dark and rode off.","她摸黑给母马备好鞍，骑上走了。",null,"https://www.collinsdictionary.com/dictionary/english/saddle"],
+      ["burden","使负担；使承担","v.",["使负担"],["saddle-burden-someone"],"The new rules saddled small firms with extra paperwork.","新规定给小公司增加了额外的文书负担。","saddle sb with sth","https://api.dictionaryapi.dev/api/v2/entries/en/saddle"],
+      ["mount","跨上马鞍；上马","vi.",["跨上马鞍"],["mount-horse"],"The riders saddled up at sunrise and followed the river east.","骑手们日出时上马，沿河向东行进。","saddle up","https://www.collinsdictionary.com/dictionary/english/saddle"]
     ]);
     entry("tortoise", [
       ["land-reptile","陆龟；龟","n.",["龟"],["tortoise-land-reptile"],"The tortoise slowly crossed the road towards the grass.","那只陆龟慢慢穿过马路，爬向草地。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/tortoise"]
@@ -206,7 +224,9 @@
       ["driver-of-change","促进因素；刺激因素","n.",["刺激因素","促进因素"],["catalyst-driver-of-change"],"The exhibition became a catalyst for change in the town.","这场展览成了小镇变革的促进因素。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/catalyst"]
     ]);
     entry("microbe", [
-      ["microorganism","微生物；细菌","n.",["微生物","细菌"],["microbe-microorganism"],"Some microbes in the soil break down dead leaves.","土壤中的一些微生物会分解枯叶。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/microbe"]
+      ["microorganism","微生物（尤指病菌）","n.",["微生物","病菌"],["microbe-microorganism"],"Some microbes in the soil break down dead leaves.","土壤中的一些微生物会分解枯叶。",null,"https://www.collinsdictionary.com/dictionary/english/microbe"]
+    ], [
+      {"terms":["细菌"],"decision":"context-required","reason":"microbe 泛指微生物，尤其可指致病细菌；不能把所有微生物都等同于细菌。","source":"https://www.collinsdictionary.com/dictionary/english/microbe"}
     ]);
     entry("metabolic", [
       ["of-metabolism","新陈代谢的；代谢的","adj.",["新陈代谢的","代谢的"],["metabolic-body-chemistry"],"Regular exercise can improve metabolic health in older adults.","规律锻炼能改善老年人的代谢健康。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/metabolic"]
@@ -214,15 +234,16 @@
       {"terms":["变化的","变形的"],"decision":"scope-excluded","reason":"条目虽列“与变态、变化有关”的罕用义，但现代英语几乎不用；旧译保留追溯，本批只训练“新陈代谢的”这一常用义。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/metabolic"}
     ]);
     entry("functional", [
-      ["of-function","功能的；机能的","adj.",["功能的","机能的","官能的"],["functional-of-function"],"The two brain regions have quite different functional roles.","这两个脑区的功能作用相当不同。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/functional"],
-      ["in-working-order","正常运转的；可用的","adj.",["正常运转的","可用的"],["functional-in-working-order"],"The heating system is old but still functional.","暖气系统很旧，但仍能正常使用。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/functional"]
+      ["of-function","功能的；机能的","adj.",["功能的","机能的","官能的"],["functional-of-function"],"The two brain regions have quite different functional roles.","这两个脑区的功能作用相当不同。",null,"https://dictionary.cambridge.org/dictionary/english/functional"],
+      ["in-working-order","正常运转的；可用的","adj.",["正常运转的","可用的"],["functional-in-working-order"],"The heating system is old but still functional.","暖气系统很旧，但仍能正常使用。",null,"https://dictionary.cambridge.org/dictionary/english/functional"],
+      ["practical","实用的；重功能的","adj.",["实用的","重功能的"],["practical-useful-design"],"The hostel's furniture was plain and functional, with storage under every bed.","旅舍家具朴素实用，每张床下都有储物空间。",null,"https://dictionary.cambridge.org/dictionary/english/functional"]
     ]);
     entry("experimental", [
       ["based-on-experiment","实验的；以实验为基础的","adj.",["实验的","根据实验的"],["experimental-based-on-experiment"],"Chemistry is an experimental science, learned mainly in the laboratory.","化学是一门实验科学，主要在实验室里学习。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/experimental"],
       ["trial-exploratory","试验性的；探索性的","adj.",["试验性的","探索性的"],["experimental-trial-exploratory"],"The band's experimental sound divided fans who had loved their old style.","这支乐队试验性的音乐让歌迷分成了两派。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/experimental"]
     ]);
     entry("optimal", [
-      ["best-possible","最佳的；最理想的；最优的","adj.",["最佳的","最理想的","最优的"],["optimal-best-possible"],"Plants grow best at an optimal temperature of about 25 degrees.","植物在约25度的最佳温度下生长得最好。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/optimal"]
+      ["best-possible","最佳的；最理想的；最优的","adj.",["最佳的","最理想的","最优的"],["optimal-best-possible"],"The team tested several settings to find the optimal temperature for this experiment.","研究团队测试了几种设置，以找出最适合本次实验的温度。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/optimal"]
     ]);
     entry("minimal", [
       ["smallest-amount","最小的；最低限度的；极微的","adj.",["最小的","极微的","最小限度的","最低的"],["minimal-smallest-amount"],"The damage was minimal, so no repairs were needed.","损坏极小，因此无需修理。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/minimal"],
@@ -230,15 +251,15 @@
     ]);
     entry("substantial", [
       ["large-amount","大量的；可观的","adj.",["大量的","可观的"],["substantial-large-amount"],"A substantial number of students walk to school every day.","相当多的学生每天步行上学。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/substantial"],
-      ["real-not-illusion","实质的；实际的","adj.",["实质上的"],["substantial-real-not-illusion"],"Despite the new title, the job's substantial duties have not changed.","尽管头衔变了，这份工作的实质职责并未改变。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/substantial"],
-      ["material-entity","物质的；实体的","adj.",["物质的"],["substantial-material-entity"],"Some philosophers argue that only substantial things truly exist.","一些哲学家认为只有实体性的东西才真正存在。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/substantial"],
+      ["real-not-illusion","真实存在的；有形的（正式）","adj.",["真实存在的","物质的"],["substantial-real-material"],"In the story, the ghost becomes substantial enough to lift a chair.","在这个故事里，幽灵获得了实体，甚至能够举起一把椅子。",null,"https://www.collinsdictionary.com/dictionary/english/substantial"],
       ["solid-build","结实的；坚固的","adj.",["结实的"],["substantial-solid-build"],"The bridge rests on substantial stone piers built in 1750.","这座桥架在建于1750年的坚固石墩上。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/substantial"],
-      ["filling-meal","有内容的；丰盛的（食物）","adj.",["有内容的"],["substantial-filling-meal"],"We wanted a substantial breakfast before the long drive.","长途开车前，我们想吃一顿丰盛的早餐。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/substantial"]
+      ["filling-meal","丰盛的；能填饱肚子的（食物）","adj.",["丰盛的","有内容的"],["substantial-filling-meal"],"We wanted a substantial breakfast before the long drive.","长途开车前，我们想吃一顿丰盛的早餐。",null,"https://www.collinsdictionary.com/dictionary/english/substantial"],
+      ["general-agreement","大体上的；主要方面的（正式）","adj.",["实质上的","大体上的"],["general-essential-agreement"],"The two teams reached substantial agreement, although a few details remained unsettled.","两队在主要方面达成了一致，不过仍有几个细节尚未敲定。","substantial agreement","https://dictionary.cambridge.org/dictionary/english/substantial"]
     ], [
       {"terms":["重要材料(或事物)","有实际价值的东西"],"decision":"restricted-verified","reason":"条目确实列有名词义“实质部分、要旨”，但现代英语极少使用，且与形容词义区分度低；本批只训练形容词义项，旧译保留追溯。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/substantial"}
     ]);
     entry("synthesise", [
-      ["chemical-combine","合成；使合成（物质）","v.",["合成","用合成法合成","接合"],["synthesise-chemical-combine"],"The plant synthesises sugars from sunlight, water and air.","植物利用阳光、水和空气合成糖分。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/synthesise"],
+      ["chemical-combine","合成；使合成（物质）","v.",["合成","用合成法合成","接合"],["synthesise-chemical-combine"],"Plants use energy from sunlight to synthesise sugars from carbon dioxide and water.","植物利用阳光提供的能量，由二氧化碳和水合成糖。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/synthesise"],
       ["combine-findings","综合；整合（信息、观点）","v.",["vi. 综合","综合地处理"],["synthesise-combine-findings"],"The essay synthesises findings from four separate studies.","这篇文章综合了四项独立研究的发现。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/synthesise"]
     ]);
     entry("formation", [
@@ -255,10 +276,9 @@
       {"terms":["讲稿"],"decision":"scope-excluded","reason":"旧词库的“讲稿”指讲演所用的书面文稿；本次核对的条目中 lecture 作名词只指演讲或讲座这一活动，未列“讲稿”义，故不设为学习义项。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/lecture"}
     ]);
     entry("literature", [
-      ["literary-works","文学；文学作品","n.",["文学","文学作品"],["literary-writing"],"She studied French literature at university before becoming a translator.","她上大学时学的是法国文学，后来当了翻译。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/literature"],
-      ["research-papers","文献；研究资料","n.",["文献","研究资料"],["academic-publications"],"The literature on sleep and memory has grown enormously in the past decade.","过去十年间，有关睡眠与记忆的研究文献大量增加。","the literature on sth","https://api.dictionaryapi.dev/api/v2/entries/en/literature"]
-    ], [
-      {"terms":["宣传印刷品","产品说明资料"],"decision":"scope-excluded","reason":"旧词库这两个片段对应 literature 指商家印刷品（如 sales literature）的口语用法；本次核对的条目只列文学、学术文献等义，未收该商业用法，故不设为学习义项。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/literature"}
+      ["literary-works","文学；文学作品","n.",["文学","文学作品"],["literary-writing"],"She studied French literature at university before becoming a translator.","她上大学时学的是法国文学，后来当了翻译。",null,"https://dictionary.cambridge.org/dictionary/english/literature"],
+      ["research-papers","文献；研究资料","n.",["文献","研究资料"],["academic-publications"],"The literature on sleep and memory has grown enormously in the past decade.","过去十年间，有关睡眠与记忆的研究文献大量增加。","the literature on sth","https://dictionary.cambridge.org/dictionary/english/literature"],
+      ["promotional-information","宣传印刷品；产品说明资料","n.",["宣传印刷品","产品说明资料"],["promotional-printed-material"],"The assistant gave us literature comparing the company's home insurance plans.","工作人员给了我们介绍并比较该公司住房保险方案的宣传资料。",null,"https://dictionary.cambridge.org/dictionary/english/literature"]
     ]);
     entry("librarian", [
       ["library-keeper","图书馆员；图书管理员","n.",["图书馆员","图书管理员"],["library-staff"],"The librarian helped me find two old maps in the basement.","图书管理员帮我在地下室找到了两张旧地图。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/librarian"]
@@ -289,8 +309,10 @@
       ["first-version","草稿；草案","n.",["草稿","草案"],["preliminary-version"],"Her first draft was twice as long as the final report.","她的初稿长度是最终报告的两倍。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/draft"],
       ["air-current","气流；穿堂风","n.",["气流"],["cold-air-current"],"A cold draft came under the door and chilled my feet.","一股冷风从门底下钻进来，冻得我脚发凉。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/draft"],
       ["payment-order","汇票；付款凭单","n.",["汇票"],["bill-of-exchange"],"Payment was made by draft drawn on a bank in London.","款项是以一张伦敦银行开出的汇票支付的。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/draft"],
-      ["conscription","征兵；征召入伍","n.",["征兵"],["military-conscription"],"He left the country in 1968 to avoid the draft.","1968 年他离开本国以逃避征兵。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/draft"],
-      ["compose","起草；草拟","v.",["起草"],["write-preliminary-text"],"Two lawyers drafted the contract in a single afternoon.","两位律师用一下午就起草了这份合同。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/draft"]
+      ["conscription","（美）征兵制；征召","n.",["征兵"],["military-conscription"],"He left the country in 1968 to avoid the draft.","1968 年他离开本国以逃避征兵。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/draft"],
+      ["compose","起草；草拟","v.",["起草"],["write-preliminary-text"],"Two lawyers drafted the contract in a single afternoon.","两位律师用一下午就起草了这份合同。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/draft"],
+      ["enlist","征召入伍","vt.",["征召入伍"],["military-conscription"],"He was drafted into the army shortly after leaving college.","他离开大学不久便被征召入伍。","draft someone into the army","https://www.collinsdictionary.com/dictionary/english/draft"],
+      ["assign","抽调；选派","vt.",["抽调","选派"],["assign-extra-personnel"],"The council drafted in extra engineers to inspect the damaged bridges.","市议会抽调了更多工程师检查受损桥梁。","draft in / draft into","https://www.collinsdictionary.com/dictionary/english/draft"]
     ]);
     entry("sketch", [
       ["drawing","素描；速写","n.",["素描","速写"],["quick-drawing"],"He made a quick sketch of the harbour before the light faded.","趁天还没黑，他快速画了一幅港口速写。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/sketch"],
@@ -350,7 +372,7 @@
       ["enslaved-person","奴隶","n.",["奴隶"],["person-held-in-servitude"],"The novel describes how a slave escaped from a cotton farm.","这部小说讲述了一名奴隶如何从棉花农场逃走。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/slave"],
       ["dependent","受…支配的人；…的奴隶","n.",["受支配者"],["person-controlled-by-habit"],"He is a slave to his phone and checks it every minute.","他完全被手机支配，每分钟都要看一眼。","a slave to sth","https://api.dictionaryapi.dev/api/v2/entries/en/slave"],
       ["toil","拼命干；苦干","v.",["拼命工作"],["exhausting-labour"],"She slaved over the stove all afternoon to feed twelve guests.","她整个下午在灶台前忙活，为十二位客人做饭。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/slave"],
-      ["subordinate-device","从动装置；从设备","n.",["从动装置","从设备"],["master-slave-device"],"Set the second drive as a slave before copying the files.","复制文件前先把第二个硬盘设为从盘。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/slave"]
+      ["subordinate-device","从设备；从动装置（旧技术称谓）","n.",["从动装置","从设备"],["master-slave-device"],"The manual for the old computer labels the second hard drive as the slave.","这台老电脑的手册将第二块硬盘标为“从盘”。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/slave"]
     ], [
       {"terms":["卑鄙的人"],"decision":"scope-excluded","reason":"旧词库的“卑鄙的人”对应条目里的 abject person/wretch，是古旧且带强烈贬义的口语用法，与现代 slave（奴隶）常用义不同，本批不单列。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/slave"}
     ]);
@@ -364,12 +386,16 @@
     entry("pot", [
       ["vessel","锅；罐；壶；盆（容器）","n.",["盆","罐","壶","锅"],["cooking-vessel"],"Let the soup simmer in a covered pot for an hour.","让汤在盖着盖的锅里炖一个小时。",null,"https://www.vocabulary.com/dictionary/pot"],
       ["flowerpot","花盆","n.",["花盆"],["plant-container"],"Move the fern into a bigger pot before its roots get crowded.","在根长满之前，把蕨类移进大一点的花盆。",null,"https://www.vocabulary.com/dictionary/pot"],
-      ["plant","把…栽入盆中；装罐保存","v.",["装入盆中"],["put-plant-in-container"],"She potted the young tomato plants on the balcony.","她把番茄幼苗栽进了阳台上的花盆。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/pot"],
-      ["potshot","乱射；随意射击（pot shot）","n.",["随手射击"],["random-gunshot"],"One guard took a pot shot at the moving shadow.","一名警卫朝晃动的影子随手开了一枪。","take a pot shot at sth","https://api.dictionaryapi.dev/api/v2/entries/en/pot"]
+      ["plant","把（植物）栽入盆中","v.",["装入盆中"],["put-plant-in-container"],"She potted the young tomato plants on the balcony.","她把番茄幼苗栽进了阳台上的花盆。",null,"https://www.collinsdictionary.com/dictionary/english/pot"],
+      ["preserve","把（食品等）装罐保存","vt.",["装罐保存"],["preserve-food-in-container"],"They potted the cooked meat in small jars for the journey.","他们把熟肉装进小罐保存，留待旅途中食用。",null,"https://www.collinsdictionary.com/dictionary/english/pot"],
+      ["money-pool","共同资金；赌注总额；奖金池","n.",["共同资金","赌注总额","奖金池"],["pooled-money"],"Everyone added a few pounds to the pot to pay for the farewell gift.","大家各往公共资金里添了几英镑，用来买告别礼物。",null,"https://www.collinsdictionary.com/dictionary/english/pot"],
+      ["pocket-ball","把（台球）击入球袋","vt.",["把球击入袋"],["pocket-billiard-ball"],"She potted the red ball but left herself a difficult next shot.","她把红球打进袋里，却给下一杆留下了难局。","pot a ball","https://www.collinsdictionary.com/dictionary/english/pot"],
+      ["potful","一壶；一锅；一罐（的量）","n.",["一壶的量","一锅的量"],["containerful-quantity"],"A single pot of soup fed all six of us after the walk.","步行结束后，一锅汤就够我们六个人吃了。","a pot of","https://www.collinsdictionary.com/dictionary/english/pot"]
     ], [
-      {"terms":["坩埚"],"decision":"scope-excluded","reason":"“坩埚”在英语通常是 crucible；本次核对的条目只把 pot 释为各种敞口容器与炊具，未列熔炼用的坩埚，故不设为义项。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/pot"},
-      {"terms":["奖杯"],"decision":"scope-excluded","reason":"“奖杯”是 pot 在英国口语中表示奖品或奖杯的用法；本次核对的两个条目均未列该义，无法核对，故暂不设为学习义项。","source":"https://www.vocabulary.com/dictionary/pot"},
-      {"terms":["在锅中煮"],"decision":"scope-excluded","reason":"旧词库把 pot 作动词释为“在锅中煮”；核对条目中 pot 的动词义只有“栽入盆中/装罐保存”，没有“煮”义，故不单列。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/pot"}
+      {"terms":["随手射击"],"decision":"context-required","reason":"旧例句实际使用复合词 pot shot，不能把整个短语的释义视为 pot 单词的普通名词义；狩猎中的射击用法不列入本批训练。","source":"https://www.collinsdictionary.com/dictionary/english/pot"},
+      {"terms":["奖杯"],"decision":"restricted-verified","reason":"Collins 核实英式非正式 pot 可指奖杯，属受限用法；本批主要训练容器、奖金池和台球等常用语境，不再声称词典未列。","source":"https://www.collinsdictionary.com/dictionary/english/pot"},
+      {"terms":["在锅中煮"],"decision":"restricted-verified","reason":"Collins 确有在锅中煮的动词义；本批不训练这一较少用法，不再声称不存在。","source":"https://www.collinsdictionary.com/dictionary/english/pot"},
+      {"terms":["坩埚"],"decision":"context-required","reason":"熔炼容器可称 melting pot；不能把日常容器例句当作专业坩埚义的证据。","source":"https://www.collinsdictionary.com/dictionary/english/pot"}
     ]);
     entry("ford", [
       ["crossing","浅滩；可涉水而过处","n.",["浅滩"],["shallow-river-crossing"],"The old ford is too deep to cross after heavy rain.","大雨过后，那处旧浅滩水深得无法通过。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/ford"],
@@ -389,7 +415,7 @@
     ]);
     entry("cassette", [
       ["audio-cassette","盒式磁带","n.",["盒式磁带"],["audio-tape-case"],"He found an old cassette of his mother singing in 1985.","他找到一盘母亲 1985 年唱歌的老磁带。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/cassette"],
-      ["film-cassette","暗盒；胶卷盒","n.",["暗盒"],["lightproof-film-container"],"Load the film cassette in the dark so the negatives stay clear.","要在暗处装入胶卷暗盒，这样底片才不会跑光。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/cassette"]
+      ["film-cassette","暗盒；胶卷盒","n.",["暗盒"],["lightproof-film-container"],"The photographer checked the film cassette before loading the camera.","摄影师在给相机装胶卷前检查了胶卷盒。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/cassette"]
     ], [
       {"terms":["珠宝箱","字盒"],"decision":"scope-excluded","reason":"“珠宝箱”是法语 cassette 的借义，“字盒”是旧印刷术语（排字用的活字盒）；现代英语均已不用，本次核对条目也未列，故不设为义项。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/cassette"}
     ]);
@@ -402,7 +428,7 @@
       ["gear-ratio","挡位；排挡","n.",["排挡","挡位"],["transmission-position"],"Change to a lower gear before the road climbs steeply.","在道路开始陡坡前换到低挡。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/gear"],
       ["equipment","装备；用具","n.",["工具","装备"],["outdoor-equipment"],"Climbing gear filled the back of the van.","货车后部装满了登山装备。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/gear"],
       ["adapt","使适应；针对…而设计","v.",["使适应","适合","安排"],["adapt-to-purpose"],"The course is geared towards students with no science background.","这门课针对没有理科基础的学生设计。","gear sth to/towards sth","https://api.dictionaryapi.dev/api/v2/entries/en/gear"],
-      ["mesh","（使）啮合；用齿轮连接","v.",["以齿轮连起","连接上","开动"],["interlock-gears"],"The two wheels geared together smoothly once oiled.","上好油之后，两个轮子啮合得很顺畅。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/gear"]
+      ["mesh","（使）啮合；用齿轮连接","v.",["以齿轮连起","连接上","开动"],["interlock-gears"],"The mechanism gears the two shafts together so that they turn at different speeds.","这个机构用齿轮连接两根轴，使它们以不同速度转动。",null,"https://www.collinsdictionary.com/dictionary/english/gear"]
     ]);
     entry("pope", [
       ["bishop-of-rome","教皇；罗马教皇","n.",["罗马教皇"],["roman-catholic-head"],"The pope addressed a crowd of thousands from the balcony.","教皇在阳台上向数千名群众讲话。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/pope"]
@@ -414,9 +440,11 @@
     ]);
     entry("temple", [
       ["shrine","庙宇；神殿；寺院","n.",["庙宇","圣堂"],["worship-building"],"We climbed the steps of the temple just before sunset.","日落前我们登上庙宇的台阶。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/temple"],
-      ["head-side","太阳穴；鬓角","n.",["太阳穴","鬓角","颞颥","颞部"],["side-of-head"],"A grey streak showed at his temple above the ear.","他耳朵上方的太阳穴处露出一缕灰白的头发。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/temple"]
+      ["head-side","太阳穴","n.",["太阳穴","颞颥","颞部"],["side-of-head"],"A grey streak showed at his temple above the ear.","他耳朵上方的太阳穴处露出一缕灰白的头发。",null,"https://dictionary.cambridge.org/dictionary/english/temple"]
     ], [
-      {"terms":["教堂","礼拜堂"],"decision":"scope-excluded","reason":"旧词库把 temple 释为“教堂/礼拜堂”；现代英语中基督教教堂通常说 church，temple 指犹太教、印度教或佛教的礼拜场所，故不并入本批义项。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/temple"}
+      {"terms":["礼拜堂"],"decision":"scope-excluded","reason":"旧词库把 temple 释为“教堂/礼拜堂”；现代英语中基督教教堂通常说 church，temple 指犹太教、印度教或佛教的礼拜场所，故不并入本批义项。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/temple"},
+      {"terms":["鬓角"],"decision":"context-required","reason":"temple 指耳前上方的太阳穴区域；hair at the temples 可说鬓边头发，但 temple 本身不是鬓角头发。","source":"https://dictionary.cambridge.org/dictionary/english/temple"},
+      {"terms":["教堂"],"decision":"context-required","reason":"temple 是某些宗教的礼拜建筑，通常译庙宇、神殿；不能泛指一切 church，也不能绝对声称基督教从不使用 temple。","source":"https://dictionary.cambridge.org/dictionary/english/temple"}
     ]);
     entry("priest", [
       ["clergy","祭司；牧师；神父","n.",["祭司","牧师","神父","神质人员","僧侣"],["religious-clergy"],"A priest blessed the boat before it left the harbour.","船离港前，一位神父为它祝福。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/priest"]
@@ -435,9 +463,8 @@
       ["feudal-master","领主；统治者；老爷","n.",["统治者","领主"],["feudal-master"],"The lord of the manor collected rent from every farmer.","庄园领主向每一户农民收租。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/lord"],
       ["title","勋爵；阁下（英国贵族或法官的头衔）","n.",["阁下","勋爵"],["british-noble-title"],"Lord Ashby spoke for only five minutes in the debate.","阿什比勋爵在辩论中只讲了五分钟。",null,"https://www.vocabulary.com/dictionary/lord"],
       ["domineer","作威作福；摆架子","v.",["作威作福","称王"],["domineering-behaviour"],"He lords it over the interns whenever the manager is away.","经理一走，他就对实习生颐指气使。","lord it over sb","https://api.dictionaryapi.dev/api/v2/entries/en/lord"],
-      ["ennoble","封…为勋爵；使成为贵族","v.",["使成贵族"],["grant-noble-title"],"In 1714 the king lorded the admiral for his service at sea.","1714 年，国王因这位海军上将的海上功绩封他为勋爵。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/lord"]
-    ], [
-      {"terms":["上帝"],"decision":"scope-excluded","reason":"旧词库的“上帝”指首字母大写的 Lord 作神名的宗教用法；本次核对的两个条目都只列领主/统治者与动词义，未列神名义，为避免编造暂不设为学习义项。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/lord"}
+      ["ennoble","封…为贵族（罕用）","v.",["使成贵族"],["grant-noble-title"],"In the historical novel, the king lords a merchant for financing his fleet.","在这部历史小说中，国王因一位商人资助其舰队而封他为贵族。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/lord"],
+      ["god","（大写，基督教中）主；上帝；耶稣","n.",["上帝","主"],["deity-god"],"The congregation sang a hymn thanking the Lord for his mercy.","会众唱起赞美诗，感谢主的仁慈。","the Lord","https://dictionary.cambridge.org/dictionary/english/lord"]
     ]);
     entry("throne", [
       ["royal-seat","宝座；王座","n.",["王座"],["royal-seat"],"The throne in the great hall is carved from dark oak.","大厅里的宝座是用深色橡木雕刻成的。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/throne"],
@@ -540,9 +567,8 @@
     ]);
     entry("broom", [
       ["sweeping-tool","扫帚","n.",["扫帚"],["sweeping-tool"],"She swept the kitchen floor with a stiff broom.","她用一把硬毛扫帚扫了厨房地板。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/broom"],
-      ["sweep","扫；扫除","v.",["扫除"],["sweep-clean"],"He broomed the leaves off the path before the guests arrived.","客人到来之前，他把小路上的落叶扫干净了。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/broom"]
-    ], [
-      {"terms":["金雀花"],"decision":"scope-excluded","reason":"“金雀花”指一类豆科灌木（broom 植物），是植物学专名义，与清洁工具义无关。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/broom"}
+      ["sweep","扫；扫除","v.",["扫除"],["sweep-clean"],"He broomed the leaves off the path before the guests arrived.","客人到来之前，他把小路上的落叶扫干净了。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/broom"],
+      ["flowering-shrub","金雀花类灌木","n.",["金雀花"],["yellow-flowered-shrub"],"Yellow broom covered the hillside beside the old quarry.","旧采石场旁的山坡上长满了开黄花的金雀花类灌木。",null,"https://www.collinsdictionary.com/dictionary/english/broom"]
     ]);
     entry("mat", [
       ["floor-mat","垫子；地垫","n.",["垫"],["floor-mat"],"Please wipe your boots on the mat by the front door.","请在前门旁的垫子上擦擦靴子。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/mat"],
@@ -555,9 +581,9 @@
     ]);
     entry("rug", [
       ["floor-rug","小地毯","n.",["小块地毯","小地毯"],["floor-rug"],"A faded rug covered the wooden floor of the cottage.","一块褪色的地毯铺在小屋的木地板上。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/rug"],
-      ["blanket-throw","盖毯；厚毛毯","n.",["盖毯","毛毯"],["rug-thick-blanket"],"He wrapped a thick rug around his shoulders as the wind rose.","风大起来时，他把一条厚毛毯裹在肩上。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/rug"]
+      ["blanket-throw","（主要英式）盖毯；旅行毯","n.",["盖毯","厚毛毯","毯子","旅行毯"],["rug-blanket-throw","bed-covering"],"He wrapped a thick rug around his shoulders as the wind rose.","风大起来时，他把一条厚毛毯裹在肩上。",null,"https://www.collinsdictionary.com/dictionary/english/rug"]
     ], [
-      {"terms":["揭露某人"],"decision":"context-required","reason":"该义只出现在习语 pull the rug (out) from under someone 中，rug 本身不表示“揭露某人”，需按整体习语理解。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/rug"}
+      {"terms":["揭露某人"],"decision":"scope-excluded","reason":"旧译错误。pull the rug out from under someone 是突然撤走支持或使某人陷入困境，不是揭露某人；rug 单词本身也无此义。","source":"https://dictionary.cambridge.org/dictionary/english/pull-the-rug-carpet-from-under-feet"}
     ]);
     entry("carpet", [
       ["floor-covering","地毯","n.",["地毯"],["floor-carpet"],"The hotel corridor was lined with a thick red carpet.","酒店走廊铺着厚厚的红地毯。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/carpet"],
@@ -569,7 +595,7 @@
       ["steel-metal","钢；钢铁；钢制品","n.",["钢","钢铁","钢制品"],["steel-alloy","steel-goods"],"The bridge is built from steel produced in local mills.","这座桥用当地工厂生产的钢材建造。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/steel"],
       ["hardness","坚硬；坚韧","n.",["坚硬","坚固"],["hardness-resilience"],"There was steel in his voice as he refused the offer.","他拒绝那个提议时，语气里带着钢铁般的坚定。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/steel"],
       ["made-of-steel","钢制的；钢铁业的","adj.",["钢的","钢制的","钢铁业的"],["made-of-steel","steel-industry"],"The steel industry employs thousands of workers in this region.","钢铁业在该地区雇用数千名工人。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/steel"],
-      ["steely","坚强的；钢铁般的","adj.",["坚强的"],["resolute-strength"],"His steel resolve carried the team through the final minutes.","他钢铁般的决心带领球队撑过了最后几分钟。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/steel"],
+      ["steely","坚强的；钢铁般的","adj.",["坚强的"],["resolute-strength"],"Her steel determination kept the rescue team searching after dark.","她钢铁般的决心让救援队在天黑后仍继续搜寻。",null,"https://www.collinsdictionary.com/dictionary/english/steel"],
       ["fortify","使坚强；使有决心","v.",["坚强","使坚强","使冷酷"],["fortify-oneself"],"She steeled herself for the difficult conversation with her father.","她硬起心肠，准备和父亲进行那场艰难的谈话。","steel oneself","https://api.dictionaryapi.dev/api/v2/entries/en/steel"]
     ], [
       {"terms":["钢化"],"decision":"scope-excluded","reason":"“钢化”是冶金术语 steelify（把铁炼成钢）的直译，属专业用法，本批不列。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/steel"}
@@ -578,7 +604,9 @@
       ["brass-alloy","黄铜；黄铜制品","n.",["黄铜","黄铜制品"],["brass-alloy","brass-objects"],"The door handles are made of polished brass.","门把手是抛光黄铜做的。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/brass"],
       ["brass-instruments","铜管乐器（总称）","n.",["铜管乐器"],["brass-instruments"],"The brass came in too loudly during the final movement.","在最后一个乐章，铜管乐器声音太响了。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/brass"],
       ["made-of-brass","黄铜制的；铜管乐器的","adj.",["黄铜的","铜管乐器的"],["made-of-brass","brass-band"],"A brass band played marches in the town square all afternoon.","一支铜管乐队整个下午在镇广场演奏进行曲。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/brass"],
-      ["coat-with-brass","镀黄铜于","v.",["镀以黄铜"],["coat-with-brass"],"The fittings were brassed to resist corrosion near the sea.","这些配件镀了黄铜，以抵御海边的腐蚀。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/brass"]
+      ["coat-with-brass","镀黄铜于","v.",["镀以黄铜"],["coat-with-brass"],"The fittings were brassed to resist corrosion near the sea.","这些配件镀了黄铜，以抵御海边的腐蚀。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/brass"],
+      ["senior-officials","（非正式）高层人物；高级军官","n.",["高层人物","高级军官"],["senior-leadership"],"The top brass visited the depot but left before the night shift began.","高层人物参观了仓库，但夜班开始前就离开了。","the (top) brass","https://www.collinsdictionary.com/dictionary/english/brass"],
+      ["nerve","厚脸皮；厚颜","n.",["厚脸皮","厚颜"],["impudent-boldness"],"He had the brass to ask for a refund after breaking the camera himself.","他自己弄坏了相机，居然还厚着脸皮要求退款。","have the brass to do something","https://www.collinsdictionary.com/dictionary/english/brass"]
     ], [
       {"terms":["支付"],"decision":"scope-excluded","reason":"在核对的词典条目中 brass 没有“支付”义；该旧译可能来自 brass 作“钱”的俚语义的误加动词化，故不采信。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/brass"}
     ]);
@@ -622,7 +650,7 @@
     ], [
       {"terms":["红利"],"decision":"scope-excluded","reason":"“红利”属俚语/行业语用法（指额外分红），核对的常用词典条目未列此义，本批不单列。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/melon"},
       {"terms":["赃物"],"decision":"scope-excluded","reason":"“赃物”义在核对的条目中查无实据，疑与俚语 melon（钱）混淆，故不采信。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/melon"},
-      {"terms":["三聚二氰亚胺"],"decision":"scope-excluded","reason":"“三聚二氰亚胺（三聚氰胺）”是化学物质 melamine 的译名，与 melon 无关，属旧库串词。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/melon"}
+      {"terms":["三聚二氰亚胺"],"decision":"scope-excluded","reason":"melon 在碳氮材料研究中确可指一种聚合物，与 melamine（三聚氰胺）相关但不相同。旧中文化学片段不列入本批日常学习范围，也不再断言 melon 无化学用法或将两者等同。","source":"https://pubs.acs.org/doi/10.1021/acs.inorgchem.1c02769"}
     ]);
     entry("beefy", [
       ["muscular","粗壮的；结实的","adj.",["粗壮的","结实的"],["muscular-build","sturdy"],"A beefy security guard blocked the entrance to the stage.","一名粗壮的保安挡住了舞台入口。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/beefy"],
@@ -647,7 +675,9 @@
     ]);
     entry("grid", [
       ["grid-pattern","网格；格子；栅格","n.",["格子","栅格","网格"],["grid-pattern"],"The city's streets form a neat grid of squares.","这座城市的街道构成整齐的方格网。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/grid"],
-      ["power-grid","电网；输电网","n.",["电网"],["power-grid"],"Storms knocked out the grid for three days last winter.","去年冬天暴风雨使电网中断了三天。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/grid"]
+      ["power-grid","电网；输电网","n.",["电网"],["power-grid"],"Storms knocked out the grid for three days last winter.","去年冬天暴风雨使电网中断了三天。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/grid"],
+      ["map-squares","（地图上的）坐标方格网","n.",["坐标方格网"],["map-coordinate-grid"],"We used the grid on the map to locate the abandoned observatory.","我们借助地图上的坐标方格网找到了废弃天文台。",null,"https://dictionary.cambridge.org/dictionary/english/grid"],
+      ["starting-positions","（赛车）发车位置；起跑排列","n.",["发车位置","起跑排列"],["motor-racing-start"],"The driver moved to the front of the grid after the qualifying session.","排位赛后，这名车手排到了发车队列的前列。","starting grid","https://dictionary.cambridge.org/dictionary/english/grid"]
     ]);
     entry("layer", [
       ["stratum","层；层次","n.",["层"],["layer-stratum"],"A thin layer of dust covered every shelf in the room.","房间里每个架子上都覆着一层薄灰。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/layer"],
@@ -660,7 +690,9 @@
     entry("bench", [
       ["park-bench","长椅","n.",["长椅子","长椅"],["park-bench"],"They ate lunch on a bench overlooking the harbour.","他们坐在俯瞰港口的长椅上吃午饭。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/bench"],
       ["workbench","工作台","n.",["台","工作台"],["workbench"],"The carpenter clamped the board to the bench and began sanding.","木匠把木板夹在工作台上，开始打磨。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/bench"],
-      ["court-or-sideline","法官席；（球场）替补席","n.",["法官席","替补席"],["judges-seat","substitutes-bench"],"The young defender watched the final from the bench.","那名年轻后卫在替补席上观看决赛。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/bench"]
+      ["court-or-sideline","（体育）替补席","n.",["替补席"],["sports-substitutes-bench"],"The young defender watched the final from the bench.","那名年轻后卫在替补席上观看决赛。",null,"https://dictionary.cambridge.org/dictionary/english/bench"],
+      ["judiciary","法官席；法官（总称）","n.",["法官席","法官"],["judicial-bench"],"The lawyer turned towards the bench to request a short adjournment.","律师转向法官席，请求短暂休庭。","the bench","https://dictionary.cambridge.org/dictionary/english/bench"],
+      ["leave-out-player","让（球员）坐替补席；不让上场","vt.",["让球员坐替补席"],["leave-player-out"],"The coach benched the captain after he missed two training sessions.","队长缺席两次训练后，教练不再让他上场。",null,"https://dictionary.cambridge.org/dictionary/english/bench"]
     ]);
     entry("mall", [
       ["shopping-centre","购物中心","n.",["购物中心","商场"],["shopping-centre"],"The mall was crowded with families buying winter clothes.","购物中心里挤满了买冬衣的家庭。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/mall"],
@@ -673,9 +705,8 @@
     ]);
     entry("hostel", [
       ["youth-hostel","青年旅舍；旅社","n.",["青年招待所","旅店"],["youth-hostel"],"We stayed in a hostel near the station and shared a dormitory.","我们住在车站附近的一家青年旅舍，合住一间宿舍。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/hostel"],
-      ["refuge","（慈善）收容所","n.",["收容所"],["homeless-shelter"],"The charity runs a hostel for homeless men in the old town.","这家慈善机构在老城区为无家可归的男子开办了一所收容所。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/hostel"]
-    ], [
-      {"terms":["宿舍"],"decision":"scope-excluded","reason":"“宿舍”通常指学校或单位的 dormitory；hostel 是按床位出租的旅舍/收容所，二者设施相近但词义不同。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/hostel"}
+      ["refuge","（慈善）收容所","n.",["收容所"],["homeless-shelter"],"The charity runs a hostel for homeless men in the old town.","这家慈善机构在老城区为无家可归的男子开办了一所收容所。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/hostel"],
+      ["residential-hostel","（学生或工人的）宿舍；集体宿舍","n.",["宿舍","集体宿舍"],["shared-residential-lodging"],"The students share a kitchen on each floor of their hostel.","学生们在宿舍每层共用一个厨房。",null,"https://dictionary.cambridge.org/dictionary/english/hostel"]
     ]);
     entry("downtown", [
       ["city-centre","市中心；商业中心区","n.",["市中心区","市中心"],["city-centre"],"The city's downtown has changed greatly since the new station opened.","自新车站开通以来，市中心变化很大。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/downtown"],
@@ -684,10 +715,14 @@
     ]);
     entry("steward", [
       ["estate-manager","管家；财产管理人","n.",["管家","管理人"],["steward-estate-manager","household-staff"],"The estate's steward kept careful records of every harvest and every debt.","庄园管家仔细记录每一次收成和每一笔债务。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/steward"],
-      ["ship-steward","（客轮上的）乘务员；事务长","n.",["轮船","乘务员"],["ship-steward","dining-officer"],"A steward carried our bags to the cabin before the ship sailed.","船开之前，一名乘务员把我们的包送到了客舱。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/steward"],
-      ["flight-attendant","（飞机上的）男乘务员；服务员","n.",["飞机的服务员","招待员"],["flight-attendant","cabin-crew"],"The steward helped an elderly passenger fasten her seat belt before take-off.","起飞前，那位男乘务员帮助一位老年乘客系好安全带。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/steward"],
+      ["ship-steward","（客轮等的）乘务员","n.",["乘务员"],["ship-steward","dining-officer","passenger-service-attendant"],"A steward carried our bags to the cabin before the ship sailed.","船开之前，一名乘务员把我们的包送到了客舱。",null,"https://dictionary.cambridge.org/dictionary/english/steward"],
+      ["flight-attendant","（飞机上的）男乘务员；服务员","n.",["飞机的服务员","招待员"],["flight-attendant","cabin-crew","passenger-service-attendant"],"The steward helped an elderly passenger fasten her seat belt before take-off.","起飞前，那位男乘务员帮助一位老年乘客系好安全带。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/steward"],
       ["union-rep","工会代表；车间职工代表","n.",["工会代表"],["shop-steward","labor-representative"],"The shop steward took the safety complaint straight to the plant manager.","工会代表直接把有关安全的投诉反映给了厂长。","shop steward","https://api.dictionaryapi.dev/api/v2/entries/en/steward"],
-      ["fiscal-agent","（机构或教会的）财务管理员","n.",["(财务)管理员"],["steward-fiscal-agent","church-finance"],"Each congregation elects a steward to look after its accounts.","每个教会堂区推选一名财务管理员来管理账目。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/steward"]
+      ["fiscal-agent","（机构或教会的）财务管理员","n.",["(财务)管理员"],["steward-fiscal-agent","church-finance"],"Each congregation elects a steward to look after its accounts.","每个教会堂区推选一名财务管理员来管理账目。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/steward"],
+      ["event-attendant","（活动的）服务人员；秩序维护员","n.",["秩序维护员","活动服务人员"],["event-organizer-attendant"],"A steward directed late arrivals to the empty seats at the back.","一位现场工作人员把迟到者引向后排空座。",null,"https://dictionary.cambridge.org/dictionary/english/steward"]
+    ], [
+      {"terms":["事务长"],"decision":"context-required","reason":"事务长通常对应 chief/purser 一类特定职务；普通 steward 端行李的例句不证明其管理层级。","source":"https://dictionary.cambridge.org/dictionary/english/steward"},
+      {"terms":["轮船"],"decision":"context-required","reason":"旧库把“轮船、飞机的服务员”拆成了片段；轮船是服务地点，不是 steward 所指的人或职业。","source":"https://dictionary.cambridge.org/dictionary/english/steward"}
     ]);
     entry("sailor", [
       ["seaman","水手；船员；海员","n.",["水手","船员","海员"],["sailor-crew-member","seafarer"],"The old sailor mended his nets while the tide crept up the beach.","潮水漫上海滩时，那位老水手在补渔网。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/sailor"],
@@ -724,8 +759,8 @@
     entry("tram", [
       ["streetcar","有轨电车","n.",["有轨电车"],["tram-streetcar","light-rail"],"A crowded tram rattled past the cathedral square at dusk.","黄昏时，一辆拥挤的有轨电车哐当哐当地驶过大教堂广场。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/tram"],
       ["mine-cart","矿车；轨道运料车","n.",["煤车"],["tram-mine-cart","goods-tram"],"The miners pushed the loaded tram towards the shaft entrance.","矿工们把装满煤的矿车推向井口。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/tram"],
-      ["tram-rails","电车轨道；轨道","n.",["电车轨道"],["tramway-rails","street-track"],"Rain had rusted the old tram rails embedded in the street.","雨水让嵌在街面里的旧电车轨道生了锈。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/tram"],
-      ["weft-silk","纬纱；纬丝（丝织用的股线）","n.",["纬纱","纬丝"],["silk-tram","weft-thread"],"The weaver used a fine silk tram for the velvet's weft.","织工用纤细的丝股线作天鹅绒的纬纱。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/tram"],
+      ["tram-rails","电车线路；轨道线路（较少用）","n.",["电车轨道"],["tramway-rails","street-track"],"The old tram beyond the village has been closed for years.","村子那边的老电车线路已经停用了多年。",null,"https://www.collinsdictionary.com/dictionary/english/tram"],
+      ["weft-silk","纬丝；丝织纬纱（专业）","n.",["纬纱","纬丝"],["silk-tram","weft-thread"],"The weaver used a fine silk tram for the velvet's weft.","织工用纤细的丝股线作天鹅绒的纬纱。",null,"https://www.collinsdictionary.com/dictionary/english/tram"],
       ["ride-or-haul","乘电车；用轨道车运送","v.",["乘电车","用煤车运载"],["tram-travel","tram-transport"],"Visitors trammed up the hill to the castle and walked back down.","游客乘电车上了山到城堡，然后步行下山。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/tram"]
     ]);
     entry("wagon", [
@@ -790,7 +825,7 @@
       {"terms":["加强"],"decision":"context-required","reason":"旧译“加强”来自 strengthen enforcement 这类搭配，enforcement 本身只表示“执行、强制”，不含“加强”义，保留追溯。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/enforcement"}
     ]);
     entry("supreme", [
-      ["highest-authority","至高的；拥有最高权力的","adj.",["至高的","至高"],["supreme-highest-authority","top-ranking"],"Parliament is supreme, and no court may set its statutes aside.","议会拥有最高权力，任何法院都不能废除它制定的法令。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/supreme"],
+      ["highest-authority","至高的；拥有最高权力的","adj.",["至高的","至高"],["supreme-highest-authority","top-ranking"],"In the fictional kingdom, the royal council holds supreme authority over the courts.","在这个虚构王国里，王室议会拥有高于法院的最高权力。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/supreme"],
       ["utmost-degree","最大的；极度的；终极的","adj.",["最大的","极端的","终极的"],["supreme-utmost-degree","extreme-quality"],"He handled the crisis with supreme confidence and very little evidence.","他处理这场危机时表现出极大的自信，却没有多少证据。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/supreme"]
     ], [
       {"terms":["霸权"],"decision":"scope-excluded","reason":"旧译“霸权”对应的是名词 supremacy（霸权、优势地位）；supreme 是形容词，条目未列“霸权”义，保留追溯。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/supreme"}
@@ -821,10 +856,12 @@
     entry("vice", [
       ["bad-habit","恶习；不良习惯","n.",["恶习","恶癖"],["vice-bad-habit","personal-failing"],"His only vice was an expensive taste in watches.","他唯一的恶习是喜欢买昂贵的手表。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/vice"],
       ["wickedness","罪恶；邪恶；堕落","n.",["恶行","罪恶","堕落","缺陷"],["vice-wickedness","moral-corruption"],"The novel shows how small vices grow into open cruelty.","这部小说展示了小的邪恶如何发展成公然的残忍。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/vice"],
-      ["clamp-tool","老虎钳；台钳","n.",["老虎钳"],["vice-clamp-tool","bench-vise"],"He tightened the vice until the plank could not move.","他把台钳拧紧，直到木板再也动不了。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/vice"],
+      ["clamp-tool","台钳；台虎钳","n.",["台钳","台虎钳"],["vice-clamp-tool","bench-vise"],"He tightened the vice until the plank could not move.","他把台钳拧紧，直到木板再也动不了。",null,"https://dictionary.cambridge.org/dictionary/english/vice"],
       ["grip","钳住；夹紧","v.",["钳住"],["vice-clamp-verb","grip-hold"],"She viced the metal rod to the bench and began to file it.","她把金属棒夹在台钳上，开始锉削。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/vice"],
-      ["deputy","副的；代理的","adj.",["副的"],["vice-deputy","second-in-command"],"The vice president took over when the chairman resigned in June.","主席六月辞职后，副总裁接任。","vice president","https://api.dictionaryapi.dev/api/v2/entries/en/vice"],
-      ["instead-of","代替；接替（职位）","prep.",["代替"],["vice-in-place-of","succession"],"She was elected treasurer vice the officer who retired in May.","她接替五月退休的那位干事当选为财务主管。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/vice"]
+      ["deputy","副职的；代理的（职位前缀）","prefix",["副的"],["vice-deputy","second-in-command"],"The vice president took over when the chairman resigned in June.","主席六月辞职后，副总裁接任。","vice president","https://dictionary.cambridge.org/dictionary/english/vice"],
+      ["instead-of","代替；接替（正式、较少用）","prep.",["代替"],["vice-in-place-of","succession"],"She was elected treasurer vice the officer who retired in May.","她接替五月退休的那位干事当选为财务主管。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/vice"]
+    ], [
+      {"terms":["老虎钳"],"decision":"context-required","reason":"vice 是工作台上固定物件的台钳、台虎钳；汉语“老虎钳”常指手持钢丝钳，不能与所有钳子等同。","source":"https://dictionary.cambridge.org/dictionary/english/vice"}
     ]);
     entry("rob", [
       ["steal-from","抢劫；抢夺（用暴力或威胁夺取）","v.",["抢夺","抢掠"],["rob-steal-from","violent-theft"],"Two men robbed the corner shop just before closing time.","两名男子在打烊前抢劫了街角那家店。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/rob"],
@@ -839,7 +876,9 @@
     ]);
     entry("cannon", [
       ["artillery","大炮；加农炮","n.",["大炮","加农炮"],["cannon-artillery","heavy-gun"],"Rusty cannon still point out to sea from the old fort.","旧要塞上的生锈大炮仍指向海面。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/cannon"],
-      ["bombard","炮轰；用大炮轰击","v.",["炮轰"],["cannon-bombard","shell-fire"],"The ships cannoned the harbour walls until the garrison surrendered.","舰船炮轰港口城墙，直到守军投降。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/cannon"]
+      ["bombard","炮轰；用大炮轰击","v.",["炮轰"],["cannon-bombard","shell-fire"],"The ships cannoned the harbour walls until the garrison surrendered.","舰船炮轰港口城墙，直到守军投降。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/cannon"],
+      ["collide","（猛烈地）撞上；碰撞","vi.",["撞上","碰撞"],["strike-with-force"],"A cyclist swerved to avoid the dog and cannoned into a parked van.","一名骑车人为躲避狗猛地转向，撞上了一辆停着的货车。","cannon into","https://dictionary.cambridge.org/dictionary/english/cannon"],
+      ["rebound","撞上后弹开；反弹","vi.",["反弹","弹开"],["rebound-after-impact"],"The ball cannoned off the post and landed beside the goalkeeper.","球击中门柱后弹开，落在守门员身旁。","cannon off","https://dictionary.cambridge.org/dictionary/english/cannon"]
     ]);
     entry("arrow", [
       ["projectile","箭","n.",["箭"],["arrow-projectile","bow-and-arrow"],"He drew the bow and sent an arrow into the straw target.","他拉开弓，把一支箭射进草靶。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/arrow"],
@@ -862,12 +901,12 @@
     ]);
     entry("invader", [
       ["aggressor","入侵者；侵略者","n.",["侵略者"],["invader-military","foreign-aggressor"],"Villagers hid their grain in caves when the invaders approached.","入侵者逼近时，村民们把粮食藏进山洞。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/invader"],
-      ["intruder","闯入者；侵犯他人隐私的人","n.",["闯入者"],["invader-intruder","privacy-trespass"],"The photographers behaved like invaders, pushing past the nurses at the door.","那些摄影记者像闯入者一样，从门口的护士身边挤了过去。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/invader"]
+      ["intruder","闯入者；侵入者（可指生物等）","n.",["闯入者","侵入者"],["invader-intruder","privacy-trespass","intruding-organism"],"Gardeners removed the fast-spreading invader before it crowded out the native plants.","园丁们在这种迅速蔓延的入侵植物挤走本地植物之前将它清除了。",null,"https://www.merriam-webster.com/dictionary/invader"]
     ], [
-      {"terms":["侵入物"],"decision":"scope-excluded","reason":"旧译“侵入物”把 invader 当成物；条目中 invader 只指入侵的人（入侵者或闯入者），外来物种等用 invasive species，保留追溯。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/invader"}
+      {"terms":["侵入物"],"decision":"context-required","reason":"invader 不是只能指人。Merriam-Webster 释为入侵的事物；Collins invade 及其派生词允许植物等侵入语境。这里纳入生物侵入者，不泛指任意被放入的物件。","source":"https://www.collinsdictionary.com/dictionary/english/invade"}
     ]);
     entry("traitor", [
-      ["betrayer-of-country","叛国者；叛徒","n.",["叛国者","叛徒","叛逆者"],["traitor-to-country","treason-betrayal"],"The general was hanged as a traitor in the winter of 1649.","那位将军在1649年冬天以叛国者身份被处以绞刑。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/traitor"],
+      ["betrayer-of-country","叛国者；叛徒","n.",["叛国者","叛徒","叛逆者"],["traitor-to-country","treason-betrayal"],"In the novel, the general is condemned as a traitor after handing over the fort.","在这部小说中，将军交出堡垒后被判为叛国者。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/traitor"],
       ["breacher-of-trust","背信者；背叛朋友或组织的人","n.",["背信者","叛逆"],["traitor-breach-of-trust","disloyal-friend"],"She called him a traitor for selling the story to a rival paper.","她骂他是背信者，因为他把这件事卖给了竞争对手的报纸。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/traitor"]
     ]);
     entry("treason", [
@@ -907,12 +946,13 @@
       ["female-performer","女演员","n.",["女演员"],["female-stage-film-performer"],"The actress spent six months learning to play the violin for the role.","为了这个角色，这位女演员花了六个月学拉小提琴。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/actress"]
     ]);
     entry("chancellor", [
-      ["senior-minister","（英国）大臣；财政大臣","n.",["大臣"],["senior-government-minister"],"The chancellor announced tax cuts for small businesses in his autumn statement.","财政大臣在秋季声明中宣布为小企业减税。",null,"https://www.vocabulary.com/dictionary/chancellor"],
-      ["head-of-government","总理；首相（德国、奥地利等）","n.",["总理","首相"],["head-of-government"],"Germany's chancellor will visit Beijing next week for trade talks.","德国总理下周将访问北京进行贸易谈判。",null,"https://www.vocabulary.com/dictionary/chancellor"],
-      ["university-head","大学校长（名誉校长）","n.",["大学校长"],["university-chancellor"],"The chancellor handed each graduate a certificate at the end of the ceremony.","典礼结束时，校长为每位毕业生颁发了证书。",null,"https://www.vocabulary.com/dictionary/chancellor"]
+      ["senior-minister","（英）财政大臣；高级官员","n.",["财政大臣"],["senior-government-minister"],"The chancellor announced tax cuts for small businesses in his autumn statement.","财政大臣在秋季声明中宣布为小企业减税。","the Chancellor (of the Exchequer)","https://dictionary.cambridge.org/dictionary/english/chancellor"],
+      ["head-of-government","总理；首相（德国、奥地利等）","n.",["总理","首相"],["head-of-government"],"The documentary follows a newly elected chancellor through her first week in office.","这部纪录片跟拍一位新当选总理上任后的第一周。",null,"https://www.vocabulary.com/dictionary/chancellor"],
+      ["university-head","大学校长（英国多为名誉职位）","n.",["大学校长"],["university-chancellor"],"The chancellor handed each graduate a certificate at the end of the ceremony.","典礼结束时，校长为每位毕业生颁发了证书。",null,"https://dictionary.cambridge.org/dictionary/english/chancellor"]
     ], [
       {"terms":["大使馆/领事馆的一等秘书"],"decision":"restricted-verified","reason":"该义指使馆或领馆内负责文书与行政的主管（head of chancery），属于专门的驻外职务称谓，并非通用词义，故保留追溯。","source":"https://www.vocabulary.com/dictionary/chancellor"},
-      {"terms":["司法官"],"decision":"restricted-verified","reason":"该义只见于英国 Lord Chancellor（大法官）等特定官职，本次核对的可读条目未把它列为独立义项，故不设学习义项。","source":"https://www.vocabulary.com/dictionary/chancellor"}
+      {"terms":["司法官"],"decision":"restricted-verified","reason":"该义只见于英国 Lord Chancellor（大法官）等特定官职，本次核对的可读条目未把它列为独立义项，故不设学习义项。","source":"https://www.vocabulary.com/dictionary/chancellor"},
+      {"terms":["大臣"],"decision":"context-required","reason":"英国语境的 the Chancellor 通常特指财政大臣，或 Lord Chancellor 等特定官职；不是任意一位大臣的通称。","source":"https://dictionary.cambridge.org/dictionary/english/chancellor"}
     ]);
     entry("barber", [
       ["haircutter","理发师","n.",["理发师"],["haircutting-tradesman"],"The barber on the corner keeps a row of combs in his window.","街角的理发师在橱窗里摆了一排梳子。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/barber"],
@@ -929,7 +969,9 @@
     entry("hostess", [
       ["female-host","女主人（招待客人者）","n.",["女主人"],["female-greeter-host"],"Our hostess greeted us at the door and took our coats before dinner.","女主人在门口迎接我们，并在晚饭前接过我们的外套。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/hostess"],
       ["female-innkeeper","女房东；女老板（客栈女主人）","n.",["女房东","女老板"],["female-innkeeper"],"The hostess of the small inn cooked breakfast for everyone herself.","那家小客栈的女老板亲自为大家做早饭。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/hostess"],
-      ["air-hostess","（客机上的）女乘务员","n.",["空姐","女乘务员"],["air-hostess"],"The hostess helped an elderly passenger fasten his seat belt before take-off.","起飞前，女乘务员帮助一位年长乘客系好安全带。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/hostess"]
+      ["air-hostess","（客机上的）女乘务员","n.",["空姐","女乘务员"],["air-hostess","passenger-service-attendant"],"The air hostess asked us to place our bags under the seats before departure.","起飞前，女乘务员请我们把包放在座位下方。","air hostess","https://api.dictionaryapi.dev/api/v2/entries/en/hostess"],
+      ["restaurant-greeter","（餐厅的）女领位员；女接待员","n.",["女领位员","女接待员"],["restaurant-reception-staff"],"The hostess checked our reservation and led us to a table by the window.","女领位员核对了我们的预订，带我们来到窗边的桌子。",null,"https://www.collinsdictionary.com/dictionary/english/hostess"],
+      ["presenter","女主持人","n.",["女主持人"],["female-programme-presenter"],"The hostess introduced the next guest on the evening radio show.","女主持人在晚间广播节目中介绍了下一位嘉宾。",null,"https://www.collinsdictionary.com/dictionary/english/hostess"]
     ]);
     entry("oath", [
       ["solemn-vow","誓言；誓约","n.",["誓约","誓言","宣誓"],["solemn-vow","promise-oath"],"Witnesses must take an oath before they give evidence in court.","证人在法庭作证前必须宣誓。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/oath"],
@@ -938,7 +980,7 @@
     entry("pledge", [
       ["solemn-promise-n","誓言；诺言；保证","n.",["诺言","保证","誓言"],["solemn-promise","promise-oath"],"The government's pledge to cut waiting times has not yet been kept.","政府关于缩短等候时间的承诺至今尚未兑现。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/pledge"],
       ["collateral-token","抵押品；信物","n.",["抵押","信物"],["collateral-security","token-of-faith"],"He left his watch with the pawnbroker as a pledge for the loan.","他把手表留给当铺作为借款的抵押。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/pledge"],
-      ["drinking-toast","祝酒；祝愿；举杯祝…健康","n. / v.",["祝愿","举杯祝...健康"],["drinking-toast"],"The guests raised their glasses in a pledge to the young couple.","宾客们举杯向这对年轻夫妇祝酒。","pledge someone's health","https://api.dictionaryapi.dev/api/v2/entries/en/pledge"],
+      ["drinking-toast","（正式、较少用）举杯祝…健康","vt.",["祝愿","举杯祝...健康"],["drinking-toast"],"The guests pledged the young couple's health before dinner began.","晚宴开始前，宾客们举杯祝这对年轻夫妇健康。","pledge someone's health","https://api.dictionaryapi.dev/api/v2/entries/en/pledge"],
       ["promise-verb","保证；发誓；使某人承诺","v.",["许诺","使发誓"],["promise-solemnly"],"She pledged to phone her mother every Sunday evening.","她保证每周日晚上给母亲打电话。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/pledge"],
       ["pawn-deposit","典当；抵押（物品）","v.",["典当"],["pawn-deposit"],"He had to pledge his car to cover the hospital bill.","他不得不把车典当出去，以支付住院费。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/pledge"]
     ], [
@@ -986,7 +1028,7 @@
     ]);
     entry("intestine", [
       ["bowel","肠","n.",["肠"],["bowel-gut"],"The doctor said the infection had spread to his small intestine.","医生说感染已经扩散到他的小肠。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/intestine"],
-      ["internal-domestic","内部的；国内的","adj.",["内部的","国内的"],["internal-domestic"],"The historian traced the country's decline to decades of intestine strife.","这位历史学家把该国的衰落归因于数十年的内乱。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/intestine"]
+      ["internal-domestic","内部的；国内的（古旧）","adj.",["内部的","国内的"],["internal-domestic"],"The historian traced the country's decline to decades of intestine strife.","这位历史学家把该国的衰落归因于数十年的内乱。",null,"https://www.collinsdictionary.com/us/dictionary/english/intestine"]
     ]);
     entry("kidney", [
       ["organ","肾；肾脏","n.",["肾"],["kidney-organ"],"She was born with only one kidney and has regular check-ups.","她天生只有一个肾，需要定期检查。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/kidney"],
@@ -1008,7 +1050,10 @@
     entry("surgery", [
       ["operation","外科手术；手术","n.",["手术"],["surgical-operation"],"She needs surgery on her knee before the season starts.","赛季开始前她的膝盖需要做手术。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/surgery"],
       ["specialty","外科（学科）","n.",["外科"],["surgical-specialty"],"He trained in surgery for six years before joining the hospital.","他在加入这家医院之前接受了六年的外科训练。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/surgery"],
-      ["clinic-room","（英）诊所；手术室","n.",["手术室"],["clinic-room","operating-theatre"],"The village surgery opens at nine and closes at five on weekdays.","村里的诊所周一到周五九点开门，五点关门。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/surgery"]
+      ["clinic-room","（英）诊所；诊室","n.",["诊所","诊室"],["clinic-room"],"The village surgery opens at nine and closes at five on weekdays.","村里的诊所周一到周五九点开门，五点关门。",null,"https://dictionary.cambridge.org/dictionary/english/surgery"],
+      ["operating-room","（美、加）手术室","n.",["手术室"],["operating-theatre"],"A nurse checked the equipment in the surgery before the surgeon arrived.","外科医生到来前，一名护士检查了手术室里的设备。",null,"https://www.collinsdictionary.com/dictionary/english/surgery"],
+      ["consultation-hours","（英）门诊时间","n.",["门诊时间"],["medical-consultation-hours"],"Morning surgery ends at eleven, so I booked an appointment for ten.","上午门诊时间到十一点结束，所以我约了十点就诊。",null,"https://www.collinsdictionary.com/dictionary/english/surgery"],
+      ["advice-session","（英）议员接待选民的时间","n.",["议员接待时间"],["representative-constituency-session"],"Residents queued outside the hall before the councillor's weekly surgery.","地方议员每周接待开始前，居民们就在礼堂外排起了队。",null,"https://www.collinsdictionary.com/dictionary/english/surgery"]
     ], [
       {"terms":["换球术"],"decision":"scope-excluded","reason":"“换球术”在可读的词典条目里找不到任何对应义项，疑为旧词库串行误录；surgery 没有体育换球的意思，故只保留追溯。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/surgery"}
     ]);
@@ -1017,7 +1062,9 @@
     ]);
     entry("diabetes", [
       ["mellitus","糖尿病","n.",["糖尿病"],["diabetes-mellitus"],"Her father has lived with type 2 diabetes for more than twenty years.","她父亲患2型糖尿病已经二十多年了。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/diabetes"],
-      ["insipidus","多尿症（尿崩症）","n.",["多尿症"],["excessive-urination"],"Diabetes insipidus makes patients pass unusually large amounts of dilute urine.","尿崩症使患者排出异常大量稀释的尿液。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/diabetes"]
+      ["insipidus","尿崩症（仅限 diabetes insipidus 搭配）","n.",["尿崩症"],["diabetes-insipidus"],"The researcher wrote diabetes insipidus in full to distinguish the term from other diagnoses.","研究者把尿崩症的英语名称写全，以区别于其他诊断。","diabetes insipidus","https://dictionary.cambridge.org/dictionary/english/diabetes-insipidus"]
+    ], [
+      {"terms":["多尿症"],"decision":"context-required","reason":"多尿是症状描述，不能泛作 diabetes 的单词释义。尿崩症须用完整术语 diabetes insipidus，不能与通常指糖尿病的 diabetes 混为一义。","source":"https://dictionary.cambridge.org/dictionary/english/diabetes-insipidus"}
     ]);
     entry("paralyse", [
       ["cause-paralysis","使瘫痪；使麻痹","v.",["使麻痹","使瘫痪"],["cause-paralysis"],"The accident paralysed him from the waist down.","那场事故使他腰部以下瘫痪。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/paralyse"],
@@ -1047,8 +1094,10 @@
     ]);
     entry("foremost", [
       ["most-important","最重要的；首要的","adj.",["最重要的"],["most-prominent"],"She is one of the country's foremost experts on ancient glass.","她是该国古代玻璃研究领域最重要的专家之一。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/foremost"],
-      ["frontmost","最前面的；最初的","adj.",["最初的"],["frontmost"],"He took a seat in the foremost row so that he could hear everything.","他坐在最前排，以便听清所有内容。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/foremost"],
-      ["at-front","在最前面；首先","adv.",["在最前"],["at-the-front"],"He was foremost among those who opposed the plan from the start.","在最初反对该计划的人当中，他位居首位。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/foremost"]
+      ["frontmost","最前面的","adj.",["最前面的"],["frontmost"],"He took a seat in the foremost row so that he could hear everything.","他坐在最前排，以便听清所有内容。",null,"https://www.collinsdictionary.com/dictionary/english/foremost"],
+      ["at-front","首先；最重要地","adv.",["首先","最重要地","在最前"],["priority-first"],"First and foremost, the guide asks every walker to carry enough water.","首先，也是最重要的，向导要求每位徒步者带足饮用水。","first and foremost","https://www.collinsdictionary.com/dictionary/english/foremost"]
+    ], [
+      {"terms":["最初的"],"decision":"restricted-verified","reason":"Collins 另有 first in time 的用法；本条 frontmost 的例句只展示位置，不用它证明时间义。","source":"https://www.collinsdictionary.com/dictionary/english/foremost"}
     ]);
     entry("permanent", [
       ["lasting","永久的；持久的","adj.",["永久的","持久的"],["lasting-forever"],"The damage to the coral reef may be permanent.","珊瑚礁受到的损害可能是永久的。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/permanent"],
@@ -1066,8 +1115,9 @@
       ["intermittently","时而；间或","adv.",["时而","间或"],["intermittently"],"Periodically a car would pass, but otherwise the road stayed empty.","偶尔有车经过，除此之外路上一直空荡荡的。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/periodically"]
     ]);
     entry("recent", [
-      ["short-while-ago","最近的；最新的","adj.",["最近的","最新的"],["happened-shortly-ago"],"Recent rainfall has raised the level of the reservoir by nearly a metre.","最近的降雨使水库水位上升了近一米。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/recent"],
-      ["modern-near","近代的；新近的","adj.",["近代的","新进的"],["modern-near-past"],"Recent arrivals to the city often find the bus system confusing at first.","新来这座城市的人起初常常觉得公交系统让人摸不着头脑。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/recent"]
+      ["short-while-ago","最近的；最新的","adj.",["最近的","最新的"],["happened-shortly-ago"],"Recent rainfall has raised the level of the reservoir by nearly a metre.","最近的降雨使水库水位上升了近一米。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/recent"]
+    ], [
+      {"terms":["近代的","新进的"],"decision":"context-required","reason":"recent 指不久前的、新近的；原 modern-near 与 short-while-ago 是同一时间含义，合并训练，不能理解为历史分期“近代”或“先进”。","source":"https://www.collinsdictionary.com/dictionary/english/recent"}
     ]);
   }
   if(typeof module==='object'&&module.exports)module.exports=register;else scope.WordOrbitSenseBatch08=register;

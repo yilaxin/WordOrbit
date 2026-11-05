@@ -15,9 +15,9 @@
 - 项目目录：`C:/Users/17526/Documents/Codex/IELTS-Vocab-App`。不要在聊天原始工作目录中的其他项目写文件。
 - GitHub：<https://github.com/yilaxin/WordOrbit>，分支 `main`。
 - 先读项目 `AGENTS.md`，再读 `docs/SENSE_TRAINING_IMPLEMENTATION.md` 及最新批次说明。
-- 最近完成的**词义数据提交**：[f439567e2f6107c5b3c5d32a295955a54ed1c9d2](https://github.com/yilaxin/WordOrbit/commit/f439567e2f6107c5b3c5d32a295955a54ed1c9d2)。此后可能有本交接文档等提交，开始工作前以实际工作区和远端状态为准。
+- 第八批**初始数据提交**：[f439567e2f6107c5b3c5d32a295955a54ed1c9d2](https://github.com/yilaxin/WordOrbit/commit/f439567e2f6107c5b3c5d32a295955a54ed1c9d2)。此后已有独立复核修正，详见 `docs/SENSE_EDITORIAL_BATCH_08_REVIEW.md`；开始工作前以实际工作区和远端状态为准。
 
-截至上述数据提交，已整理情况如下：
+第八批初始提交之后已独立复核修正，以下为复核后的基线（不是初始提交的旧数）：
 
 | 批次 | 词数 | 义项组 | 原创英汉例句组 |
 | --- | ---: | ---: | ---: |
@@ -28,14 +28,14 @@
 | 05 | 200 | 376 | 376 |
 | 06 | 200 | 475 | 475 |
 | 07 | 200 | 628 | 628 |
-| 08 | 200 | 499 | 499 |
-| 累计 | **1,130** | **2,787** | **2,787** |
+| 08（复核后） | 200 | 538 | 538 |
+| 累计 | **1,130** | **2,826** | **2,826** |
 
-正式公共词 4,247 个，3,117 个尚未结构化。通过各批声明学习范围检查的为 1,125 词、2,747 义项组。另有第二批的 `branch / trunk / stem / field / range` 五词保留部分审核状态，共 10 个未决旧译片段，继续阻断整词的完整覆盖训练。
+正式公共词 4,247 个，3,117 个尚未结构化。通过各批声明学习范围检查的为 1,125 词、2,786 义项组。另有第二批的 `branch / trunk / stem / field / range` 五词保留部分审核状态，共 10 个未决旧译片段，继续阻断整词的完整覆盖训练。
 
 这些累计数是编辑进度，不是用户已背词数。不要从中反推用户学习状态。
 
-**义项数据和独立训练核心仍为开发资料，未接入正式网页或桌面整本遍历。桌面仍为 v1.7.0。** 最近一次相关回归为 43 项通过。数据整理完成或核心测试通过，均不等于桌面已经上线。
+**义项数据和独立训练核心仍为开发资料，未接入正式网页或桌面整本遍历。桌面仍为 v1.7.0。** 最近一次相关回归为 48 项通过。数据整理完成或核心测试通过，均不等于桌面已经上线。
 
 ## 3. 先取得可信的学习状态，再选词
 
@@ -84,7 +84,7 @@
 | `scripts/Audit-Vocabulary.cjs` | 在独立浏览器捕获正式公共词表 |
 | `scripts/Audit-SenseCoverage.cjs` | 累计覆盖、旧译追溯及人工核对单 |
 | `scripts/Audit-SenseBatchSelection.cjs` | 读取完整授权导出核对指定批次未学条件 |
-| `tests/sense-batch-08.test.cjs` | 最新批次测试参考；不可盲改历史预期数 |
+| `tests/sense-batch-08.test.cjs` 和 `tests/sense-batch-08-review.test.cjs` | 最新批次及独立语义回归；不可盲改历史预期数 |
 | `docs/SENSE_EDITORIAL_BATCH_08.md` | 最新词表、范围、来源、验证说明参考 |
 | `docs/SENSE_TRAINING_IMPLEMENTATION.md` | 最新累计统计和正式接入边界 |
 
@@ -162,7 +162,7 @@ node scripts/Audit-SenseBatchSelection.cjs --progress <本机授权完整导出.
 运行现有回归并追加新批次：
 
 ```text
-node --test tests/sense-catalog.test.cjs tests/sense-training-core.test.cjs tests/sense-selection.test.cjs tests/sense-batch-03.test.cjs tests/sense-batch-04.test.cjs tests/sense-batch-05.test.cjs tests/sense-batch-06.test.cjs tests/sense-batch-07.test.cjs tests/sense-batch-08.test.cjs
+node --test tests/sense-catalog.test.cjs tests/sense-training-core.test.cjs tests/sense-selection.test.cjs tests/sense-batch-03.test.cjs tests/sense-batch-04.test.cjs tests/sense-batch-05.test.cjs tests/sense-batch-06.test.cjs tests/sense-batch-07.test.cjs tests/sense-batch-08.test.cjs tests/sense-batch-08-review.test.cjs
 ```
 
 在现有历史批次的浏览器 VM 加载列表中加入新模块依赖，否则总目录会报缺少模块。历史的词数、义项数和例句数应保持；累计断言使用各批截止范围，不随新批次重写旧事实。
