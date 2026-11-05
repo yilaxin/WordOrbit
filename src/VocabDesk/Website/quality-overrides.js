@@ -543,6 +543,14 @@ function qApplyMeaningFixes(){
   });
   if(changed)save();
 }
+// Old replacement imports can omit seed-only public words. Restore only missing
+// bundled rows, by canonical spelling, and never rename IDs already holding progress.
+function qRestoreBundledSeeds(){
+  const names=new Set(state.words.map(w=>qCanonicalWord(w.word))),ids=new Set(state.words.map(w=>w.id));let changed=false;
+  for(const seed of SEED_WORDS)if(!names.has(qCanonicalWord(seed.word))&&!ids.has(seed.id)){state.words.push(JSON.parse(JSON.stringify(seed)));names.add(qCanonicalWord(seed.word));ids.add(seed.id);changed=true;}
+  if(changed)save();
+}
+qRestoreBundledSeeds();
 qApplyExternalDictionary();
 qApplyMeaningFixes();
 

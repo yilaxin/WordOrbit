@@ -72,6 +72,25 @@ const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=r
   const saved=await legacy.evaluate(()=>{const w=state.words.find(w=>w.word==='seed');const q={wordId:w.id,status:'pending',attempts:0,checked:false,selected:null,options:makeOptions(w),optionKind:'single'};state.lastSession=qNewSession([q],'single');state.lastSession.id='synthetic-old-round';save();return JSON.stringify(state.lastSession);});
   await legacy.reload();await legacy.waitForFunction(()=>window.WordOrbitSenseStudy);await legacy.evaluate(()=>WordOrbitSenseStudy.ensure());await legacy.click('#continueBtn');
   assert.equal(await legacy.evaluate(()=>JSON.stringify(session)),saved);assert.equal(await legacy.evaluate(()=>qFullMeaning(currentWord())),await legacy.evaluate(()=>qExternalEntry(currentWord()).meaning));
+  // Native replacement imports must preserve both legacy public IDs and schema-3 sense state.
+  const nativeScript=data=>{
+   const source=fs.readFileSync(path.resolve(__dirname,'../src/VocabDesk/MainWindow.xaml.cs'),'utf8').split('private static string BuildImportScript(string raw)')[1];
+   return source.split('return $$"""')[1].split('""";')[0].replace('{{escapedPayload}}',JSON.stringify(JSON.stringify(data))).replaceAll('{{StateKey}}','vocab-offline-state-v1').replaceAll('{{CatalogKey}}','vocab-offline-catalog-v1');
+  };
+  await legacy.evaluate(()=>{const [word,e]=Object.entries(WordOrbitSenseIndex.entries).find(([,e])=>e.aliases?.length),w=state.words.find(w=>w.word===word);w.id=e.aliases[0];w.notes='Synthetic old ID note';state.records[w.id]={level:2,seen:4,correct:3,wrong:1,due:null,lastSeen:null};state.lastSession=null;save();});
+  await legacy.reload();await legacy.waitForFunction(()=>window.WordOrbitSenseStudy);await legacy.evaluate(()=>WordOrbitSenseStudy.ensure());
+  assert.equal(await legacy.evaluate(()=>WordOrbitSenseState.eligible(state.words,WORDORBIT_SENSE_CATALOG.entries,WordOrbitSenseIndex).length),1125);
+  assert.equal(await legacy.evaluate(()=>state.words.some(w=>w.notes==='Synthetic old ID note'&&state.records[w.id]?.seen===4&&WordOrbitSenseIndex.entries[w.word].aliases.includes(w.id))),true);
+  await legacy.evaluate(nativeScript(JSON.parse(fs.readFileSync(path.resolve(__dirname,'sample-export.json'),'utf8'))));
+  await legacy.waitForTimeout(400);await legacy.waitForFunction(()=>window.WordOrbitSenseStudy&&state.records['seed-1-1']?.seen===7);await legacy.evaluate(()=>WordOrbitSenseStudy.ensure());
+  assert.equal(await legacy.evaluate(()=>qEligibleWords().length),4247,'Partial old native backups cannot erase bundled public words');
+  assert.equal(await legacy.evaluate(()=>WordOrbitSenseState.eligible(state.words,WORDORBIT_SENSE_CATALOG.entries,WordOrbitSenseIndex).length),1125);
+  assert.deepEqual(await legacy.evaluate(()=>state.senseStudy.completed),{});
+  await legacy.evaluate(nativeScript(payload));await legacy.waitForTimeout(400);await legacy.waitForFunction(()=>state.lastSession?.type==='senses');
+  assert.equal(await legacy.evaluate(()=>JSON.stringify(state.lastSession)),JSON.stringify(payload.senseSession));
+  assert.deepEqual(await legacy.evaluate(()=>state.senseStudy),payload.senseStudy);
+  await legacy.click('#continueBtn');await legacy.waitForFunction(()=>WordOrbitSenseStudy.snapshot().loaded);
+  assert.equal(await legacy.evaluate(()=>JSON.stringify(session)),JSON.stringify(payload.senseSession));
   assert.deepEqual(errors,[]);assert.deepEqual(network,[]);
   console.log(JSON.stringify({passed:true,lazyLoading:true,readyWords:1125,senses:2786,targets:start.words,goals:start.goals,baseQuestions:start.base,exactResume:true,legacyResume:true,multiFeedback:true,backupRestore:true,clearModes:true,offline:true}));
  }finally{await browser.close();}

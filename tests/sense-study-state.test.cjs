@@ -11,6 +11,10 @@ test('shipping index contains exactly the reviewed public range and excludes all
  const bad=[...words,{word:words[0].word,id:'synthetic-private-alias'},{word:'branch',id:'synthetic-partial'}];
  assert.equal(S.eligible(bad,pack.entries,index).length,1125);
  assert.equal(S.eligible([{...words[0],id:'synthetic-private-alias'}],pack.entries,index).length,0);
+ const known=Object.entries(index.entries).find(([,e])=>e.aliases?.length),alias={word:known[0],id:known[1].aliases[0]};
+ assert.equal(S.eligible([alias],pack.entries,index).length,1,'A bundled OCR/index alias retains its original progress ID');
+ assert.equal(S.eligible([alias,{...alias,id:known[1].id}],pack.entries,index).length,1,'Alias IDs cannot duplicate a word in a batch');
+ assert.equal(S.eligible([{...alias,referenceOnly:true}],pack.entries,index).length,0);
 });
 
 test('resume validates locked goals, word IDs, immutable option shape, roots and counters',()=>{

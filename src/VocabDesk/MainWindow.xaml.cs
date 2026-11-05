@@ -130,6 +130,7 @@ public partial class MainWindow : Window
                 {
                     testImportApplied = true;
                     var raw = await File.ReadAllTextAsync(testImportPath);
+                    await EnsureSenseModulesAsync();
                     var imported = await Browser.ExecuteScriptAsync(BuildImportScript(raw));
                     if (imported != "true") throw new InvalidOperationException("Test import was not acknowledged.");
                     return;
@@ -149,13 +150,7 @@ public partial class MainWindow : Window
                 var vocabularyResult = JsonSerializer.Deserialize<Dictionary<string, object?>>(JsonSerializer.Deserialize<string>(vocabularyAudit) ?? "{}")
                     ?? throw new InvalidOperationException("Empty vocabulary self-test result.");
                 foreach (var entry in vocabularyResult) testResult[entry.Key] = entry.Value;
-                await Browser.ExecuteScriptAsync("window.__senseReady=false;window.WordOrbitSenseStudy.ensure().then(()=>{window.__senseReady=WordOrbitSenseStudy.snapshot().readyWords===1125&&WordOrbitSenseStudy.snapshot().readySenses===2786&&WordOrbitSenseState.eligible(state.words,WORDORBIT_SENSE_CATALOG.entries,WordOrbitSenseIndex).length===1125;}).catch(e=>{window.__senseError=String(e)});");
-                for (var attempt=0;attempt<100;attempt++)
-                {
-                    if (await Browser.ExecuteScriptAsync("window.__senseReady===true") == "true") break;
-                    await Task.Delay(100);
-                }
-                if (await Browser.ExecuteScriptAsync("window.__senseReady===true") != "true") throw new InvalidOperationException("Reviewed sense modules failed to load from the desktop host: " + await Browser.ExecuteScriptAsync("window.__senseError"));
+                await EnsureSenseModulesAsync();
                 testResult["reviewedSenseWordCount"] = 1125;
                 testResult["reviewedSenseCount"] = 2786;
                 testResult["sensePracticeOnDemand"] = true;
@@ -331,6 +326,17 @@ public partial class MainWindow : Window
         }
     }
 
+    private async Task EnsureSenseModulesAsync()
+    {
+        await Browser.ExecuteScriptAsync("window.__senseReady=false;window.__senseError=null;window.WordOrbitSenseStudy.ensure().then(()=>{window.__senseReady=WordOrbitSenseStudy.snapshot().readyWords===1125&&WordOrbitSenseStudy.snapshot().readySenses===2786&&WordOrbitSenseState.eligible(state.words,WORDORBIT_SENSE_CATALOG.entries,WordOrbitSenseIndex).length===1125;}).catch(e=>{window.__senseError=String(e)});");
+        for (var attempt=0;attempt<100;attempt++)
+        {
+            if (await Browser.ExecuteScriptAsync("window.__senseReady===true") == "true") return;
+            await Task.Delay(100);
+        }
+        throw new InvalidOperationException("Reviewed sense modules failed to load from the desktop host: " + await Browser.ExecuteScriptAsync("window.__senseError"));
+    }
+
     private void OnNavigationStarting(object? sender, CoreWebView2NavigationStartingEventArgs e)
     {
         if (IsAppUrl(e.Uri)) return;
@@ -415,15 +421,17 @@ public partial class MainWindow : Window
 
         try
         {
+            await EnsureSenseModulesAsync();
             var backupScript = $$"""
                 JSON.stringify((() => {
                   const state = JSON.parse(localStorage.getItem('{{StateKey}}') || '{}');
                   return {
-                    schemaVersion: 2,
+                    schemaVersion: 3,
                     words: JSON.parse(localStorage.getItem('{{CatalogKey}}') || '[]'),
                     records: state.records || {},
                     attempts: state.attempts || [],
-                    favorites: state.favorites || []
+                    favorites: state.favorites || [],
+                    ...window.WordOrbitSenseStudy.backup()
                   };
                 })())
                 """;
@@ -450,13 +458,14 @@ public partial class MainWindow : Window
         return $$"""
             (() => {
               const data = JSON.parse({{escapedPayload}});
+              const senseState = window.WordOrbitSenseStudy.nativeState(data);
               const previous = JSON.parse(localStorage.getItem('{{StateKey}}') || '{}');
               const compact = {
                 ...previous,
                 records: data.records,
                 attempts: data.attempts,
                 favorites: Array.isArray(data.favorites) ? data.favorites : [],
-                lastSession: null,
+                ...senseState,
                 recentSession: null
               };
               const oldCatalog = localStorage.getItem('{{CatalogKey}}');

@@ -28,7 +28,7 @@ function practice(type, variant = undefined) {
     setup: {}, window: { EXTERNAL_VOCAB: {}, EXAMPLE_SENTENCES: {} },
     document: { addEventListener() {} },
     localStorage: { getItem() { return null; }, setItem() {} },
-    KEY: 'test-state', CHAPTERS: [],
+    KEY: 'test-state', CHAPTERS: [], SEED_WORDS: [],
     $: element, $$: () => [],
     renderHome() {}, renderLibrary() {}, renderStats() {}, statusMatch() { return true; },
     showView() {}, fillSelects() {}, makeQueue() { return []; },

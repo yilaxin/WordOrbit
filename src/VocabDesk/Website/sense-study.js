@@ -2,14 +2,14 @@
  * Large editorial modules load on first use. No private database is opened here. */
 (() => {
   'use strict';
-  const index=window.WordOrbitSenseIndex,S=window.WordOrbitSenseState,readyIds=new Set(Object.values(window.WordOrbitSenseIndex.entries).map(e=>e.id));
+  const index=window.WordOrbitSenseIndex,S=window.WordOrbitSenseState,readyIds=new Set(Object.values(window.WordOrbitSenseIndex.entries).flatMap(e=>[e.id,...(e.aliases||[])]));
   const e=qEscape,clone=v=>JSON.parse(JSON.stringify(v));
   let pack=null,core=null,loading=null,launching=false,trusted=new Set();
   const pinnedLegacy=new WeakSet();
   if(state.lastSession&&state.lastSession.type!=='senses'&&!state.lastSession.senseCatalogRevision)pinnedLegacy.add(state.lastSession);
   const oldMeaning=qFullMeaning,oldPos=qPartOfSpeech,oldExample=qExample,oldExplanation=qExplanationHtml;
   const legacyActive=()=>session&&pinnedLegacy.has(session)&&$('#view-practice')?.classList.contains('active');
-  const approved=w=>w&&index.entries[qWordKey(w.word)]?.id===w.id&&pack?.entries[qWordKey(w.word)]?.complete?pack.entries[qWordKey(w.word)]:null;
+  const approved=w=>w&&S.publicMatch(w,index)&&pack?.entries[qWordKey(w.word)]?.complete?pack.entries[qWordKey(w.word)]:null;
   const fullMeaning=entry=>[...new Set(entry.senses.map(s=>s.label))].join('；');
   function loadScript(name){return new Promise((resolve,reject)=>{const script=document.createElement('script');script.src=name;script.onload=()=>{script.remove();resolve();};script.onerror=()=>{script.remove();reject(Error('无法读取本机义项文件：'+name));};document.head.append(script);});}
   async function ensure(){
@@ -44,7 +44,7 @@
     $('#senseStudyContinue').hidden=state.lastSession?.type!=='senses';
   }
   const oldHome=renderHome;renderHome=function(){oldHome();syncPanel();};
-  const oldStatus=statusMatch;statusMatch=function(w,status){return status==='sense-reviewed'?!!index.entries[qWordKey(w.word)]&&index.entries[qWordKey(w.word)].id===w.id:oldStatus(w,status);};
+  const oldStatus=statusMatch;statusMatch=function(w,status){return status==='sense-reviewed'?S.publicMatch(w,index):oldStatus(w,status);};
   const oldLibrary=renderLibrary;
   renderLibrary=function(page){
     oldLibrary(page);
@@ -149,6 +149,13 @@
     state.senseStudy=S.clearProgress(state.senseStudy,removed,scope==='all');save();syncPanel();
   };
   function backup(){return {senseStudy:clone(progress()),...(state.lastSession?.type==='senses'?{senseSession:clone(state.lastSession)}:{})};}
+  // Native replacement import uses the incoming catalog's IDs, not the current profile's IDs.
+  function nativeState(payload){
+    if(!pack)throw Error('义项资料尚未载入');
+    const words=S.eligible(payload.words||[],pack.entries,index),senseStudy=S.cleanProgress(payload.senseStudy,words);
+    if(payload.senseSession&&!S.validRound(payload.senseSession,words,pack.entries,core))throw Error('备份义项训练无效，未替换记录');
+    return {senseStudy,lastSession:payload.senseSession?clone(payload.senseSession):null};
+  }
   function prepareImport(payload){
     if(!payload.senseStudy&&!payload.senseSession)return null;
     if(!pack)throw Error('请等待义项资料载入后再恢复');
@@ -185,5 +192,5 @@
     const choice=document.createElement('button');choice.className='choice';choice.dataset.type='senses';choice.textContent='义项全覆盖';choice.onclick=()=>openSetup('senses');$('#typeChoices').append(choice);
     syncPanel();
   });
-  window.WordOrbitSenseStudy={ensure,backup,prepareImport,snapshot:()=>({loaded:!!pack,readyWords:index.words,readySenses:index.senses,active:session?.type==='senses',...(session?.type==='senses'&&core?{progress:core.progress(session)}:{})})};
+  window.WordOrbitSenseStudy={ensure,backup,prepareImport,nativeState,snapshot:()=>({loaded:!!pack,readyWords:index.words,readySenses:index.senses,active:session?.type==='senses',...(session?.type==='senses'&&core?{progress:core.progress(session)}:{})})};
 })();

@@ -3,8 +3,9 @@
   'use strict';
   const key=w=>String(w||'').trim().toLowerCase(),clone=v=>JSON.parse(JSON.stringify(v));
   function hideEnglishHints(text){return String(text||'').replace(/[A-Za-z][A-Za-z0-9'’/-]*(?:\s+[A-Za-z][A-Za-z0-9'’/-]*)*/g,'…');}
+  function publicMatch(w,index){const e=index.entries[key(w?.word)];return !!e&&!w.referenceOnly&&(e.id===w.id||e.aliases?.includes(w.id)===true);}
   function eligible(words,catalog,index){
-    const used=new Set();return words.filter(w=>{const name=key(w.word),e=catalog[name];if(index.entries[name]?.id!==w.id||used.has(name)||!e?.complete||!e.reviewed||e.unresolvedReferences?.length)return false;used.add(name);return true;});
+    const used=new Set();return words.filter(w=>{const name=key(w.word),e=catalog[name];if(!publicMatch(w,index)||used.has(name)||!e?.complete||!e.reviewed||e.unresolvedReferences?.length)return false;used.add(name);return true;});
   }
   function history(attempts){const out={};for(const a of attempts||[])if(a.mode?.startsWith('sense-'))for(const s of a.senseResults||[]){const k=a.id+':'+s.id,r=out[k]||{seen:0,correct:0,wrong:0};r.seen++;r[s.correct?'correct':'wrong']++;out[k]=r;}return out;}
   function validRound(round,words,catalog,core){
@@ -44,5 +45,5 @@
     }return out;
   }
   function clearProgress(value,removedSessionIds,all=false){const out=clone(value||{version:1,cycle:1,completed:{}});if(all)return {version:1,cycle:1,completed:{}};for(const[id,p]of Object.entries(out.completed||{}))if(removedSessionIds.includes(p.sessionId))delete out.completed[id];return out;}
-  const api={eligible,history,validRound,cleanProgress,clearProgress,hideEnglishHints};if(typeof module==='object'&&module.exports)module.exports=api;else scope.WordOrbitSenseState=api;
+  const api={eligible,history,validRound,cleanProgress,clearProgress,hideEnglishHints,publicMatch};if(typeof module==='object'&&module.exports)module.exports=api;else scope.WordOrbitSenseState=api;
 })(typeof window==='object'?window:globalThis);
