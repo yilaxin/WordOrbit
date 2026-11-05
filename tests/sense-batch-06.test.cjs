@@ -74,7 +74,7 @@ test('four disjoint 50-word batches cover all 475 goals and preserve choices thr
 test('batch 06 near equivalents are excluded and the catalog loads offline without activating the UI',()=>{
   for(const [a,b]of [[get('grace','movement'),get('elegance','grace')],[get('energetic','energy'),get('vigorous','energy')],[get('collaborate','joint-work'),get('cooperate','joint')],[get('immigration','settlement'),get('immigrate','settle')],[get('restrict','limit'),get('confine','limit')],[get('plague','disease'),get('disease','illness')],[get('perform','function'),get('function','operate')]])assert.equal(core.overlaps(a,b),true);
   const site=path.join(__dirname,'../src/VocabDesk/Website'),window={},context={window};vm.createContext(context);
-  for(const f of ['sense-batch-03.js','sense-batch-04.js','sense-batch-05.js','sense-batch-06.js','sense-batch-07.js','sense-catalog.js'])vm.runInContext(fs.readFileSync(path.join(site,f),'utf8'),context);
+  for(const f of ['sense-batch-03.js','sense-batch-04.js','sense-batch-05.js','sense-batch-06.js','sense-batch-07.js','sense-batch-08.js','sense-catalog.js'])vm.runInContext(fs.readFileSync(path.join(site,f),'utf8'),context);
   assert.equal(JSON.stringify(window.WORDORBIT_SENSE_CATALOG),JSON.stringify(pack));
   assert.equal(pack.publicationState,'editorial-development');
   assert.doesNotMatch(fs.readFileSync(path.join(site,'index.html'),'utf8'),/src=["'][^"']*sense-(?:batch|catalog|training)/);
