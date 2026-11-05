@@ -15,7 +15,7 @@
 - 项目目录：`C:/Users/17526/Documents/Codex/IELTS-Vocab-App`。不要在聊天原始工作目录中的其他项目写文件。
 - GitHub：<https://github.com/yilaxin/WordOrbit>，分支 `main`。
 - 先读项目 `AGENTS.md`，再读 `docs/SENSE_TRAINING_IMPLEMENTATION.md` 及最新批次说明。
-- 最近完成的**词义数据提交**：[17fec9c82d9f9e2d75b1732696805c727b25453f](https://github.com/yilaxin/WordOrbit/commit/17fec9c82d9f9e2d75b1732696805c727b25453f)。此后可能有本交接文档等提交，开始工作前以实际工作区和远端状态为准。
+- 最近完成的**词义数据提交**：[f439567e2f6107c5b3c5d32a295955a54ed1c9d2](https://github.com/yilaxin/WordOrbit/commit/f439567e2f6107c5b3c5d32a295955a54ed1c9d2)。此后可能有本交接文档等提交，开始工作前以实际工作区和远端状态为准。
 
 截至上述数据提交，已整理情况如下：
 
