@@ -68,10 +68,10 @@ test('four disjoint 50-word batches target all 628 senses with fixed safe option
   assert.equal(JSON.stringify({words,entries}),before);
 });
 
-test('new cross-batch near equivalents are excluded and all seven batches load offline without UI activation',()=>{
+test('new cross-batch near equivalents are excluded and all seven batches load offline without eager editorial scripts',()=>{
   for(const[a,b]of [[get('sunshine','light'),get('sunlight','light')],[get('consult','reference'),get('reference','consult')],[get('liquid','substance'),get('fluid','substance')],[get('component','part'),get('assembly','unit')],[get('wrap','finish'),get('conclude','finish')],[get('express','communicate'),get('expression','show')],[get('fascinate','interest'),get('absorb','attention')],[get('influence','effect'),get('govern','determine')]])assert.equal(core.overlaps(a,b),true);
   const site=path.join(__dirname,'../src/VocabDesk/Website'),window={},context={window};vm.createContext(context);
   for(const f of ['sense-batch-03.js','sense-batch-04.js','sense-batch-05.js','sense-batch-06.js','sense-batch-07.js','sense-batch-08.js','sense-catalog.js'])vm.runInContext(fs.readFileSync(path.join(site,f),'utf8'),context);
-  assert.equal(JSON.stringify(window.WORDORBIT_SENSE_CATALOG),JSON.stringify(pack));assert.equal(pack.publicationState,'editorial-development');
+  assert.equal(JSON.stringify(window.WORDORBIT_SENSE_CATALOG),JSON.stringify(pack));assert.equal(pack.publicationState,'reviewed-subset-production');
   assert.doesNotMatch(fs.readFileSync(path.join(site,'index.html'),'utf8'),/src=["'][^"']*sense-(?:batch|catalog|training)/);
 });

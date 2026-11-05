@@ -72,10 +72,11 @@
 
   function syncSetup() {
     const whole = setup.type === 'whole';
+    const senses = setup.type === 'senses';
     const countBlock = select('#countChoices')?.closest('.form-block');
     const scopeBlock = select('#chapterSelect')?.closest('.form-block');
     const orderBlock = select('#orderChoices')?.closest('.form-block');
-    [countBlock, scopeBlock, orderBlock].forEach(block => { if (block) block.hidden = whole; });
+    [countBlock, scopeBlock, orderBlock].forEach(block => { if (block) block.hidden = whole || senses; });
     let note = select('#wholeSetupNote');
     if (!note && select('#launchPracticeBtn')) {
       select('#launchPracticeBtn').insertAdjacentHTML('beforebegin', '<div id="wholeSetupNote" class="whole-setup-note" hidden><div><b>01</b><strong>英文 → 中文</strong><span>50 题</span></div><div><b>02</b><strong>中文 → 英文</strong><span>50 题</span></div><p>从全书随机抽取同一批 50 个词，两段分别打乱顺序。答错的题排到原定 100 题之后重做。</p></div>');
@@ -84,7 +85,11 @@
     if (note) note.hidden = !whole;
     const preview = select('#previewNumber');
     const description = select('.setup-aside > .muted');
-    if (whole) {
+    let senseNote=select('#senseSetupNote');
+    if(!senseNote&&select('#launchPracticeBtn')){select('#launchPracticeBtn').insertAdjacentHTML('beforebegin','<div id="senseSetupNote" class="whole-setup-note" hidden><p>从已整理的 1,125 个词中随机选最多 50 词。先逐个义项做语境题，再做中文选英文和多义检查。题量随义项变化；基础题完成后集中重做错题。</p><p>本模式独立记录全义项完成进度，不把旧的单次答对当作全部义项已掌握。其余词仍可在整本遍历中练习。</p></div>');senseNote=select('#senseSetupNote');}
+    if(senseNote)senseNote.hidden=!senses;
+    if(senses){if(preview)preview.textContent='50 词';if(description)description.textContent='每个已审核义项都有对应练习；题量动态生成，不固定为 100 题。';}
+    else if (whole) {
       if (setup.count !== 100) regularCount = setup.count;
       if (preview) preview.textContent = String(Math.min(50, wholeBookWords().length) * 2);
       if (description) description.textContent = '全书随机 50 个词，完成两段练习。两段均完成后，再集中重做本轮错题。';

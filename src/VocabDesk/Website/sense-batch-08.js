@@ -1,6 +1,6 @@
 /* Batch 08: 200 formal public words; every retained sense names the dictionary entry
  * that was actually read, and all bilingual examples are original WordOrbit writing.
- * No learner data is included and the module is not loaded by the app UI yet. */
+ * No learner data is included. Complete entries are loaded on demand by the app. */
 (function(scope){
   'use strict';
   function register(add){

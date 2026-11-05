@@ -1,4 +1,4 @@
-/* Offline sense-training foundation. Not activated until editorial coverage is ready.
+/* Offline sense-training foundation, used by the reviewed-subset practice adapter.
  * Input words must be the formal public catalog. No storage, DOM, network or old records.
  */
 (function(scope){

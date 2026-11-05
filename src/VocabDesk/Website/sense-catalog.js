@@ -1,7 +1,7 @@
 /* Editorial batches 01-08. Definitions checked against the named dictionary entries.
  * Chinese grouping and all bilingual teaching examples are written for WordOrbit.
  * complete means the explicitly declared learning scope, NOT all dictionary senses.
- * This pack is not yet loaded by the desktop app. No user data is included.
+ * The complete reviewed subset loads on demand in v1.8.0. No user data is included.
  */
 (function(scope){
   'use strict';
@@ -290,6 +290,6 @@
     if(entry.unresolvedReferences.length){entry.complete=false;entry.pendingReview='常用义项已初审；旧译仍有未决项：'+entry.unresolvedReferences.join('；')+'。整词暂不进入完整覆盖训练。';}
     entry.sources=[...new Set([...entry.sources,...entry.senses.map(s=>s.source),...entry.referenceOnly.map(r=>r.source).filter(Boolean)])];
   }
-  const api={version:8,batches:['01','02','03','04','05','06','07','08'],reviewDate:'2026-11-05',publicationState:'editorial-development',scope:'declared-learning-scope-not-exhaustive-dictionary',entries};
+  const api={version:8,batches:['01','02','03','04','05','06','07','08'],reviewDate:'2026-11-05',publicationState:'reviewed-subset-production',scope:'declared-learning-scope-not-exhaustive-dictionary',entries};
   if(typeof module==='object'&&module.exports)module.exports=api;else scope.WORDORBIT_SENSE_CATALOG=api;
 })(typeof window==='object'?window:globalThis);

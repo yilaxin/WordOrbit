@@ -101,6 +101,7 @@ const { pathToFileURL } = require('node:url');
   await page.locator('#constellationStart').click();
   assert.deepEqual(await page.evaluate(() => ({ ...setup })), { type: 'mixed', count: 20, chapter: '自然地理', source: 'all', order: 'smart' });
   await page.locator('#launchPracticeBtn').click();
+  await page.waitForFunction(()=>session?.type==='mixed');
   const round = await page.evaluate(() => ({ type: session.type, count: session.queue.length, topics: [...new Set(session.queue.map(i => state.words.find(w => w.id === i.wordId).chapter))], verified: session.queue.every(i => qVerified(state.words.find(w => w.id === i.wordId))) }));
   assert.deepEqual(round, { type: 'mixed', count: 20, topics: ['自然地理'], verified: true });
   await page.locator('#exitPractice').click();

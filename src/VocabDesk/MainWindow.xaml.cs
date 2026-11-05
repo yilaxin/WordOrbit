@@ -149,6 +149,16 @@ public partial class MainWindow : Window
                 var vocabularyResult = JsonSerializer.Deserialize<Dictionary<string, object?>>(JsonSerializer.Deserialize<string>(vocabularyAudit) ?? "{}")
                     ?? throw new InvalidOperationException("Empty vocabulary self-test result.");
                 foreach (var entry in vocabularyResult) testResult[entry.Key] = entry.Value;
+                await Browser.ExecuteScriptAsync("window.__senseReady=false;window.WordOrbitSenseStudy.ensure().then(()=>{window.__senseReady=WordOrbitSenseStudy.snapshot().readyWords===1125&&WordOrbitSenseStudy.snapshot().readySenses===2786&&WordOrbitSenseState.eligible(state.words,WORDORBIT_SENSE_CATALOG.entries,WordOrbitSenseIndex).length===1125;}).catch(e=>{window.__senseError=String(e)});");
+                for (var attempt=0;attempt<100;attempt++)
+                {
+                    if (await Browser.ExecuteScriptAsync("window.__senseReady===true") == "true") break;
+                    await Task.Delay(100);
+                }
+                if (await Browser.ExecuteScriptAsync("window.__senseReady===true") != "true") throw new InvalidOperationException("Reviewed sense modules failed to load from the desktop host: " + await Browser.ExecuteScriptAsync("window.__senseError"));
+                testResult["reviewedSenseWordCount"] = 1125;
+                testResult["reviewedSenseCount"] = 2786;
+                testResult["sensePracticeOnDemand"] = true;
                 testResult["topicUniverse3D"] = true;
                 await Browser.ExecuteScriptAsync("WordOrbitConstellation.select('语言演化')");
                 if (await Browser.ExecuteScriptAsync("WordOrbitConstellation.snapshot().selected==='语言演化'&&WordOrbitConstellation.snapshot().paused&&document.querySelector('#selectedTopicKind').textContent.includes('自然地理')") != "true") throw new InvalidOperationException("Native topic focus failed.");

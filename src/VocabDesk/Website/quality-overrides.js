@@ -335,8 +335,8 @@ function qRebuildRecord(wordId,originalAttempts){
     const timestamp=Date.parse(at);
     record.seen++;
     record.lastSeen=Number.isFinite(timestamp)?new Date(timestamp).toISOString():null;
-    if(attempt.correct){record.correct++;record.level=Math.min(4,record.level+1);record.due=Number.isFinite(timestamp)?new Date(timestamp+[0,1,3,7,21][record.level]*86400000).toISOString():null}
-    else{record.wrong++;record.level=Math.max(0,record.level-1);record.due=record.lastSeen}
+    if(attempt.correct){record.correct++;if(!attempt.mode?.startsWith('sense-')){record.level=Math.min(4,record.level+1);record.due=Number.isFinite(timestamp)?new Date(timestamp+[0,1,3,7,21][record.level]*86400000).toISOString():null}}
+    else{record.wrong++;if(!attempt.mode?.startsWith('sense-'))record.level=Math.max(0,record.level-1);record.due=record.lastSeen}
   });
   state.records[wordId]=record;
 }
@@ -394,14 +394,15 @@ importData=function(file){
     try{
       const payload=JSON.parse(reader.result),incoming=Array.isArray(payload)?payload:(Array.isArray(payload.words)?payload.words:[]);
       if(!incoming.length)throw Error('empty');
+      const applySenseProgress=window.WordOrbitSenseStudy?.prepareImport(payload);
       const byId=new Map(state.words.map(w=>[String(w.id),w])),byWord=new Map(state.words.map(w=>[qWordKey(w.word),w]));let added=0,updated=0,rejected=0;
       incoming.forEach((raw,index)=>{const item=qNormalizeImported(raw,index);if(!item){rejected++;return}const existing=byId.get(item.id)||byWord.get(qWordKey(item.word));if(existing){Object.keys(item).forEach(key=>{if(key!=='id'&&item[key]!==''&&item[key]!==undefined)existing[key]=item[key]});updated++}else{state.words.push(item);byId.set(item.id,item);byWord.set(qWordKey(item.word),item);added++}});
-      if(payload.records)state.records={...state.records,...payload.records};if(Array.isArray(payload.favorites))state.favorites=[...new Set([...state.favorites,...payload.favorites])];save();fillSelects();renderHome();toast(`导入完成：新增 ${added}，更新 ${updated}，跳过 ${rejected}`);
+      if(payload.records)state.records={...state.records,...payload.records};if(Array.isArray(payload.favorites))state.favorites=[...new Set([...state.favorites,...payload.favorites])];applySenseProgress?.();save();fillSelects();renderHome();toast(`导入完成：新增 ${added}，更新 ${updated}，跳过 ${rejected}`);
     }catch(error){toast('导入失败：文件不是有效的词库 JSON')}
   };reader.readAsText(file);
 };
 exportData=function(){
-  const payload={schemaVersion:2,exportedAt:new Date().toISOString(),words:state.words,records:state.records,favorites:state.favorites,attempts:state.attempts};
+  const payload={schemaVersion:3,exportedAt:new Date().toISOString(),words:state.words,records:state.records,favorites:state.favorites,attempts:state.attempts,...window.WordOrbitSenseStudy?.backup()};
   const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='vocab-offline-export.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('学习数据已导出');
 };
 

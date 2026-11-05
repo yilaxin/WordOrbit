@@ -82,7 +82,7 @@ test('200 real words produce four disjoint 50-word batches with complete sense g
   assert.equal(JSON.stringify({words,entries}),before);
 });
 
-test('cross-word equivalents are excluded and the full pack loads without network or production activation',()=>{
+test('cross-word equivalents are excluded and the full pack loads without network or eager editorial scripts',()=>{
   for(const [a,b]of [[get('adapt','adjust'),get('adjust','adapt')],[get('accurate','precise'),get('precise','exact')],[get('entertainment','amusement'),get('recreation','leisure')],[get('mediate','dispute'),get('intervene','involve')]])assert.equal(core.overlaps(a,b),true);
   const site=path.join(__dirname,'../src/VocabDesk/Website'),window={},context={window};vm.createContext(context);
   for(const file of ['sense-batch-03.js','sense-batch-04.js','sense-batch-05.js','sense-batch-06.js','sense-batch-07.js','sense-batch-08.js','sense-catalog.js'])vm.runInContext(fs.readFileSync(path.join(site,file),'utf8'),context);
