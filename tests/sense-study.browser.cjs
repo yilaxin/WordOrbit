@@ -7,11 +7,11 @@ const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=r
   page.on('pageerror',error=>errors.push(error.message));page.on('request',request=>{if(/^https?:/.test(request.url()))network.push(request.url());});
   const url=pathToFileURL(path.resolve(__dirname,'../src/VocabDesk/Website/index.html')).href+'?desktop=1';
   await page.goto(url);await page.waitForFunction(()=>window.WordOrbitSenseStudy&&state.words.length>4000);
-  assert.deepEqual(await page.evaluate(()=>WordOrbitSenseStudy.snapshot()),{loaded:false,readyWords:1330,readySenses:3342,active:false});
+  assert.deepEqual(await page.evaluate(()=>WordOrbitSenseStudy.snapshot()),{loaded:false,readyWords:1530,readySenses:3788,active:false});
   await page.screenshot({path:'.build/sense-study-home.png',fullPage:true});
   const before=await page.evaluate(()=>JSON.stringify({words:state.words,records:state.records,attempts:state.attempts,favorites:state.favorites,lastSession:state.lastSession}));
   const coverage=await page.evaluate(async()=>{await WordOrbitSenseStudy.ensure();return {ready:WordOrbitSenseState.eligible(state.words,WORDORBIT_SENSE_CATALOG.entries,WordOrbitSenseIndex).length,formal:qEligibleWords().length,partial:['branch','trunk','stem','field','range'].every(word=>!!WordOrbitSenseIndex.entries[word]),seed:qFullMeaning(state.words.find(w=>w.word==='seed'))};});
-  assert.equal(coverage.ready,1330);assert.equal(coverage.formal,4247);assert.equal(coverage.partial,true);assert.match(coverage.seed,/去除.*籽/);
+  assert.equal(coverage.ready,1530);assert.equal(coverage.formal,4247);assert.equal(coverage.partial,true);assert.match(coverage.seed,/去除.*籽/);
   assert.equal(await page.evaluate(()=>JSON.stringify({words:state.words,records:state.records,attempts:state.attempts,favorites:state.favorites,lastSession:state.lastSession})),before,'Loading public data must not rewrite learner records or catalog rows');
   await page.click('#senseBrowseButton');await page.fill('#searchInput','seed');await page.locator('.sense-library-details').first().click();
   await page.waitForSelector('.sense-answer-item');assert.ok(await page.locator('.sense-answer-item').count()>=9);
@@ -79,12 +79,12 @@ const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=r
   };
   await legacy.evaluate(()=>{const [word,e]=Object.entries(WordOrbitSenseIndex.entries).find(([,e])=>e.aliases?.length),w=state.words.find(w=>w.word===word);w.id=e.aliases[0];w.notes='Synthetic old ID note';state.records[w.id]={level:2,seen:4,correct:3,wrong:1,due:null,lastSeen:null};state.lastSession=null;save();});
   await legacy.reload();await legacy.waitForFunction(()=>window.WordOrbitSenseStudy);await legacy.evaluate(()=>WordOrbitSenseStudy.ensure());
-  assert.equal(await legacy.evaluate(()=>WordOrbitSenseState.eligible(state.words,WORDORBIT_SENSE_CATALOG.entries,WordOrbitSenseIndex).length),1330);
+  assert.equal(await legacy.evaluate(()=>WordOrbitSenseState.eligible(state.words,WORDORBIT_SENSE_CATALOG.entries,WordOrbitSenseIndex).length),1530);
   assert.equal(await legacy.evaluate(()=>state.words.some(w=>w.notes==='Synthetic old ID note'&&state.records[w.id]?.seen===4&&WordOrbitSenseIndex.entries[w.word].aliases.includes(w.id))),true);
   await legacy.evaluate(nativeScript(JSON.parse(fs.readFileSync(path.resolve(__dirname,'sample-export.json'),'utf8'))));
   await legacy.waitForTimeout(400);await legacy.waitForFunction(()=>window.WordOrbitSenseStudy&&state.records['seed-1-1']?.seen===7);await legacy.evaluate(()=>WordOrbitSenseStudy.ensure());
   assert.equal(await legacy.evaluate(()=>qEligibleWords().length),4247,'Partial old native backups cannot erase bundled public words');
-  assert.equal(await legacy.evaluate(()=>WordOrbitSenseState.eligible(state.words,WORDORBIT_SENSE_CATALOG.entries,WordOrbitSenseIndex).length),1330);
+  assert.equal(await legacy.evaluate(()=>WordOrbitSenseState.eligible(state.words,WORDORBIT_SENSE_CATALOG.entries,WordOrbitSenseIndex).length),1530);
   assert.deepEqual(await legacy.evaluate(()=>state.senseStudy.completed),{});
   await legacy.evaluate(nativeScript(payload));await legacy.waitForTimeout(400);await legacy.waitForFunction(()=>state.lastSession?.type==='senses');
   assert.equal(await legacy.evaluate(()=>JSON.stringify(state.lastSession)),JSON.stringify(payload.senseSession));
@@ -92,6 +92,6 @@ const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=r
   await legacy.click('#continueBtn');await legacy.waitForFunction(()=>WordOrbitSenseStudy.snapshot().loaded);
   assert.equal(await legacy.evaluate(()=>JSON.stringify(session)),JSON.stringify(payload.senseSession));
   assert.deepEqual(errors,[]);assert.deepEqual(network,[]);
-  console.log(JSON.stringify({passed:true,lazyLoading:true,readyWords:1330,senses:3342,targets:start.words,goals:start.goals,baseQuestions:start.base,exactResume:true,legacyResume:true,multiFeedback:true,backupRestore:true,clearModes:true,offline:true}));
+  console.log(JSON.stringify({passed:true,lazyLoading:true,readyWords:1530,senses:3788,targets:start.words,goals:start.goals,baseQuestions:start.base,exactResume:true,legacyResume:true,multiFeedback:true,backupRestore:true,clearModes:true,offline:true}));
  }finally{await browser.close();}
 })().catch(error=>{console.error(error);process.exit(1);});

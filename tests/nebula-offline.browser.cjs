@@ -6,7 +6,7 @@ const server=http.createServer((req,res)=>{const target=path.resolve(site,'.'+de
  try{
  browser=await chromium.launch({executablePath:'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',headless:true});const context=await browser.newContext({reducedMotion:'reduce'}),page=await context.newPage(),errors=[];
  page.on('pageerror',err=>errors.push(err.message));await page.goto('http://127.0.0.1:'+server.address().port+'/index.html');await page.waitForFunction(()=>!!navigator.serviceWorker.controller);
- const assets=await page.evaluate(async()=>{const cache=await caches.open('wordorbit-reviewed-v39');return(await cache.keys()).map(r=>new URL(r.url).pathname);});
+ const assets=await page.evaluate(async()=>{const cache=await caches.open('wordorbit-reviewed-v40');return(await cache.keys()).map(r=>new URL(r.url).pathname);});
  assert.equal((await page.locator('.primary-nav [data-view=mywords]').innerText()).replace('◎','').trim(),'我的星球');assert.ok(assets.includes('/reviewed-dictionary.js'));assert.ok(assets.includes('/catalog-repairs.js'));assert.equal(await page.evaluate(()=>qEligibleWords().length),4247);assert.equal(await page.evaluate(()=>state.words.filter(qReview).length),1);
  for(const name of ['nebula-core.js','nebula-store.js','nebula.js','nebula.css'])assert.ok(assets.includes('/'+name));assert.equal(assets.filter(p=>p.includes('/assets/constellation/display/')).length,22);
  assert.ok(assets.includes('/constellation-space.js'));assert.ok(!assets.includes('/constellation-fleet.js'),'retired placeholder renderer is not cached');

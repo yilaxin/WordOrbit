@@ -1,10 +1,10 @@
 # WordOrbit 词汇义项更新任务交接
 
-更新：2026-11-06，v1.9.0。项目目录 `C:/Users/17526/Documents/Codex/IELTS-Vocab-App`；仓库 <https://github.com/yilaxin/WordOrbit>，分支 main。先读 `AGENTS.md`，检查工作区和远端，不覆盖其他人的修改。
+更新：2026-11-06，v1.10.0。项目目录 `C:/Users/17526/Documents/Codex/IELTS-Vocab-App`；仓库 <https://github.com/yilaxin/WordOrbit>，分支 main。先读 `AGENTS.md`，检查工作区和远端，不覆盖其他人的修改。
 
 ## 当前基线与下一批
 
-下一批编号为 **10**。先检查实际最新提交；如已有后续批次，不得重复使用编号或词表。本轮用户明确要求已整理数据接入正式练习，因此第九批和五词补充均已用于正式桌面版，不是尚未接入的开发资料。
+下一批编号为 **11**。先检查实际最新提交；如已有后续批次，不得重复使用编号或词表。本轮用户明确要求已整理数据接入正式练习，因此第九、十批和五词补充均已用于正式桌面版，不是尚未接入的开发资料。
 
 | 范围 | 词数 | 义项/原创英汉例句组 |
 | --- | ---: | ---: |
@@ -17,11 +17,12 @@
 | 07 | 200 | 628 |
 | 08，独立复核后 | 200 | 538 |
 | 09 | 200 | 499 |
-| 累计，全部接入 | **1,330** | **3,342** |
+| 10 | 200 | 446 |
+| 累计，全部接入 | **1,530** | **3,788** |
 
-正式公共词 4,247，尚未结构化 2,917；无部分审核词、未决旧译或未映射旧译。曾部分审核的 branch/trunk/stem/field/range 当前共 57 个学习义项，其中新增 17 个，见 `sense-completion-02.js`。不改写前八批最初 1,130/2,826 的历史时点。本轮实际新写 516 组例句（17+499）。这些是编辑数量，不能反推用户学习数量。
+正式公共词 4,247，尚未结构化 2,717；无部分审核词、未决旧译或未映射旧译。曾部分审核的 branch/trunk/stem/field/range 当前共 57 个学习义项，其中新增 17 个，见 `sense-completion-02.js`。不改写前八批最初 1,130/2,826 的历史时点。第九批时点实际新写 516 组例句（17+499）；第十批另新增 446 组。这些是编辑数量，不能反推用户学习数量。
 
-最新公开说明为 `docs/SENSE_EDITORIAL_BATCH_09.md`；架构与保存约定见 `docs/SENSE_TRAINING_IMPLEMENTATION.md` 及历史接入说明 `docs/SENSE_PRACTICE_v1.8.0.md`。同机私人来源、导出时间及证据见忽略目录 `.build/SENSE_EDITORIAL_HANDOFF_LOCAL.md`，不得上传。
+最新公开说明为 `docs/SENSE_EDITORIAL_BATCH_10.md`；架构与保存约定见 `docs/SENSE_TRAINING_IMPLEMENTATION.md` 及历史接入说明 `docs/SENSE_PRACTICE_v1.8.0.md`。同机私人来源、导出时间及证据见忽略目录 `.build/SENSE_EDITORIAL_HANDOFF_LOCAL.md`，不得上传。
 
 ## 可信的未学筛选
 
@@ -47,7 +48,7 @@
 
 ## 文件和注册
 
-- `sense-batch-09.js` 可作新模块格式参考；下一批 `sense-batch-10.js` 导出注册函数和浏览器全局 `WordOrbitSenseBatch10`。
+- `sense-batch-10.js` 可作新模块格式参考；下一批 `sense-batch-11.js` 导出注册函数和浏览器全局 `WordOrbitSenseBatch11`。
 - 在总目录审核归一化循环之前注册；更新目录 version、batches 和 reviewDate。add 按 word 键赋值，会覆盖同名条目，必须比较新增集合与开工前所有键。
 - 若用户要求正式接入，更新 sense-study 的按需模块列表，重建 sense-ready-index，离线 worker 纳入新资源、递增缓存版本；不把大型批次直接加入 index.html。
 - 公共 ID 索引只由公共捕获与内置 OCR/索引别名生成，不能把学习导出当索引输入。保留历史公共 ID，不把任意私人编号当正式词。
@@ -69,7 +70,7 @@
 
 ```text
 node scripts/Audit-SenseCoverage.cjs
-node scripts/Audit-SenseBatchSelection.cjs --progress <本机授权完整导出.json> --batch 10 --count 200
+node scripts/Audit-SenseBatchSelection.cjs --progress <本机授权完整导出.json> --batch 11 --count 200
 node scripts/Build-SenseReadyIndex.cjs
 node --test tests/*.test.cjs
 node tests/sense-study.browser.cjs
