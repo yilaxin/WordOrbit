@@ -14,7 +14,7 @@ function containsTarget(word,text){
 test('batch 07 adds 200 distinct words, 628 scoped senses and 628 original bilingual examples',()=>{
   assert.equal(entries.length,200);assert.equal(Object.values(pack.entries).filter(e=>e.batch<='07').length,930);
   const older=Object.values(pack.entries).filter(e=>e.batch<'07'),sentences=new Set(older.flatMap(e=>e.senses.map(s=>s.example.en)));
-  assert.equal(older.length,730);assert.equal(sentences.size,1660);let count=0;
+  assert.equal(older.length,730);assert.equal(sentences.size,1677);let count=0;
   for(const [word,e]of entries){
     assert.equal(e.reviewDate,'2026-11-05');assert.equal(core.validateEntry(e),true,word);assert.deepEqual(e.unresolvedReferences,[]);
     for(const s of e.senses){
@@ -27,7 +27,7 @@ test('batch 07 adds 200 distinct words, 628 scoped senses and 628 original bilin
     }
     for(const r of e.referenceOnly)assert.ok(r.terms.length&&r.decision&&r.reason&&e.sources.includes(r.source),word);
   }
-  assert.equal(count,628);assert.equal(sentences.size,2288);
+  assert.equal(count,628);assert.equal(sentences.size,2305);
 });
 
 test('distinct uses, restricted constructions, technical sources and legacy corrections stay explicit',()=>{
@@ -71,7 +71,7 @@ test('four disjoint 50-word batches target all 628 senses with fixed safe option
 test('new cross-batch near equivalents are excluded and all seven batches load offline without eager editorial scripts',()=>{
   for(const[a,b]of [[get('sunshine','light'),get('sunlight','light')],[get('consult','reference'),get('reference','consult')],[get('liquid','substance'),get('fluid','substance')],[get('component','part'),get('assembly','unit')],[get('wrap','finish'),get('conclude','finish')],[get('express','communicate'),get('expression','show')],[get('fascinate','interest'),get('absorb','attention')],[get('influence','effect'),get('govern','determine')]])assert.equal(core.overlaps(a,b),true);
   const site=path.join(__dirname,'../src/VocabDesk/Website'),window={},context={window};vm.createContext(context);
-  for(const f of ['sense-batch-03.js','sense-batch-04.js','sense-batch-05.js','sense-batch-06.js','sense-batch-07.js','sense-batch-08.js','sense-catalog.js'])vm.runInContext(fs.readFileSync(path.join(site,f),'utf8'),context);
+  for(const f of ['sense-batch-03.js','sense-batch-04.js','sense-batch-05.js','sense-batch-06.js','sense-batch-07.js','sense-batch-08.js','sense-completion-02.js','sense-batch-09.js','sense-catalog.js'])vm.runInContext(fs.readFileSync(path.join(site,f),'utf8'),context);
   assert.equal(JSON.stringify(window.WORDORBIT_SENSE_CATALOG),JSON.stringify(pack));assert.equal(pack.publicationState,'reviewed-subset-production');
   assert.doesNotMatch(fs.readFileSync(path.join(site,'index.html'),'utf8'),/src=["'][^"']*sense-(?:batch|catalog|training)/);
 });

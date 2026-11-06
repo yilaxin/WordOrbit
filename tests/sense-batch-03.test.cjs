@@ -25,7 +25,7 @@ test('batch 03 has exactly 100 new reviewed words and 229 sense-specific origina
     }
     for(const r of e.referenceOnly)assert.ok(r.terms.length&&r.decision&&r.reason&&e.sources.includes(r.source));
   }
-  assert.equal(count,229);assert.equal(sentences.size,394);
+  assert.equal(count,229);assert.equal(sentences.size,411);
 });
 test('important formerly omitted meanings and usage limits remain explicit',()=>{
   assert.equal(pack.entries.resilient.senses.length,2);assert.ok(get('resilient','recover'));
@@ -64,7 +64,7 @@ test('100 real words create two different 50-word batches with all chosen senses
 test('new cross-word equivalents are excluded and the data load offline in a browser context',()=>{
   for(const [a,b]of [[get('research','study'),get('scholarship','study')],[get('cushion','protection'),get('mitigate','lessen')],[get('surrender','give-up'),get('yield','give-way')],[get('contemporary','modern'),get('current','now')],[get('organism','system'),get('ecosystem','network')],[get('evidence','proof'),get('testimony','proof')]])assert.equal(core.overlaps(a,b),true);
   const site=path.join(__dirname,'../src/VocabDesk/Website'),window={},context={window};vm.createContext(context);
-  for(const name of ['sense-batch-03.js','sense-batch-04.js','sense-batch-05.js','sense-batch-06.js','sense-batch-07.js','sense-batch-08.js','sense-catalog.js'])vm.runInContext(fs.readFileSync(path.join(site,name),'utf8'),context);
+  for(const name of ['sense-batch-03.js','sense-batch-04.js','sense-batch-05.js','sense-batch-06.js','sense-batch-07.js','sense-batch-08.js','sense-completion-02.js','sense-batch-09.js','sense-catalog.js'])vm.runInContext(fs.readFileSync(path.join(site,name),'utf8'),context);
   assert.equal(Object.values(window.WORDORBIT_SENSE_CATALOG.entries).filter(e=>e.batch<='03').length,130);
   assert.equal(JSON.stringify(window.WORDORBIT_SENSE_CATALOG),JSON.stringify(pack));
   // The production UI remains on its existing training system until integration.

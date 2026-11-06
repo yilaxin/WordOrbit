@@ -86,7 +86,7 @@
     const preview = select('#previewNumber');
     const description = select('.setup-aside > .muted');
     let senseNote=select('#senseSetupNote');
-    if(!senseNote&&select('#launchPracticeBtn')){select('#launchPracticeBtn').insertAdjacentHTML('beforebegin','<div id="senseSetupNote" class="whole-setup-note" hidden><p>从已整理的 1,125 个词中随机选最多 50 词。先逐个义项做语境题，再做中文选英文和多义检查。题量随义项变化；基础题完成后集中重做错题。</p><p>本模式独立记录全义项完成进度，不把旧的单次答对当作全部义项已掌握。其余词仍可在整本遍历中练习。</p></div>');senseNote=select('#senseSetupNote');}
+    if(!senseNote&&select('#launchPracticeBtn')){select('#launchPracticeBtn').insertAdjacentHTML('beforebegin','<div id="senseSetupNote" class="whole-setup-note" hidden><p>从当前已整理词库中随机选最多 50 词。先逐个义项做语境题，再做中文选英文和多义检查。题量随义项变化；基础题完成后集中重做错题。</p><p>本模式独立记录全义项完成进度，不把旧的单次答对当作全部义项已掌握。其余词仍可在整本遍历中练习。</p></div>');senseNote=select('#senseSetupNote');}
     if(senseNote)senseNote.hidden=!senses;
     if(senses){if(preview)preview.textContent='50 词';if(description)description.textContent='每个已审核义项都有对应练习；题量动态生成，不固定为 100 题。';}
     else if (whole) {

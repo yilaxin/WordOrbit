@@ -1,4 +1,4 @@
-/* Editorial batches 01-08. Definitions checked against the named dictionary entries.
+/* Editorial batches 01-09. Definitions checked against the named dictionary entries.
  * Chinese grouping and all bilingual teaching examples are written for WordOrbit.
  * complete means the explicitly declared learning scope, NOT all dictionary senses.
  * The complete reviewed subset loads on demand in v1.8.0. No user data is included.
@@ -283,6 +283,13 @@
   for(const [word,items]of Object.entries(constructions))for(const [id,page]of Object.entries(items))entries[word].senses.find(s=>s.id===id).source='https://dictionary.cambridge.org/dictionary/english/'+page;
   entries.root.senses.find(s=>s.id==='fixed').source='https://www.collinsdictionary.com/dictionary/english/root';
   entries.root.sources.push('https://dictionary.cambridge.org/dictionary/learner-english/be-rooted-in-sth');
+  const complete02=typeof module==='object'&&module.exports?require('./sense-completion-02.js'):scope.WordOrbitSenseCompletion02;
+  if(typeof complete02!=='function')throw Error('Missing batch 02 completion');
+  complete02(entries);
+  editorialBatch='09';
+  const registerBatch09=typeof module==='object'&&module.exports?require('./sense-batch-09.js'):scope.WordOrbitSenseBatch09;
+  if(typeof registerBatch09!=='function')throw Error('Missing editorial batch 09');
+  registerBatch09(add);
   // Unresolved OLD fragments remain visible in the audit; they are not certified
   // merely because the explicitly bounded teaching selection is usable.
   for(const entry of Object.values(entries)){
@@ -290,6 +297,6 @@
     if(entry.unresolvedReferences.length){entry.complete=false;entry.pendingReview='常用义项已初审；旧译仍有未决项：'+entry.unresolvedReferences.join('；')+'。整词暂不进入完整覆盖训练。';}
     entry.sources=[...new Set([...entry.sources,...entry.senses.map(s=>s.source),...entry.referenceOnly.map(r=>r.source).filter(Boolean)])];
   }
-  const api={version:8,batches:['01','02','03','04','05','06','07','08'],reviewDate:'2026-11-05',publicationState:'reviewed-subset-production',scope:'declared-learning-scope-not-exhaustive-dictionary',entries};
+  const api={version:9,batches:['01','02','03','04','05','06','07','08','09'],reviewDate:'2026-11-06',publicationState:'reviewed-subset-production',scope:'declared-learning-scope-not-exhaustive-dictionary',entries};
   if(typeof module==='object'&&module.exports)module.exports=api;else scope.WORDORBIT_SENSE_CATALOG=api;
 })(typeof window==='object'?window:globalThis);

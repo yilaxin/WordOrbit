@@ -151,8 +151,8 @@ public partial class MainWindow : Window
                     ?? throw new InvalidOperationException("Empty vocabulary self-test result.");
                 foreach (var entry in vocabularyResult) testResult[entry.Key] = entry.Value;
                 await EnsureSenseModulesAsync();
-                testResult["reviewedSenseWordCount"] = 1125;
-                testResult["reviewedSenseCount"] = 2786;
+                testResult["reviewedSenseWordCount"] = JsonSerializer.Deserialize<int>(await Browser.ExecuteScriptAsync("WordOrbitSenseIndex.words"));
+                testResult["reviewedSenseCount"] = JsonSerializer.Deserialize<int>(await Browser.ExecuteScriptAsync("WordOrbitSenseIndex.senses"));
                 testResult["sensePracticeOnDemand"] = true;
                 testResult["topicUniverse3D"] = true;
                 await Browser.ExecuteScriptAsync("WordOrbitConstellation.select('语言演化')");
@@ -328,7 +328,7 @@ public partial class MainWindow : Window
 
     private async Task EnsureSenseModulesAsync()
     {
-        await Browser.ExecuteScriptAsync("window.__senseReady=false;window.__senseError=null;window.WordOrbitSenseStudy.ensure().then(()=>{window.__senseReady=WordOrbitSenseStudy.snapshot().readyWords===1125&&WordOrbitSenseStudy.snapshot().readySenses===2786&&WordOrbitSenseState.eligible(state.words,WORDORBIT_SENSE_CATALOG.entries,WordOrbitSenseIndex).length===1125;}).catch(e=>{window.__senseError=String(e)});");
+        await Browser.ExecuteScriptAsync("window.__senseReady=false;window.__senseError=null;window.WordOrbitSenseStudy.ensure().then(()=>{window.__senseReady=WordOrbitSenseStudy.snapshot().readyWords===WordOrbitSenseIndex.words&&WordOrbitSenseStudy.snapshot().readySenses===WordOrbitSenseIndex.senses&&WordOrbitSenseState.eligible(state.words,WORDORBIT_SENSE_CATALOG.entries,WordOrbitSenseIndex).length===WordOrbitSenseIndex.words;}).catch(e=>{window.__senseError=String(e)});");
         for (var attempt=0;attempt<100;attempt++)
         {
             if (await Browser.ExecuteScriptAsync("window.__senseReady===true") == "true") return;
