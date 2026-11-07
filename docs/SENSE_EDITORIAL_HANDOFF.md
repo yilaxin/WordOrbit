@@ -1,5 +1,7 @@
 # WordOrbit 词汇义项更新任务交接
 
+2026-11-07 第十一批的具体执行要求见 [第十一批 200 词任务书](TASK_BATCH_11_200_WORDS.md)。本轮由另一个 agent 先完成编辑与隔离测试，再交回原 agent 复核；复核前不修改生产接入或发布桌面版本。该任务书的本轮交付顺序优先于下面的一般接入流程。
+
 更新：2026-11-06，v1.10.0。项目目录 `C:/Users/17526/Documents/Codex/IELTS-Vocab-App`；仓库 <https://github.com/yilaxin/WordOrbit>，分支 main。先读 `AGENTS.md`，检查工作区和远端，不覆盖其他人的修改。
 
 ## 当前基线与下一批
