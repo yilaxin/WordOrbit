@@ -1,7 +1,6 @@
 /* Batch 11: 200 formal public words; every retained sense names the dictionary entry
  * actually read for that sense, and all bilingual examples are original WordOrbit writing.
- * No learner data is included. This module is NOT registered by the production catalog yet;
- * the review harness composes a candidate catalog in isolation. */
+ * No learner data is included. Registered for offline, on-demand production practice. */
 (function(scope){
   'use strict';
   function register(add){
@@ -15,16 +14,16 @@
       entries[word]=e;return e;
     }
     entry("fashionable", [
-      ["in-current-style","时髦的；流行的；时兴的","adj.",["时髦的","流行的","时兴的","时尚的","风行一时的"],["in-vogue-style","current-popular-fashion"],"Wearing second-hand clothes has become surprisingly fashionable among students who care about the planet.","在关心地球的学生中，穿二手衣服已变得出奇地时髦。",null,"https://www.vocabulary.com/dictionary/fashionable"],
-      ["elegant-refined","有品位的；优雅讲究的","adj.",["有品位的","优雅的","讲究的","格调高的"],["elegant-refined"],"Her understated dress and careful manners struck everyone as quietly fashionable.","她素雅的连衣裙和得体的举止让人觉得她有一种含蓄的优雅。",null,"https://www.vocabulary.com/dictionary/fashionable"]
+      ["in-current-style","时髦的；流行的；时兴的","adj.",["时髦的","流行的","时兴的","时尚的","风行一时的"],["in-vogue-style","current-popular-fashion"],"Wearing second-hand clothes has become surprisingly fashionable among students who care about the planet.","在关心地球的学生中，穿二手衣服已变得出奇地时髦。",null,"https://www.merriam-webster.com/dictionary/fashionable"]
     ],
     [
-      {"terms":["上流社会的"],"decision":"scope-excluded","reason":"旧译'上流社会的'来自过时的 fashionable society 搭配，现代词典不把该义单列为常用形容词义项。","source":"https://www.vocabulary.com/dictionary/fashionable"}
+      {"terms":["上流社会的"],"decision":"scope-excluded","reason":"旧译'上流社会的'来自过时的 fashionable society 搭配，现代词典不把该义单列为常用形容词义项。","source":"https://www.vocabulary.com/dictionary/fashionable"},
+      {"terms":["有品位的","优雅的","讲究的","格调高的"],"decision":"context-required","reason":"优雅或有品位本身不等于符合时尚；仅在服饰与风尚语境下可作意译，不独立考查为一般的 elegant/refined。","source":"https://www.merriam-webster.com/dictionary/fashionable"}
     ]);
     entry("handsome", [
       ["good-looking","英俊的；帅气的","adj.",["英俊的","帅气的","相貌堂堂的","好看的"],["attractive-appearance"],"The actor was considered unusually handsome when he first appeared on screen in the 1990s.","这位演员20世纪90年代初登银幕时被认为格外英俊。",null,"https://www.vocabulary.com/dictionary/handsome"],
       ["large-amount","（金额）可观的；丰厚的","adj.",["相当可观的","可观的","丰厚的","大笔的"],["large-amount"],"Selling the old factory brought the family a handsome sum of money.","卖掉旧工厂给这家人带来了一笔可观的收入。",null,"https://www.vocabulary.com/dictionary/handsome"],
-      ["generous-giving","大方的；慷慨的","adj.",["大方的","慷慨的","出手大方的","豪爽的"],["generous-giving"],"Our neighbours are handsome hosts, always offering guests far more food than they can eat.","我们的邻居待客十分大方，总是给客人准备远超食量的饭菜。",null,"https://www.vocabulary.com/dictionary/handsome"],
+      ["generous-giving","大方的；慷慨的","adj.",["大方的","慷慨的","出手大方的","豪爽的"],["generous-giving"],"The charity received a handsome donation from an anonymous local business owner.","这家慈善机构收到了一位匿名本地企业主的慷慨捐赠。",null,"https://www.vocabulary.com/dictionary/handsome"],
       ["well-made-appearance","美观的；精致的","adj.",["美观的","精致的","做工考究的"],["well-made-quality"],"The carpenter turned the rough oak into a handsome dining table that has lasted thirty years.","木匠把粗糙的橡木做成了一张美观结实的餐桌，用了三十年。",null,"https://www.vocabulary.com/dictionary/handsome"]
     ],
     [
@@ -91,7 +90,8 @@
       ["headwear","帽子；便帽","n.",["帽子","便帽","鸭舌帽","帽"],["cap-headwear"],"She pulled her cap down to keep the sun out of her eyes.","她把帽子往下拉，免得阳光晃眼。",null,"https://www.vocabulary.com/dictionary/cap"],
       ["lid-cover","盖子；罩；瓶盖","n.",["盖子","盖","罩","瓶盖"],["lid-cover"],"Please put the cap back on the bottle so the lemonade stays fizzy.","请把瓶盖盖回去，这样柠檬水才不会跑气。",null,"https://www.vocabulary.com/dictionary/cap"],
       ["cover-top","覆盖；位于…顶端","v.",["覆盖","盖住","笼罩"],["cover-top"],"Thick snow capped the mountains for most of the winter.","那年冬天大部分时间，厚厚的积雪覆盖着群山。",null,"https://www.vocabulary.com/dictionary/cap"],
-      ["upper-limit","上限；限额","n.",["上限","限额","最高限度"],["upper-limit","maximum-allowed-limit"],"The government placed a cap on the price of bread during the shortage.","短缺期间，政府对面包价格设定了上限。","a cap on sth","https://www.vocabulary.com/dictionary/cap"]
+      ["upper-limit","上限；限额","n.",["上限","限额","最高限度"],["upper-limit","maximum-allowed-limit"],"The government placed a cap on the price of bread during the shortage.","短缺期间，政府对面包价格设定了上限。","a cap on sth","https://www.merriam-webster.com/dictionary/cap"],
+      ["set-upper-limit","限制上限；限定（开支、收费等）","v.",["限制上限","限定","限制"],["set-upper-limit"],"The council capped annual parking charges at two hundred pounds.","市政委员会把每年的停车费限定在两百英镑以内。","cap sth at","https://www.merriam-webster.com/dictionary/cap"]
     ],
     [
       {"terms":["戴帽子"],"decision":"scope-excluded","reason":"'戴帽子'的动词用法罕见，现代英语通常说 put on a cap。","source":"https://www.vocabulary.com/dictionary/cap"},
@@ -187,9 +187,12 @@
     ]);
     entry("purple", [
       ["colour-purple","紫色的；紫色","adj./n.",["紫色的","紫色","紫红色"],["colour-purple"],"She painted the bedroom walls purple and hung a matching curtain.","她把卧室墙壁刷成紫色，还挂上了相配的窗帘。",null,"https://www.vocabulary.com/dictionary/purple"],
-      ["imperial","帝王的；帝位；皇权","adj./n.",["帝王的","帝位","皇权","王权的"],["imperial-rank"],"In ancient Rome, purple cloth was reserved for the emperor and his family.","在古罗马，紫色布料专供皇帝及其家族使用。",null,"https://www.vocabulary.com/dictionary/purple"],
+      ["imperial","帝位；皇权","n.",["帝位","皇权"],["imperial-rank"],"The prince was born to the purple, but his younger brother eventually became emperor.","这位王子出生于帝王之家，但最终登上帝位的是他的弟弟。","be born to the purple","https://www.merriam-webster.com/dictionary/purple"],
       ["ornate-prose","华而不实的；辞藻华丽的","adj.",["华而不实的","辞藻华丽的","浮华的"],["ornate-language"],"The critic dismissed the novel as purple prose full of empty images.","评论家把这部小说斥为辞藻华丽却意象空洞的文字。",null,"https://www.vocabulary.com/dictionary/purple"],
       ["turn-purple","（使）成紫色；变紫","v.",["(使)成紫色","变紫","染成紫色"],["become-purple"],"The sky purpled as the sun sank behind the distant hills.","太阳落到远山背后时，天空变成了紫色。",null,"https://www.vocabulary.com/dictionary/purple"]
+    ],
+    [
+      {"terms":["帝王的"],"decision":"restricted-verified","reason":"形容词的帝王的用法在 Merriam-Webster 标为 dated；保留作历史语境参考，正式学习项用名词帝位、皇权及其搭配。","source":"https://www.merriam-webster.com/dictionary/purple"}
     ]);
     entry("diamond", [
       ["precious-stone","钻石；金刚石","n.",["钻石","金刚石","宝石"],["gemstone-diamond"],"The ring held a small diamond that had been in the family for generations.","那枚戒指镶着一颗家族传承数代的小钻石。",null,"https://www.vocabulary.com/dictionary/diamond"],
@@ -269,7 +272,7 @@
     ]);
     entry("firm", [
       ["company","公司；商号","n.",["公司","商号","企业"],["business-company"],"She joined a law firm in London after finishing her degree.","她毕业后加入了伦敦的一家律师事务所。",null,"https://www.vocabulary.com/dictionary/firm"],
-      ["resolute","坚定的；确定的","adj.",["坚定的","坚强的","确定的","坚决的"],["resolute-certain"],"The mayor was firm that the new bridge would be built on time.","市长坚定地表示新桥会按时建成。","be firm that","https://www.vocabulary.com/dictionary/firm"],
+      ["resolute","坚定的；确定的","adj.",["坚定的","坚强的","确定的","坚决的"],["resolute-certain"],"The mayor remained firm in her decision to finish the bridge on time.","市长坚持按时完成桥梁工程的决定。","be firm that","https://www.vocabulary.com/dictionary/firm"],
       ["solid","牢固的；结实的；坚硬的","adj.",["牢固的","结实的","坚硬的","稳固的"],["solid-sturdy","substantial-solid-build"],"The mattress is firm enough to support your back.","这张床垫足够坚实，能支撑你的背部。",null,"https://www.vocabulary.com/dictionary/firm"],
       ["steady-price","（价格、行情）坚挺的；稳定的","adj.",["坚挺的","稳定的","行情坚挺的"],["steady-market-price"],"Coffee prices remained firm despite a record harvest in Brazil.","尽管巴西迎来创纪录的丰收，咖啡价格依然坚挺。",null,"https://www.vocabulary.com/dictionary/firm"]
     ],
@@ -292,7 +295,8 @@
       ["bank-account","账户；帐号","n.",["帐户","帐号","账户","账号"],["bank-account"],"She opened a savings account at the bank near her office.","她在办公室附近的银行开了一个储蓄账户。",null,"https://www.vocabulary.com/dictionary/account"],
       ["financial-record","账目；账单；结账单","n.",["帐目","账目","账单","结账单","算账","报帐"],["financial-record"],"The manager asked for a detailed account of the company's spending.","经理要求提供公司开支的详细账目。",null,"https://www.vocabulary.com/dictionary/account"],
       ["narrative-report","叙述；描述；报告","n.",["报告","叙述","描述","说明"],["narrative-report"],"The witness gave a clear account of what happened that night.","目击者清楚地叙述了那晚发生的事。",null,"https://www.vocabulary.com/dictionary/account"],
-      ["explain-proportion","说明（原因）；（比例上）占；导致","v.",["解释","占","导致","说明原因"],["explain-cause","proportion-of-total"],"Online sales account for a third of the company's total revenue.","网上销售占公司总营收的三分之一。","account for sth","https://www.vocabulary.com/dictionary/account"]
+      ["explain-proportion","（比例上）占","v.",["占","占比"],["constitute-proportion"],"Online sales account for a third of the company's total revenue.","网上销售占公司总营收的三分之一。","account for sth","https://www.merriam-webster.com/dictionary/account"],
+      ["explain-cause","解释；说明（原因）","v.",["解释","说明","说明原因","导致"],["explain-cause"],"A broken pump accounts for the sudden drop in water pressure.","水泵损坏解释了水压突然下降的原因。","account for","https://www.merriam-webster.com/dictionary/account"]
     ],
     [
       {"terms":["理由"],"decision":"restricted-verified","reason":"经 vocabulary.com 核实，account 有“理由、根据”义（如 on my account、on account of），属固定搭配语境，本批不单列。","source":"https://www.vocabulary.com/dictionary/account"},
@@ -343,8 +347,7 @@
       ["belittle","贬低；削弱重要性","v.",["贬低","削弱","轻视"],["diminish-importance"],"Constant criticism can diminish a child's confidence in the classroom.","不断的批评会削弱孩子在课堂上的自信。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/diminish"]
     ]);
     entry("decelerate", [
-      ["slow-vehicle","（使）减速；放慢","v.",["(使)减速","减速","放慢速度"],["decelerate-speed"],"The train decelerated gently as it approached the flooded bridge.","列车在接近被洪水淹没的桥时缓缓减速。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/decelerate"],
-      ["slow-growth","使增长放缓","v.",["放缓","减慢","使放慢"],["decelerate-growth"],"Higher interest rates decelerated the growth of house prices last year.","较高的利率使去年房价的上涨速度放缓。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/decelerate"]
+      ["slow-vehicle","（使）减速；放慢","v.",["(使)减速","减速","放慢速度","放缓","减慢","使放慢"],["decelerate-speed","decelerate-growth"],"The train decelerated gently as it approached the flooded bridge.","列车在接近被洪水淹没的桥时缓缓减速。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/decelerate"]
     ]);
     entry("improve", [
       ["make-better","改良；改善；提高","v.",["改良","改善","提高...的价值","增加"],["improve-quality"],"Adding a second lane improved traffic flow on the ring road.","增设一条车道改善了环城路的交通流量。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/improve"],
@@ -540,8 +543,7 @@
       {"terms":["有特殊光效的"],"decision":"scope-excluded","reason":"旧译来自摄影术语 process（特殊冲洗或合成效果），属专业领域用法，本次核对条目未列，本批不收录。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/process"}
     ]);
     entry("announce", [
-      ["make-known","宣布；公布；预告","v.",["宣布","公布","预告"],["announce-make-known"],"The government announced a new tax on empty homes.","政府宣布对空置房屋征收新税。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/announce"],
-      ["pronounce-judgment","宣告；宣判","v.",["宣告","宣判","宣读"],["announce-judgment"],"The judge announced the sentence after a short pause.","法官稍作停顿后宣布了判决。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/announce"]
+      ["make-known","宣布；公布；预告","v.",["宣布","公布","预告","宣告","宣判","宣读"],["announce-make-known","announce-judgment"],"The government announced a new tax on empty homes.","政府宣布对空置房屋征收新税。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/announce"]
     ],
     [
       {"terms":["声称","显示"],"decision":"scope-excluded","reason":"旧译“声称/显示”来自 announce 在旧词典中表示宣称、表明的引申，本次核对条目只列公开宣布与宣判义，故不单列。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/announce"},
@@ -638,8 +640,7 @@
       ["of-enemy","敌人的；敌方的","adj.",["敌人的","敌方的","敌军的"],["of-enemy"],"Enemy aircraft were reported circling the harbour shortly before midnight.","据报道，敌方飞机在午夜前不久一直在港口上空盘旋。","attributive only（只作定语）","https://www.vocabulary.com/dictionary/enemy"]
     ]);
     entry("rival", [
-      ["competitor","竞争对手；对手；竞争者","n.",["竞争对手","对手","竞争者","竞争方"],["competitor"],"The two companies have been rivals for a decade in the smartphone market.","这两家公司在智能手机市场上已经做了十年的竞争对手。",null,"https://www.vocabulary.com/dictionary/rival"],
-      ["formidable-equal","劲敌；可与之匹敌的人（或物）","n.",["劲敌","匹敌者","可匹敌的事物","强敌"],["formidable-equal"],"In the final she faced her toughest rival, a player ranked above her.","决赛中她遇上了最难对付的劲敌——一位排名高于她的选手。",null,"https://www.vocabulary.com/dictionary/rival"],
+      ["competitor","竞争对手；对手；竞争者","n.",["竞争对手","对手","竞争者","竞争方","劲敌","匹敌者","可匹敌的事物","强敌"],["competitor","formidable-equal"],"The two companies have been rivals for a decade in the smartphone market.","这两家公司在智能手机市场上已经做了十年的竞争对手。",null,"https://www.vocabulary.com/dictionary/rival"],
       ["compete-match","与…竞争；匹敌；比得上","v.",["与…竞争","匹敌","比得上","抗衡","相比"],["compete-match"],"No local restaurant can rival the view from the terrace of the old hotel.","当地没有哪家餐馆能比得上那家老旅馆露台上的景色。","rival sth in sth","https://www.vocabulary.com/dictionary/rival"],
       ["competing-attributive","竞争的；对手的","adj.",["竞争的","对手的","相互竞争的"],["competing-attributive"],"Rival fans clashed outside the stadium before the cup final kicked off.","杯赛决赛开球前，对立的球迷在体育场外发生了冲突。","attributive only（只作定语）","https://www.vocabulary.com/dictionary/rival"]
     ]);
@@ -686,8 +687,7 @@
     ]);
     entry("military", [
       ["armed-forces","军队；军方；武装部队","n.",["军队","军方","武装部队","部队"],["armed-forces"],"The military has promised to send more engineers to the flooded region.","军方已承诺向洪灾地区派遣更多工程兵。","the military","https://www.vocabulary.com/dictionary/military"],
-      ["relating-to-armed-forces","军事的；军用的","adj.",["军事的","军用的","军事上的"],["military-affairs"],"The bridge was closed for two days because of military exercises nearby.","由于附近举行军事演习，这座桥关闭了两天。",null,"https://www.vocabulary.com/dictionary/military"],
-      ["soldierly-character","军人的；军队的","adj.",["军人的","军队的","士兵的"],["soldierly-character"],"New recruits spend weeks learning military discipline and basic first aid.","新兵要花数周时间学习军队纪律和基础急救。",null,"https://www.vocabulary.com/dictionary/military"]
+      ["relating-to-armed-forces","军事的；军用的","adj.",["军事的","军用的","军事上的","军人的","军队的","士兵的"],["military-affairs","soldierly-character"],"The bridge was closed for two days because of military exercises nearby.","由于附近举行军事演习，这座桥关闭了两天。",null,"https://www.vocabulary.com/dictionary/military"]
     ],
     [
       {"terms":["适于战争的"],"decision":"scope-excluded","reason":"旧译'适于战争的'是早期词典对 warlike 的释义，现代 military 已不单列此义。","source":"https://www.vocabulary.com/dictionary/military"}
@@ -748,7 +748,10 @@
     entry("surround", [
       ["encircle","包围；围住","v.",["包围","围住","围困","合围"],["encircle"],"Police surrounded the building at dawn and asked everyone inside to come out.","警察在黎明时包围了那栋楼，要求里面的人全部出来。",null,"https://www.vocabulary.com/dictionary/surround"],
       ["form-ring-around","环绕；围绕","v.",["环绕","围绕","环抱","围绕在四周"],["ring-around"],"A ring of tall pines surrounds the lake where we camp every summer.","一圈高大的松树环绕着我们每年夏天露营的那个湖。",null,"https://www.vocabulary.com/dictionary/surround"],
-      ["border-area","周边；周围环境","n.",["周边","周围","四周","围绕物"],["surrounding-area"],"The fireplace has a decorative tile surround that dates from the 1920s.","这个壁炉有一圈20世纪20年代风格的装饰瓷砖围边。",null,"https://www.vocabulary.com/dictionary/surround"]
+      ["border-area","围边；（壁炉等的）边框","n.",["围边","边框","围绕物"],["surrounding-area"],"The fireplace has a decorative tile surround that dates from the 1920s.","这个壁炉有一圈可追溯到20世纪20年代的装饰瓷砖围边。",null,"https://www.vocabulary.com/dictionary/surround"]
+    ],
+    [
+      {"terms":["周边","周围环境"],"decision":"context-required","reason":"周围环境通常用复数 surroundings；单数 surround 在本条示例中指壁炉等的围边，不当作一般的周围环境来考查。","source":"https://www.vocabulary.com/dictionary/surround"}
     ]);
     entry("prohibit", [
       ["forbid-by-rule","禁止；明令不准","v.",["禁止","不准","严禁","明令禁止"],["legal-forbid"],"The city prohibits smoking in all playgrounds and outside school gates.","该市禁止在所有游乐场和校门外吸烟。","prohibit sb from doing sth","https://www.vocabulary.com/dictionary/prohibit"]
@@ -875,11 +878,10 @@
     ]);
     entry("embarrass", [
       ["humiliate","使尴尬；使窘迫","v.",["使尴尬","使窘迫","使难堪"],["embarrass-humiliate"],"His joke embarrassed the guest so much that she left early.","他的玩笑让那位客人十分难堪，她提前离开了。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/embarrass"],
-      ["hinder","使为难；使陷入困境；阻碍","v.",["使为难","使陷入困境","阻碍"],["hinder-progress"],"The opposition embarrassed the bill by adding a hundred amendments.","反对派提出上百条修正案，使这项法案陷入困境。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/embarrass"]
+      ["hinder","使为难；使陷入困境；阻碍","v.",["使为难","使陷入困境","阻碍"],["hinder-progress"],"The unexpected question embarrassed the minister during the debate.","这个出乎意料的问题使部长在辩论中陷入困境。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/embarrass"]
     ]);
     entry("endure", [
-      ["bear-pain","忍受；忍耐","v.",["忍受","忍耐","耐","承受"],["endurance-bear"],"The prisoners endured months of cold without blankets or hot food.","囚犯们没有毯子和热饭，忍受了数月的严寒。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/endure"],
-      ["tolerate","容忍；将就","v.",["容忍","将就","容得下"],["tolerance-endure"],"She can endure noise, but she cannot endure being ignored.","她能容忍噪音，却无法容忍被人忽视。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/endure"],
+      ["bear-pain","忍受；忍耐","v.",["忍受","忍耐","耐","承受","容忍","将就","容得下"],["endurance-bear","tolerance-endure"],"The prisoners endured months of cold without blankets or hot food.","囚犯们没有毯子和热饭，忍受了数月的严寒。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/endure"],
       ["last","持续；持久","v.",["(正式)持久","持续","延续"],["durability-last"],"The bridge has endured for three centuries and still carries traffic.","这座桥已屹立三百年，如今仍在通行。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/endure"]
     ],
     [
@@ -887,7 +889,7 @@
     ]);
     entry("willing", [
       ["ready-to-do","乐意的；愿意的；甘愿的","adj.",["乐意的","甘愿的","愿意的"],["willingness-ready"],"Few farmers were willing to sell land at the price the city offered.","很少有农民愿意按市里出的价格卖地。","be willing to do sth","https://www.vocabulary.com/dictionary/willing"],
-      ["given-glady","自愿的；心甘情愿的","adj.",["自愿的","心甘情愿的"],["voluntary-consent"],"The plan worked because it had the willing support of local teachers.","这项计划成功，是因为得到了当地教师心甘情愿的支持。",null,"https://www.vocabulary.com/dictionary/willing"]
+      ["given-gladly","自愿的；心甘情愿的","adj.",["自愿的","心甘情愿的"],["voluntary-consent"],"The plan worked because it had the willing support of local teachers.","这项计划成功，是因为得到了当地教师心甘情愿的支持。",null,"https://www.vocabulary.com/dictionary/willing"]
     ]);
     entry("modest", [
       ["humble","谦逊的；不夸耀的","adj.",["谦逊的","羞怯的","谦虚的"],["modesty-humility"],"He is modest about his research even when others praise it.","即使别人称赞他的研究，他也很谦逊。","be modest about sth","https://api.dictionaryapi.dev/api/v2/entries/en/modest"],
@@ -912,9 +914,8 @@
       {"terms":["恶棍"],"decision":"restricted-verified","reason":"条目确认 tough 作名词指以暴力索取的人（toughs），属口语旧用法，仅在帮派语境成立，故保留追溯而不作为学习义项。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/tough"}
     ]);
     entry("strict", [
-      ["disciplinarian","严格的；严厉的","adj.",["严格的","严厉的","严明的"],["strictness-discipline","strict-disapproving"],"The school is strict about phones but relaxed about uniforms.","这所学校对手机管得很严，对校服却很宽松。","be strict about sth","https://api.dictionaryapi.dev/api/v2/entries/en/strict"],
-      ["exact","精确的；严格意义上的","adj.",["精确的","严格意义上的"],["precision-exact"],"In the strict sense, a tomato is a fruit, not a vegetable.","严格说来，番茄是水果，而不是蔬菜。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/strict"],
-      ["complete-control","绝对的；详尽周密的","adj.",["绝对的","详尽的","严密周全的"],["thoroughness-total"],"Their strict control of spending saved the charity thousands of pounds.","他们对开支的严格控制为这家慈善机构省下了数千英镑。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/strict"]
+      ["disciplinarian","严格的；严厉的；严密的","adj.",["严格的","严厉的","严明的","绝对的","详尽的","严密周全的"],["strictness-discipline","strict-disapproving","thoroughness-total"],"The school is strict about phones but relaxed about uniforms.","这所学校对手机管得很严，对校服却很宽松。","be strict about sth","https://api.dictionaryapi.dev/api/v2/entries/en/strict"],
+      ["exact","精确的；严格意义上的","adj.",["精确的","严格意义上的"],["precision-exact"],"In the strict sense, a tomato is a fruit, not a vegetable.","严格说来，番茄是水果，而不是蔬菜。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/strict"]
     ]);
     entry("severe", [
       ["intense","严重的；剧烈的","adj.",["严重的","尖锐的","剧烈的"],["severity-intensity"],"A severe drought has left the reservoir at a third of its capacity.","严重的干旱让水库只剩三分之一的水量。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/severe"],
@@ -935,8 +936,10 @@
       ["sleepless","睡不安稳的；得不到休息的","adj.",["休息不充分的","不得安宁的"],["sleepless-rest"],"It was a restless night, with the wind banging at the shutters.","那是个不眠之夜，风不停拍打着百叶窗。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/restless"]
     ]);
     entry("enthusiastic", [
-      ["eager","热心的；热情的","adj.",["热心的","热烈的","热情的"],["enthusiasm-eager"],"The staff were enthusiastic about the plan until they saw the budget.","员工们起初对这项计划很热心，直到看见了预算。","be enthusiastic about sth","https://api.dictionaryapi.dev/api/v2/entries/en/enthusiastic"],
-      ["fervent","狂热的；过分热情的","adj.",["狂热的","痴迷的"],["zeal-fanatical"],"His enthusiastic support for the project worried the finance committee.","他对该项目近乎狂热的支持让财务委员会感到担忧。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/enthusiastic"]
+      ["eager","热心的；热情的；热衷的","adj.",["热心的","热烈的","热情的","痴迷的"],["enthusiasm-eager","zeal-fanatical"],"The staff were enthusiastic about the plan until they saw the budget.","员工们起初对这项计划很热心，直到看见了预算。","be enthusiastic about sth","https://www.merriam-webster.com/dictionary/enthusiastic"]
+    ],
+    [
+      {"terms":["狂热的","过分热情的"],"decision":"context-required","reason":"enthusiastic 表示热情或热衷，本身不包含过度或非理性的贬义；强烈程度须由上下文体现。","source":"https://www.merriam-webster.com/dictionary/enthusiastic"}
     ]);
     entry("hurry", [
       ["haste","匆忙；急忙","n.",["匆忙","急忙","急促"],["hurry-haste"],"In her hurry she left the passport on the kitchen table.","匆忙之中，她把护照落在厨房桌上。","in a hurry","https://api.dictionaryapi.dev/api/v2/entries/en/hurry"],
@@ -1004,12 +1007,13 @@
       ["divide","劈开；裂开；切开","v.",["劈开","裂开","被劈开","切开"],["split-divide"],"He split the log with a single blow of the axe.","他一斧子就把圆木劈开了。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/split"],
       ["fissure","裂缝；裂口","n.",["裂缝"],["split-fissure","crack-fissure"],"Water had got into a split in the pipe and frozen there.","水渗进了管子上的一条裂缝，并在里面结了冰。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/split"],
       ["separate","分开；使分裂；拆分","v.",["分裂","使分裂","分离","分开","使分离","拆分"],["split-separate"],"The party split over the question of raising fuel taxes.","该党在提高燃油税的问题上发生了分裂。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/split"],
-      ["faction","派系；派别","n.",["派系","派别"],["split-faction"],"A split within the cabinet leaked the whole plan to the press.","内阁内部的派系分裂把整个计划泄露给了媒体。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/split"]
+      ["faction","分歧；分裂","n.",["分歧","分裂"],["internal-division"],"A split within the cabinet delayed approval of the housing plan.","内阁内部的分歧推迟了住房计划的批准。",null,"https://www.merriam-webster.com/dictionary/split"]
     ],
     [
       {"terms":["裂片"],"decision":"scope-excluded","reason":"条目确有“劈下的一片、碎片”这一名词义，但属罕用，本批不单列，保留追溯。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/split"},
       {"terms":["柳条"],"decision":"scope-excluded","reason":"核对条目，split 没有“柳条”义（旧词典材料有误），保留追溯。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/split"},
-      {"terms":["劈开的"],"decision":"scope-excluded","reason":"条目的形容词义指“分裂的、意见不一的”（多用于党派），本批以动词与名词义为主，未单列形容词义，保留追溯。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/split"}
+      {"terms":["劈开的"],"decision":"scope-excluded","reason":"条目的形容词义指“分裂的、意见不一的”（多用于党派），本批以动词与名词义为主，未单列形容词义，保留追溯。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/split"},
+      {"terms":["派系","派别"],"decision":"restricted-verified","reason":"词典有由分裂形成的派系这一名词义；常用教学义选用内部的分歧或分裂，不能把分裂本身等同于行动的人群。","source":"https://www.merriam-webster.com/dictionary/split"}
     ]);
     entry("collide", [
       ["hit-together","碰撞；相撞","v.",["碰撞","互撞"],["collide-physical"],"The cyclist collided with a van at the blind corner.","骑车人在视线受阻的拐角处与一辆厢式货车相撞。","collide with sth","https://api.dictionaryapi.dev/api/v2/entries/en/collide"],
@@ -1126,13 +1130,15 @@
     ]);
     entry("iron", [
       ["iron-metal","铁","n.",["铁","铁质","铁料"],["iron-metal"],"The old gate was made of iron and had rusted through in two places.","那扇旧大门是铁制的，已经有两处锈穿了。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/iron"],
-      ["iron-appliance","熨斗；熨烫（衣物）","n./v.",["熨斗","烙铁","熨","烫平"],["clothes-iron","press-clothes"],"She ironed his shirt on the kitchen table while the soup was heating.","汤在加热的时候，她在厨房桌上熨他的衬衫。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/iron"],
+      ["iron-appliance","熨斗","n.",["熨斗"],["clothes-iron","press-clothes"],"She unplugged the iron and left it to cool on the ironing board.","她拔掉熨斗的插头，把它留在熨衣板上冷却。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/iron"],
       ["irons-shackles","镣铐","n.",["镣铐","脚镣"],["shackles"],"The prisoners shuffled into the yard with irons still locked around their ankles.","囚犯们拖着脚走进院子，脚踝上仍锁着镣铐。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/iron"],
-      ["iron-firm","坚强的；强硬的","adj.",["坚强","刚强","不可动摇","铁腕的"],["unyielding-firm"],"Her iron will kept the team going through the worst months of the project.","她坚强的意志支撑团队度过了项目最艰难的几个月。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/iron"]
+      ["iron-firm","坚强的；强硬的","adj.",["坚强","刚强","不可动摇","铁腕的"],["unyielding-firm"],"Her iron will kept the team going through the worst months of the project.","她坚强的意志支撑团队度过了项目最艰难的几个月。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/iron"],
+      ["press-clothes","熨；熨烫（衣物）","v.",["熨","熨烫","烫平"],["press-clothes"],"She ironed his shirt on the kitchen table while the soup was heating.","汤在加热的时候，她在厨房桌上熨他的衬衫。",null,"https://api.dictionaryapi.dev/api/v2/entries/en/iron"]
     ],
     [
       {"terms":["铁器"],"decision":"restricted-verified","reason":"旧译“铁器”是铁制品的统称，现代词典的常用名词义为金属铁、熨斗、镣铐等，故保留追溯而不单列。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/iron"},
-      {"terms":["用铁包"],"decision":"scope-excluded","reason":"“用铁包”对应 iron 作动词的“给…装上铁件”古旧义（to iron a wagon），现代英语已不用，仅保留追溯。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/iron"}
+      {"terms":["用铁包"],"decision":"scope-excluded","reason":"“用铁包”对应 iron 作动词的“给…装上铁件”古旧义（to iron a wagon），现代英语已不用，仅保留追溯。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/iron"},
+      {"terms":["烙铁"],"decision":"restricted-verified","reason":"iron 在具体工具语境可指加热使用的铁制工具，如焊接或烙印工具；不把该类工具等同于本例用于衣物的熨斗。","source":"https://api.dictionaryapi.dev/api/v2/entries/en/iron"}
     ]);
     entry("metal", [
       ["metal-material","金属","n.",["金属","金属材料"],["metal-material"],"The frame is made of light metal, so the whole chair weighs under three kilos.","框架用轻金属制成，因此整把椅子不到三公斤。",null,"https://www.vocabulary.com/dictionary/metal"],
@@ -1252,8 +1258,8 @@
       ["cafeteria-self-service","自助餐厅；自助食堂","n.",["自助餐厅","自助食堂","员工餐厅"],["cafeteria-self-service-restaurant"],"Students queue in the cafeteria at noon and carry their trays to the tables.","中午学生们在自助食堂排队，然后把餐盘端到餐桌旁。",null,"https://www.vocabulary.com/dictionary/cafeteria"]
     ]);
     entry("skill", [
-      ["skill-learned-ability","技能；技巧","n.",["技巧","技能","技术","本领"],["skill-learned-ability"],"Learning to repair a bicycle is a practical skill that saves money.","学会修自行车是一项实用的技能，还能省钱。",null,"https://www.vocabulary.com/dictionary/skill"],
-      ["skill-problem-solving","（专业领域的）本领；技艺","n.",["技艺","专业本领","解决问题的能力"],["skill-domain-ability"],"Her skill in negotiating contracts made her invaluable to the small firm.","她在合同谈判方面的本领使她对这家小公司来说不可或缺。","skill in sth / skill in doing sth","https://www.vocabulary.com/dictionary/skill"]
+      ["skill-learned-ability","（某项）技能；技巧","n. [C]",["技巧","技能","技术","本领"],["skill-learned-ability"],"Learning to repair a bicycle is a practical skill that saves money.","学会修自行车是一项实用的技能，还能省钱。",null,"https://www.vocabulary.com/dictionary/skill"],
+      ["skill-problem-solving","熟练；技艺；本领","n. [U]",["技艺","专业本领","解决问题的能力"],["skill-domain-ability"],"Her skill in negotiating contracts made her invaluable to the small firm.","她在合同谈判方面的本领使她对这家小公司来说不可或缺。","skill in sth / skill in doing sth","https://www.merriam-webster.com/dictionary/skill"]
     ],
     [
       {"terms":["熟练","熟练工人"],"decision":"scope-excluded","reason":"“熟练”是形容词性用法（skilled），“熟练工人”对应 skilled worker 这一派生短语，均非 skill 的名词义项。","source":"https://www.vocabulary.com/dictionary/skill"}

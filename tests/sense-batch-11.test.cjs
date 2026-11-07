@@ -3,31 +3,14 @@ const site = path.join(__dirname, '../src/VocabDesk/Website');
 const C = require('../src/VocabDesk/Website/sense-training-core.js');
 const production = require('../src/VocabDesk/Website/sense-catalog.js');
 const EXPECTED_BATCH_WORDS = 200;
-const EXPECTED_BATCH_SENSES = 594;
+const EXPECTED_BATCH_SENSES = 589;
 const EXPECTED_TOTAL_WORDS = 1730;
-const EXPECTED_TOTAL_SENSES = 4382;
-const ALLOWED = /^https:\/\/(api\.dictionaryapi\.dev|www\.vocabulary\.com|www\.merriam-webster\.com|learn\.microsoft\.com|developer\.mozilla\.org|docs\.github\.com)\//;
+const EXPECTED_TOTAL_SENSES = 4377;
+const ALLOWED = /^https:\/\/(dictionary\.cambridge\.org|api\.dictionaryapi\.dev|www\.vocabulary\.com|www\.merriam-webster\.com|learn\.microsoft\.com|developer\.mozilla\.org|docs\.github\.com)\//;
 const DECISIONS = new Set(['scope-excluded', 'restricted-verified', 'context-required', 'outside-scope-unresolved']);
 
-/* Compose the batch 11 candidate catalog in an isolated VM by patching the catalog
- * source string. The production catalog file itself stays at version 10. */
-function candidateCatalog() {
-  const window = {};
-  const ctx = { window };
-  vm.createContext(ctx);
-  for (const name of ['03', '04', '05', '06', '07', '08', '09', '10', '11'])
-    vm.runInContext(fs.readFileSync(path.join(site, 'sense-batch-' + name + '.js'), 'utf8'), ctx, { filename: 'sense-batch-' + name + '.js' });
-  vm.runInContext(fs.readFileSync(path.join(site, 'sense-completion-02.js'), 'utf8'), ctx, { filename: 'sense-completion-02.js' });
-  let src = fs.readFileSync(path.join(site, 'sense-catalog.js'), 'utf8');
-  const anchor = '  // Unresolved OLD fragments remain visible in the audit; they are not certified';
-  assert.ok(src.includes(anchor), 'catalog patch anchor must exist');
-  src = src.replace(anchor, "  editorialBatch='11';\n  const registerBatch11=scope.WordOrbitSenseBatch11;\n  if(typeof registerBatch11!=='function')throw Error('Missing editorial batch 11');\n  registerBatch11(add);\n" + anchor);
-  src = src.replace("version:10,batches:['01','02','03','04','05','06','07','08','09','10'],reviewDate:'2026-11-06'", "version:11,batches:['01','02','03','04','05','06','07','08','09','10','11'],reviewDate:'2026-11-07'");
-  assert.match(src, /version:11/);
-  vm.runInContext(src, ctx, { filename: 'sense-catalog.candidate.js' });
-  return window.WORDORBIT_SENSE_CATALOG;
-}
-const candidate = candidateCatalog();
+// Exercise the actual shipped catalog and separately verify browser loading below.
+const candidate = production;
 const batch = Object.entries(candidate.entries).filter(([, e]) => e.batch === '11');
 const batchSenses = batch.flatMap(([word, e]) => e.senses.map(s => ({ word, sense: s, batch: e })));
 function random(seed) { return () => { seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0; return seed / 4294967296; }; }
@@ -44,29 +27,28 @@ function target(word, text) {
   return formsOf(word).some(f => new RegExp('\\b' + f.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i').test(text));
 }
 
-test('production catalog remains batch 10: batch 11 lives only in the isolated candidate catalog', () => {
-  assert.equal(production.version, 10);
-  assert.deepEqual(production.batches, ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10']);
-  assert.equal(Object.keys(production.entries).length, 1530);
-  assert.equal(production.entries.sense11, undefined);
-  const indexSource = fs.readFileSync(path.join(site, 'index.html'), 'utf8');
-  assert.doesNotMatch(indexSource, /sense-batch-11/);
-  assert.doesNotMatch(fs.readFileSync(path.join(site, 'sense-catalog.js'), 'utf8'), /registerBatch11|sense-batch-11/);
-  const ctx = { window: {} };
-  vm.createContext(ctx);
-  vm.runInContext(fs.readFileSync(path.join(site, 'sense-ready-index.js'), 'utf8'), ctx, { filename: 'sense-ready-index.js' });
-  assert.equal(ctx.window.WordOrbitSenseIndex.words, 1530);
-  assert.equal(ctx.window.WordOrbitSenseIndex.senses, 3788);
+test('batch 11 is registered in the actual lazy production and offline paths', () => {
+  assert.equal(production.version, 11);
+  assert.equal(Object.keys(production.entries).length, 1730);
+  assert.match(fs.readFileSync(path.join(site, 'sense-study.js'), 'utf8'), /'09','10','11'/);
+  assert.match(fs.readFileSync(path.join(site, 'service-worker.js'), 'utf8'), /'09','10','11'/);
+  assert.doesNotMatch(fs.readFileSync(path.join(site, 'index.html'), 'utf8'), /src=["'][^"']*sense-(?:batch|catalog|training|completion)/);
+  const ctx = {window: {}};vm.createContext(ctx);
+  for(const n of ['03','04','05','06','07','08','09','10','11']) vm.runInContext(fs.readFileSync(path.join(site,'sense-batch-'+n+'.js'),'utf8'),ctx);
+  for(const f of ['sense-completion-02.js','sense-catalog.js','sense-ready-index.js']) vm.runInContext(fs.readFileSync(path.join(site,f),'utf8'),ctx);
+  assert.equal(JSON.stringify(ctx.window.WORDORBIT_SENSE_CATALOG),JSON.stringify(production));
+  assert.equal(ctx.window.WordOrbitSenseIndex.words,1730);
+  assert.equal(ctx.window.WordOrbitSenseIndex.senses,4377);
 });
 
-test('candidate catalog has 1,730 words and batch 11 adds 200 distinct words with original bilingual examples', () => {
+test('production catalog has 1,730 words and batch 11 adds 200 distinct words with original bilingual examples', () => {
   assert.equal(candidate.version, 11);
   assert.deepEqual([...candidate.batches], ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11']);
   assert.equal(Object.keys(candidate.entries).length, EXPECTED_TOTAL_WORDS);
   assert.equal(batch.length, EXPECTED_BATCH_WORDS);
   assert.equal(new Set(batch.map(([word]) => word)).size, EXPECTED_BATCH_WORDS);
   const historical = new Set();
-  for (const [word, e] of Object.entries(production.entries)) for (const s of e.senses) historical.add(s.example.en);
+  for (const [word, e] of Object.entries(production.entries).filter(([,e])=>e.batch!=='11')) for (const s of e.senses) historical.add(s.example.en);
   assert.equal(historical.size, 3788);
   assert.equal(batchSenses.length, EXPECTED_BATCH_SENSES);
   const allSentences = new Set(historical);
@@ -134,11 +116,28 @@ test('four 50-word rounds cover all batch 11 goals from the full 1,730-word pool
   assert.equal(JSON.stringify(words), before);
 });
 
-test('batch 11 module registers through the shared add() contract and stays out of the production UI path', () => {
+test('batch 11 module registers through the shared add() contract and loads through the production add() contract', () => {
   const ctx = { window: {} };
   vm.createContext(ctx);
   vm.runInContext(fs.readFileSync(path.join(site, 'sense-batch-11.js'), 'utf8'), ctx, { filename: 'sense-batch-11.js' });
   assert.equal(typeof ctx.window.WordOrbitSenseBatch11, 'function');
   const rows = JSON.parse(JSON.stringify(batchSenses[0].sense));
   assert.ok(rows.id && rows.label);
+});
+// Concrete editorial regressions: each sentence must express the intended use.
+test('batch 11 keeps distinct uses and conservative synonym decisions after review', () => {
+ const entry=w=>production.entries[w], sense=(w,id)=>entry(w).senses.find(s=>s.id===id);
+ assert.ok(sense('willing','given-gladly'));
+ assert.equal(sense('cap','set-upper-limit').pos,'v.');
+ assert.equal(sense('cap','set-upper-limit').construction,'cap sth at');
+ assert.equal(sense('account','explain-cause').construction,'account for');
+ assert.notDeepEqual(sense('account','explain-cause').concepts,sense('account','explain-proportion').concepts);
+ assert.equal(sense('iron','iron-appliance').pos,'n.');assert.equal(sense('iron','press-clothes').pos,'v.');
+ assert.match(sense('purple','imperial').example.en,/born to the purple/);
+ assert.match(sense('split','faction').label,/分歧/);
+ assert.match(sense('surround','border-area').label,/围边/);
+ for(const [w,id] of [['fashionable','elegant-refined'],['rival','formidable-equal'],['strict','complete-control'],['enthusiastic','fervent'],['military','soldierly-character'],['announce','pronounce-judgment'],['endure','tolerate'],['decelerate','slow-growth']]) assert.equal(sense(w,id),undefined);
+ for(const [a,ai,b,bi] of [['firm','solid','substantial','solid-build'],['tight','strict-demanding','stern','strict']]){
+  const other=entry(b).senses.find(s=>s.id===bi);assert.ok(other);assert.equal(C.overlaps(sense(a,ai),other),true);
+ }
 });
