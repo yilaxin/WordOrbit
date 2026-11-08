@@ -1,4 +1,4 @@
-/* Editorial batches 01-11. Definitions checked against the named dictionary entries.
+/* Editorial batches 01-12. Definitions checked against the named dictionary entries.
  * Chinese grouping and all bilingual teaching examples are written for WordOrbit.
  * complete means the explicitly declared learning scope, NOT all dictionary senses.
  * The complete reviewed subset loads on demand in v1.8.0. No user data is included.
@@ -298,6 +298,10 @@
   const registerBatch11=typeof module==='object'&&module.exports?require('./sense-batch-11.js'):scope.WordOrbitSenseBatch11;
   if(typeof registerBatch11!=='function')throw Error('Missing editorial batch 11');
   registerBatch11(add);
+  editorialBatch='12';
+  const registerBatch12=typeof module==='object'&&module.exports?require('./sense-batch-12.js'):scope.WordOrbitSenseBatch12;
+  if(typeof registerBatch12!=='function')throw Error('Missing editorial batch 12');
+  registerBatch12(add);
   // Unresolved OLD fragments remain visible in the audit; they are not certified
   // merely because the explicitly bounded teaching selection is usable.
   for(const entry of Object.values(entries)){
@@ -305,6 +309,6 @@
     if(entry.unresolvedReferences.length){entry.complete=false;entry.pendingReview='常用义项已初审；旧译仍有未决项：'+entry.unresolvedReferences.join('；')+'。整词暂不进入完整覆盖训练。';}
     entry.sources=[...new Set([...entry.sources,...entry.senses.map(s=>s.source),...entry.referenceOnly.map(r=>r.source).filter(Boolean)])];
   }
-  const api={version:11,batches:['01','02','03','04','05','06','07','08','09','10','11'],reviewDate:'2026-11-07',publicationState:'reviewed-subset-production',scope:'declared-learning-scope-not-exhaustive-dictionary',entries};
+  const api={version:12,batches:['01','02','03','04','05','06','07','08','09','10','11','12'],reviewDate:'2026-11-08',publicationState:'reviewed-subset-production',scope:'declared-learning-scope-not-exhaustive-dictionary',entries};
   if(typeof module==='object'&&module.exports)module.exports=api;else scope.WORDORBIT_SENSE_CATALOG=api;
 })(typeof window==='object'?window:globalThis);

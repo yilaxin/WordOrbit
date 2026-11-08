@@ -10,6 +10,7 @@ function auditSelection(progress,publicWords,entries,batch='03',expectedCount=10
   const normalize=w=>String(w||'').trim().toLowerCase(),touchedIds=new Set();
   for(const [id,r]of Object.entries(progress.records))if(r&&((r.seen||0)>0||(r.correct||0)>0||(r.wrong||0)>0||r.lastSeen))touchedIds.add(id);
   for(const a of progress.attempts){if(a?.id)touchedIds.add(a.id);if(a?.wordId)touchedIds.add(a.wordId);}
+  for(const id of Object.keys(progress.senseStudy?.completed||{}))touchedIds.add(id);
   const touchedNames=new Set([...progress.words,...publicWords].filter(w=>touchedIds.has(w.id)).map(w=>normalize(w.word)));
   const selected=Object.entries(entries).filter(([,e])=>e.batch===batch).map(([word])=>word);
   const missing=[],alreadySeen=[],notInExport=[];

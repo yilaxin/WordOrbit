@@ -1,5 +1,5 @@
 [CmdletBinding()]
-param([switch]$Publish)
+param([switch]$Publish, [switch]$DirectUpload)
 
 # Packaging is local by default. -Publish is the explicit network-write gate.
 $ErrorActionPreference = 'Stop'
@@ -67,7 +67,10 @@ try {
     $branch = Invoke-Hub '/git/ref/heads/main'
     $tagRef = Invoke-Hub "/git/ref/tags/$tag"
     if ($branch.object.sha -ne $commit -or $tagRef.object.sha -ne $commit) { throw 'Push the exact commit and lightweight version tag before publishing.' }
-    function Find-Release { @(Invoke-Hub '/releases?per_page=100') | Where-Object { $_.tag_name -eq $tag } }
+    function Find-Release {
+        $releases = Invoke-Hub '/releases?per_page=100'
+        foreach ($item in $releases) { if ($item.tag_name -eq $tag) { $item } }
+    }
     $release = Find-Release
     if (@($release).Count -gt 1) { throw 'Ambiguous release target.' }
     if (-not $release) {
@@ -86,7 +89,9 @@ try {
             continue
         }
         if (-not $release.draft) { throw 'Public release is missing an asset; refusing to mutate it automatically.' }
-        $client = [Net.Http.HttpClient]::new(); $stream = [IO.File]::OpenRead($assetFile)
+        $uploadHandler = [Net.Http.HttpClientHandler]::new()
+        if ($DirectUpload) { $uploadHandler.UseProxy = $false }
+        $client = [Net.Http.HttpClient]::new($uploadHandler); $stream = [IO.File]::OpenRead($assetFile)
         try {
             $client.Timeout=[TimeSpan]::FromMinutes(20)
             $client.DefaultRequestHeaders.Authorization=[Net.Http.Headers.AuthenticationHeaderValue]::new('Bearer',$token)

@@ -73,7 +73,7 @@ test('four disjoint 50-word batches cover every new sense without fabricated or 
 test('batch 05 equivalents overlap across words and the catalog loads offline without eager editorial scripts',()=>{
   for(const [a,b]of [[get('infer','reason'),get('deduce','reason')],[get('compulsory','required'),get('mandatory','required')],[get('embroider','story'),get('embellish','story')],[get('decompose','rot'),get('decay','rot')],[get('soak','information'),get('absorb','learn')],[get('communicate','information'),get('transmit','signals')]])assert.equal(core.overlaps(a,b),true);
   const site=path.join(__dirname,'../src/VocabDesk/Website'),window={},context={window};vm.createContext(context);
-  for(const f of ['sense-batch-03.js','sense-batch-04.js','sense-batch-05.js','sense-batch-06.js','sense-batch-07.js','sense-batch-08.js','sense-completion-02.js','sense-batch-09.js','sense-batch-10.js','sense-batch-11.js','sense-catalog.js'])vm.runInContext(fs.readFileSync(path.join(site,f),'utf8'),context);
+  for(const f of ['sense-batch-03.js','sense-batch-04.js','sense-batch-05.js','sense-batch-06.js','sense-batch-07.js','sense-batch-08.js','sense-completion-02.js','sense-batch-09.js','sense-batch-10.js','sense-batch-11.js','sense-batch-12.js','sense-catalog.js'])vm.runInContext(fs.readFileSync(path.join(site,f),'utf8'),context);
   assert.equal(JSON.stringify(window.WORDORBIT_SENSE_CATALOG),JSON.stringify(pack));
   assert.doesNotMatch(fs.readFileSync(path.join(site,'index.html'),'utf8'),/src=["'][^"']*sense-(?:batch|catalog|training)/);
 });
