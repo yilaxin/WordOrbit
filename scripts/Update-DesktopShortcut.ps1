@@ -24,6 +24,7 @@ $allowedTargets += Join-Path $projectRoot 'artifacts\WordOrbit-win-arm64-v1.8.1\
 $allowedTargets += Join-Path $projectRoot 'artifacts\WordOrbit-win-arm64-v1.9.0\VocabDesk.exe'
 $allowedTargets += Join-Path $projectRoot 'artifacts\WordOrbit-win-arm64-v1.10.0\VocabDesk.exe'
 $allowedTargets += Join-Path $projectRoot 'artifacts\WordOrbit-win-arm64-v1.11.0\VocabDesk.exe'
+$allowedTargets += Join-Path $projectRoot 'artifacts\WordOrbit-win-arm64-v1.12.0\VocabDesk.exe'
 if (-not (Test-Path -LiteralPath $exe -PathType Leaf)) { throw "程序不存在：$exe" }
 if (-not (Test-Path -LiteralPath $icon -PathType Leaf)) { throw "图标不存在：$icon" }
 $shell = New-Object -ComObject WScript.Shell
