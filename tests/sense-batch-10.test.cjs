@@ -21,7 +21,7 @@ test('batch 10 excludes concrete new/historical near equivalents and preserves e
   assert.match(get('hybridise','breed').source,/hybridize$/);assert.match(get('apologise','regret').source,/apologize$/);
 });
 
-test('actual 2130-word pool supplies four disjoint new 50-word rounds covering all 446 new senses',()=>{
+test('actual 2330-word pool supplies four disjoint new 50-word rounds covering all 446 new senses',()=>{
   const words=Object.keys(pack.entries).map(word=>({id:'pool-'+word,word}));
   const completed=words.filter(w=>pack.entries[w.word].batch!=='10').map(w=>w.id),chosen=[];let goals=0,fallbacks=0;
   for(let n=0;n<4;n++){
@@ -66,11 +66,11 @@ test('four 50-word batches cover every new goal with locked choices, serializati
   }
   assert.equal(new Set(done).size,200);assert.equal(goals,446);assert.equal(fallbacks,0,'The real pool must provide sufficient unambiguous choices');assert.equal(JSON.stringify(words),before);
 });
-test('all eleven modules load offline on demand and the shipped scope contains 2,130 ready words',()=>{
+test('all eleven modules load offline on demand and the shipped scope contains 2,330 ready words',()=>{
   const site=path.join(__dirname,'../src/VocabDesk/Website'),window={},ctx={window};vm.createContext(ctx);
-  for(const name of ['03','04','05','06','07','08','09','10','11','12','13'])vm.runInContext(fs.readFileSync(path.join(site,'sense-batch-'+name+'.js'),'utf8'),ctx);
+  for(const name of ['03','04','05','06','07','08','09','10','11','12','13','14'])vm.runInContext(fs.readFileSync(path.join(site,'sense-batch-'+name+'.js'),'utf8'),ctx);
   for(const name of ['sense-completion-02.js','sense-catalog.js','sense-ready-index.js'])vm.runInContext(fs.readFileSync(path.join(site,name),'utf8'),ctx);
-  assert.equal(JSON.stringify(window.WORDORBIT_SENSE_CATALOG),JSON.stringify(pack));assert.equal(pack.version,13);assert.equal(window.WordOrbitSenseIndex.words,2130);assert.equal(window.WordOrbitSenseIndex.senses,5639);
-  assert.equal(Object.values(pack.entries).filter(C.validateEntry).length,2130);
+  assert.equal(JSON.stringify(window.WORDORBIT_SENSE_CATALOG),JSON.stringify(pack));assert.equal(pack.version,14);assert.equal(window.WordOrbitSenseIndex.words,2330);assert.equal(window.WordOrbitSenseIndex.senses,6177);
+  assert.equal(Object.values(pack.entries).filter(C.validateEntry).length,2330);
   assert.doesNotMatch(fs.readFileSync(path.join(site,'index.html'),'utf8'),/src=["'][^"']*sense-(?:batch|catalog|training|completion)/);
 });

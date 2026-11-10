@@ -1,4 +1,4 @@
-/* Editorial batches 01-13. Definitions checked against the named dictionary entries.
+/* Editorial batches 01-14. Definitions checked against the named dictionary entries.
  * Chinese grouping and all bilingual teaching examples are written for WordOrbit.
  * complete means the explicitly declared learning scope, NOT all dictionary senses.
  * The complete reviewed subset loads on demand in v1.8.0. No user data is included.
@@ -306,6 +306,10 @@
   const registerBatch13=typeof module==='object'&&module.exports?require('./sense-batch-13.js'):scope.WordOrbitSenseBatch13;
   if(typeof registerBatch13!=='function')throw Error('Missing editorial batch 13');
   registerBatch13(add);
+  editorialBatch='14';
+  const registerBatch14=typeof module==='object'&&module.exports?require('./sense-batch-14.js'):scope.WordOrbitSenseBatch14;
+  if(typeof registerBatch14!=='function')throw Error('Missing editorial batch 14');
+  registerBatch14(add);
   // Unresolved OLD fragments remain visible in the audit; they are not certified
   // merely because the explicitly bounded teaching selection is usable.
   for(const entry of Object.values(entries)){
@@ -313,6 +317,6 @@
     if(entry.unresolvedReferences.length){entry.complete=false;entry.pendingReview='常用义项已初审；旧译仍有未决项：'+entry.unresolvedReferences.join('；')+'。整词暂不进入完整覆盖训练。';}
     entry.sources=[...new Set([...entry.sources,...entry.senses.map(s=>s.source),...entry.referenceOnly.map(r=>r.source).filter(Boolean)])];
   }
-  const api={version:13,batches:['01','02','03','04','05','06','07','08','09','10','11','12','13'],reviewDate:'2026-11-09',publicationState:'reviewed-subset-production',scope:'declared-learning-scope-not-exhaustive-dictionary',entries};
+  const api={version:14,batches:['01','02','03','04','05','06','07','08','09','10','11','12','13','14'],reviewDate:'2026-11-10',publicationState:'reviewed-subset-production',scope:'declared-learning-scope-not-exhaustive-dictionary',entries};
   if(typeof module==='object'&&module.exports)module.exports=api;else scope.WORDORBIT_SENSE_CATALOG=api;
 })(typeof window==='object'?window:globalThis);

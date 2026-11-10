@@ -15,7 +15,7 @@
   async function ensure(){
     if(pack)return pack;if(loading)return loading;
     loading=(async()=>{
-      for(const n of ['03','04','05','06','07','08','09','10','11','12','13'])if(!window['WordOrbitSenseBatch'+n])await loadScript('sense-batch-'+n+'.js');
+      for(const n of ['03','04','05','06','07','08','09','10','11','12','13','14'])if(!window['WordOrbitSenseBatch'+n])await loadScript('sense-batch-'+n+'.js');
       if(!window.WordOrbitSenseCompletion02)await loadScript('sense-completion-02.js');
       if(!window.WORDORBIT_SENSE_CATALOG)await loadScript('sense-catalog.js');
       if(!window.WordOrbitSenseCore)await loadScript('sense-training-core.js');
