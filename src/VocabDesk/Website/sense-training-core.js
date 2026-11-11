@@ -29,11 +29,13 @@
     if(!selected.length)return null;
     const coverage=audit(selected,catalog);if(coverage.missing){const e=Error('义项未整理完整，不能生成声称全覆盖的训练');e.code='SENSE_COVERAGE_REQUIRED';e.missing=coverage.missingWords;throw e;}
     const all=words.filter(w=>validateEntry(catalog[key(w.word)])).flatMap(w=>catalog[key(w.word)].senses.map(s=>({...clone(s),wordId:w.id,word:w.word})));
+    // Reverse choices check every meaning of one candidate word, without rescanning the entire pool.
+    const sensesByWord=new Map();for(const s of all){if(!sensesByWord.has(s.wordId))sensesByWord.set(s.wordId,[]);sensesByWord.get(s.wordId).push(s);}
     const goals=selected.flatMap(w=>catalog[key(w.word)].senses.map(s=>({...clone(s),wordId:w.id,word:w.word}))),stages=[[],[],[]];let sequence=0;
     function question(w,senses,kind,stage){
       const targets=senses.map(s=>({...s,wordId:w.id,word:w.word}));
       const validMeanings=kind==='reverse'?targets:catalog[key(w.word)].senses;
-      const distractors=shuffle(all.filter(s=>s.wordId!==w.id&&!validMeanings.some(t=>overlaps(t,s))&&(kind!=='reverse'||!all.some(other=>other.wordId===s.wordId&&targets.some(t=>overlaps(t,other))))),random);
+      const distractors=shuffle(all.filter(s=>s.wordId!==w.id&&!validMeanings.some(t=>overlaps(t,s))&&(kind!=='reverse'||!sensesByWord.get(s.wordId).some(other=>targets.some(t=>overlaps(t,other))))),random);
       const options=[],labels=new Set(),usedWords=new Set([w.id]);
       const add=(id,text,correct)=>{if(labels.has(text))return;labels.add(text);options.push({id,text,correct});};
       targets.forEach(s=>add(w.id+':'+s.id,kind==='reverse'?w.word:s.label,true));
