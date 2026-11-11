@@ -5,11 +5,11 @@ const words=Object.entries(index.entries).map(([word,e])=>({word,id:e.id})),clon
 function round(){const r=core.build(words.slice(0,12),pack.entries,{limit:3,date:'2026-11-05',random:()=>0.25});Object.assign(r,{type:'senses',id:'synthetic-round',started:1,answered:0});return r;}
 
 test('shipping index contains exactly the reviewed public range and includes all five completed entries',()=>{
- assert.equal(index.words,2671);assert.equal(index.senses,6873);assert.equal(index.catalogVersion,pack.version);
+ assert.equal(index.words,2871);assert.equal(index.senses,7464);assert.equal(index.catalogVersion,pack.version);
  for(const w of ['branch','trunk','stem','field','range'])assert.ok(index.entries[w]);
  for(const[w,e]of Object.entries(pack.entries))assert.equal(!!index.entries[w],core.validateEntry(e),w);
  const bad=[...words,{word:words[0].word,id:'synthetic-private-alias'},{word:'branch',id:'synthetic-partial'}];
- assert.equal(S.eligible(bad,pack.entries,index).length,2671);
+ assert.equal(S.eligible(bad,pack.entries,index).length,2871);
  assert.equal(S.eligible([{...words[0],id:'synthetic-private-alias'}],pack.entries,index).length,0);
  const known=Object.entries(index.entries).find(([,e])=>e.aliases?.length),alias={word:known[0],id:known[1].aliases[0]};
  assert.equal(S.eligible([alias],pack.entries,index).length,1,'A bundled OCR/index alias retains its original progress ID');

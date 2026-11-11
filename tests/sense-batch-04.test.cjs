@@ -85,7 +85,7 @@ test('200 real words produce four disjoint 50-word batches with complete sense g
 test('cross-word equivalents are excluded and the full pack loads without network or eager editorial scripts',()=>{
   for(const [a,b]of [[get('adapt','adjust'),get('adjust','adapt')],[get('accurate','precise'),get('precise','exact')],[get('entertainment','amusement'),get('recreation','leisure')],[get('mediate','dispute'),get('intervene','involve')]])assert.equal(core.overlaps(a,b),true);
   const site=path.join(__dirname,'../src/VocabDesk/Website'),window={},context={window};vm.createContext(context);
-  for(const file of ['sense-batch-03.js','sense-batch-04.js','sense-batch-05.js','sense-batch-06.js','sense-batch-07.js','sense-batch-08.js','sense-completion-02.js','sense-batch-09.js','sense-batch-10.js','sense-batch-11.js','sense-batch-12.js','sense-batch-13.js','sense-batch-14.js','sense-batch-15.js','sense-batch-16.js','sense-catalog.js'])vm.runInContext(fs.readFileSync(path.join(site,file),'utf8'),context);
+  for(const file of ['sense-batch-03.js','sense-batch-04.js','sense-batch-05.js','sense-batch-06.js','sense-batch-07.js','sense-batch-08.js','sense-completion-02.js','sense-batch-09.js','sense-batch-10.js','sense-batch-11.js','sense-batch-12.js','sense-batch-13.js','sense-batch-14.js','sense-batch-15.js','sense-batch-16.js','sense-batch-17.js','sense-catalog.js'])vm.runInContext(fs.readFileSync(path.join(site,file),'utf8'),context);
   assert.equal(JSON.stringify(window.WORDORBIT_SENSE_CATALOG),JSON.stringify(pack));
   assert.doesNotMatch(fs.readFileSync(path.join(site,'index.html'),'utf8'),/src=["'][^"']*sense-(?:batch|catalog|training)/);
 });
