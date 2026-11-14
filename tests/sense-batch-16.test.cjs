@@ -4,7 +4,7 @@ const C = require('../src/VocabDesk/Website/sense-training-core.js');
 const production = require('../src/VocabDesk/Website/sense-catalog.js');
 const EXPECTED_BATCH_WORDS = 200;
 const EXPECTED_BATCH_SENSES = 442;
-const EXPECTED_TOTAL_WORDS = 2871;
+const EXPECTED_TOTAL_WORDS = 3071;
 const EXPECTED_TOTAL_SENSES = 6873;
 const ALLOWED = /^https:\/\/(dictionary\.cambridge\.org|www\.collinsdictionary\.com|api\.dictionaryapi\.dev|www\.vocabulary\.com|www\.merriam-webster\.com|learn\.microsoft\.com|developer\.mozilla\.org|docs\.github\.com)\//;
 const DECISIONS = new Set(['scope-excluded', 'restricted-verified', 'context-required', 'outside-scope-unresolved']);
@@ -28,22 +28,22 @@ function target(word, text) {
 }
 
 test('batch 16 is registered in the actual lazy production and offline paths', () => {
-  assert.equal(production.version, 17);
-  assert.equal(Object.keys(production.entries).length, 2871);
+  assert.equal(production.version, 18);
+  assert.equal(Object.keys(production.entries).length, 3071);
   assert.match(fs.readFileSync(path.join(site, 'sense-study.js'), 'utf8'), /'09','10','11'/);
   assert.match(fs.readFileSync(path.join(site, 'service-worker.js'), 'utf8'), /'09','10','11'/);
   assert.doesNotMatch(fs.readFileSync(path.join(site, 'index.html'), 'utf8'), /src=["'][^"']*sense-(?:batch|catalog|training|completion)/);
   const ctx = {window: {}};vm.createContext(ctx);
-  for(const n of ['03','04','05','06','07','08','09','10','11','12','13','14','15','16','17']) vm.runInContext(fs.readFileSync(path.join(site,'sense-batch-'+n+'.js'),'utf8'),ctx);
+  for(const n of ['03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18']) vm.runInContext(fs.readFileSync(path.join(site,'sense-batch-'+n+'.js'),'utf8'),ctx);
   for(const f of ['sense-completion-02.js','sense-catalog.js','sense-ready-index.js']) vm.runInContext(fs.readFileSync(path.join(site,f),'utf8'),ctx);
   assert.equal(JSON.stringify(ctx.window.WORDORBIT_SENSE_CATALOG),JSON.stringify(production));
-  assert.equal(ctx.window.WordOrbitSenseIndex.words,2871);
-  assert.equal(ctx.window.WordOrbitSenseIndex.senses,7464);
+  assert.equal(ctx.window.WordOrbitSenseIndex.words,3071);
+  assert.equal(ctx.window.WordOrbitSenseIndex.senses,7823);
 });
 
-test('production catalog has 2,871 words and batch 16 adds 200 distinct words with original bilingual examples', () => {
-  assert.equal(candidate.version, 17);
-  assert.deepEqual([...candidate.batches], ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17']);
+test('production catalog has 3,071 words and batch 16 adds 200 distinct words with original bilingual examples', () => {
+  assert.equal(candidate.version, 18);
+  assert.deepEqual([...candidate.batches], ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18']);
   assert.equal(Object.keys(candidate.entries).length, EXPECTED_TOTAL_WORDS);
   assert.equal(batch.length, EXPECTED_BATCH_WORDS);
   assert.equal(new Set(batch.map(([word]) => word)).size, EXPECTED_BATCH_WORDS);
@@ -81,7 +81,7 @@ test('production catalog has 2,871 words and batch 16 adds 200 distinct words wi
   assert.equal(allSentences.size, EXPECTED_TOTAL_SENSES);
 });
 
-test('four 50-word rounds cover all batch 16 goals from the full 2,871-word pool without duplicates or fallbacks', () => {
+test('four 50-word rounds cover all batch 16 goals from the full 3,071-word pool without duplicates or fallbacks', () => {
   const words = Object.keys(candidate.entries).map(word => ({ id: 'pool-' + word, word }));
   const entryById = new Map(words.map(w => [w.id, candidate.entries[w.word]]));
   const before = JSON.stringify(words);
