@@ -1,4 +1,4 @@
-/* Editorial batches 01-18. Definitions checked against the named dictionary entries.
+/* Editorial batches 01-19. Definitions checked against the named dictionary entries.
  * Chinese grouping and all bilingual teaching examples are written for WordOrbit.
  * complete means the explicitly declared learning scope, NOT all dictionary senses.
  * The complete reviewed subset loads on demand in v1.8.0. No user data is included.
@@ -326,6 +326,10 @@
   const registerBatch18=typeof module==='object'&&module.exports?require('./sense-batch-18.js'):scope.WordOrbitSenseBatch18;
   if(typeof registerBatch18!=='function')throw Error('Missing editorial batch 18');
   registerBatch18(add);
+  editorialBatch='19';
+  const registerBatch19=typeof module==='object'&&module.exports?require('./sense-batch-19.js'):scope.WordOrbitSenseBatch19;
+  if(typeof registerBatch19!=='function')throw Error('Missing editorial batch 19');
+  registerBatch19(add);
   // Unresolved OLD fragments remain visible in the audit; they are not certified
   // merely because the explicitly bounded teaching selection is usable.
   for(const entry of Object.values(entries)){
@@ -333,6 +337,6 @@
     if(entry.unresolvedReferences.length){entry.complete=false;entry.pendingReview='常用义项已初审；旧译仍有未决项：'+entry.unresolvedReferences.join('；')+'。整词暂不进入完整覆盖训练。';}
     entry.sources=[...new Set([...entry.sources,...entry.senses.map(s=>s.source),...entry.referenceOnly.map(r=>r.source).filter(Boolean)])];
   }
-  const api={version:18,batches:['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18'],reviewDate:'2026-11-14',publicationState:'reviewed-subset-production',scope:'declared-learning-scope-not-exhaustive-dictionary',entries};
+  const api={version:19,batches:['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19'],reviewDate:'2026-11-15',publicationState:'reviewed-subset-production',scope:'declared-learning-scope-not-exhaustive-dictionary',entries};
   if(typeof module==='object'&&module.exports)module.exports=api;else scope.WORDORBIT_SENSE_CATALOG=api;
 })(typeof window==='object'?window:globalThis);
