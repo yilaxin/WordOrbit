@@ -32,10 +32,19 @@
     // Reverse choices check every meaning of one candidate word, without rescanning the entire pool.
     const sensesByWord=new Map();for(const s of all){if(!sensesByWord.has(s.wordId))sensesByWord.set(s.wordId,[]);sensesByWord.get(s.wordId).push(s);}
     const goals=selected.flatMap(w=>catalog[key(w.word)].senses.map(s=>({...clone(s),wordId:w.id,word:w.word}))),stages=[[],[],[]];let sequence=0;
+    // Per-build preparation avoids repeated normalization across the full distractor pool.
+    // Keep it local: a later build may use edited meanings or a different catalog.
+    const preparedSenses=new WeakMap();
+    function prepared(s){let p=preparedSenses.get(s);if(!p){p={concepts:new Set(s.concepts),labels:[s.label,...s.aliases].map(norm)};preparedSenses.set(s,p);}return p;}
+    function buildOverlap(a,b){
+      const A=prepared(a),B=prepared(b);
+      for(const c of A.concepts)if(B.concepts.has(c))return true;
+      return A.labels.some(x=>B.labels.some(y=>x===y||Math.min(x.length,y.length)>=2&&(x.includes(y)||y.includes(x))));
+    }
     function question(w,senses,kind,stage){
       const targets=senses.map(s=>({...s,wordId:w.id,word:w.word}));
       const validMeanings=kind==='reverse'?targets:catalog[key(w.word)].senses;
-      const distractors=shuffle(all.filter(s=>s.wordId!==w.id&&!validMeanings.some(t=>overlaps(t,s))&&(kind!=='reverse'||!sensesByWord.get(s.wordId).some(other=>targets.some(t=>overlaps(t,other))))),random);
+      const distractors=shuffle(all.filter(s=>s.wordId!==w.id&&!validMeanings.some(t=>buildOverlap(t,s))&&(kind!=='reverse'||!sensesByWord.get(s.wordId).some(other=>targets.some(t=>buildOverlap(t,other))))),random);
       const options=[],labels=new Set(),usedWords=new Set([w.id]);
       const add=(id,text,correct)=>{if(labels.has(text))return;labels.add(text);options.push({id,text,correct});};
       targets.forEach(s=>add(w.id+':'+s.id,kind==='reverse'?w.word:s.label,true));

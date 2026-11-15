@@ -62,11 +62,11 @@ test('four 50-word batches cover every new goal with locked choices, serializati
   }
   assert.equal(new Set(done).size,200);assert.equal(goals,499);assert.equal(fallbacks,0,'The real pool must provide sufficient unambiguous choices');assert.equal(JSON.stringify(words),before);
 });
-test('all eleven modules load offline on demand and the shipped scope contains 3,471 ready words',()=>{
+test('all eleven modules load offline on demand and the shipped scope contains 3,671 ready words',()=>{
   const site=path.join(__dirname,'../src/VocabDesk/Website'),window={},ctx={window};vm.createContext(ctx);
-  for(const name of ['03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20'])vm.runInContext(fs.readFileSync(path.join(site,'sense-batch-'+name+'.js'),'utf8'),ctx);
+  for(const name of ['03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21'])vm.runInContext(fs.readFileSync(path.join(site,'sense-batch-'+name+'.js'),'utf8'),ctx);
   for(const name of ['sense-completion-02.js','sense-catalog.js','sense-ready-index.js'])vm.runInContext(fs.readFileSync(path.join(site,name),'utf8'),ctx);
-  assert.equal(JSON.stringify(window.WORDORBIT_SENSE_CATALOG),JSON.stringify(pack));assert.equal(pack.version,20);assert.equal(window.WordOrbitSenseIndex.words,3471);assert.equal(window.WordOrbitSenseIndex.senses,8656);
-  assert.equal(Object.values(pack.entries).filter(C.validateEntry).length,3471);
+  assert.equal(JSON.stringify(window.WORDORBIT_SENSE_CATALOG),JSON.stringify(pack));assert.equal(pack.version,21);assert.equal(window.WordOrbitSenseIndex.words,3671);assert.equal(window.WordOrbitSenseIndex.senses,9130);
+  assert.equal(Object.values(pack.entries).filter(C.validateEntry).length,3671);
   assert.doesNotMatch(fs.readFileSync(path.join(site,'index.html'),'utf8'),/src=["'][^"']*sense-(?:batch|catalog|training|completion)/);
 });

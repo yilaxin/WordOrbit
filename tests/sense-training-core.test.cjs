@@ -13,3 +13,15 @@ test('insufficient trustworthy distractors become explicit self-recall, not fake
 test('JSON resume keeps locked targets, questions and partial progress across local dates',()=>{const {words,catalog}=fixture(),b=C.build(words,catalog,opts);C.grade(b,0,b.queue[0].expected);const restored=JSON.parse(JSON.stringify(b));assert.deepEqual(restored.targetIds,b.targetIds);assert.deepEqual(restored.queue,b.queue);assert.deepEqual(C.progress(restored),C.progress(b));assert.equal(restored.date,'2026-11-04');});
 test('wrong sense history gets priority in the reverse phase',()=>{const {words,catalog}=fixture(5),b=C.build(words,catalog,{...opts,senseHistory:{'w3:s2':{wrong:9,correct:0}}});assert.deepEqual(b.queue.find(q=>q.wordId==='w3'&&q.stage===1).senseIds,['s2']);});
 test('completion requires all original goals and every appended retry, not one familiar sense',()=>{const {words,catalog}=fixture(8),b=C.build(words,catalog,opts),n=b.queue.length;C.grade(b,0,[]);for(let i=1;i<n;i++){const q=b.queue[i];C.grade(b,i,q.expected,{selfRecall:true});}assert.equal(C.progress(b).completed,false);const q=b.queue.at(-1);C.grade(b,b.queue.length-1,q.expected,{selfRecall:true});assert.equal(C.progress(b).completed,true);assert.equal(C.progress(b).wordsDone,8);assert.equal(C.progress(b).pendingRedo,0);});
+test('new builds observe edited aliases and concepts without changing earlier round snapshots',()=>{
+ const {words,catalog}=fixture(8),entry=catalog.synthetic0.senses[0],originalAliases=entry.aliases.slice(),originalConcepts=entry.concepts.slice();
+ const first=C.build(words,catalog,{...opts,limit:8}),snapshot=JSON.stringify(first),context=b=>b.queue.find(q=>q.wordId==='w0'&&q.stage===0);
+ assert.notEqual(context(first).kind,'recall');
+ const others=Object.entries(catalog).filter(([w])=>w!=='synthetic0').flatMap(([,e])=>e.senses);
+ entry.aliases=others.map(s=>s.label.split('').join('， '));
+ let before=JSON.stringify(catalog),second=C.build(words,catalog,{...opts,limit:8});
+ assert.equal(context(second).kind,'recall');assert.equal(context(second).options.length,0);assert.equal(JSON.stringify(catalog),before);
+ entry.aliases=originalAliases;entry.concepts=others.flatMap(s=>s.concepts);
+ before=JSON.stringify(catalog);const third=C.build(words,catalog,{...opts,limit:8});assert.equal(context(third).kind,'recall');assert.equal(JSON.stringify(catalog),before);
+ entry.concepts=originalConcepts;assert.deepEqual(C.build(words,catalog,{...opts,limit:8}),first);assert.equal(JSON.stringify(first),snapshot);
+});
