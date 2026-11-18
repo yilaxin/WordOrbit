@@ -10,7 +10,7 @@ const assert=require('node:assert/strict'),path=require('node:path'),{pathToFile
    const formal=qEligibleWords(),bad=formal.filter(w=>!/^\/.+\/$/.test(w.ipa)||/[0-9\\^\u0400-\u04ff\u4e00-\u9fff]|[ɒə]ː|^\/\./.test(w.ipa)||!w.pos);
    return {total:state.words.length,formal:formal.length,review:state.words.filter(qReview).map(w=>w.word),bad:bad.map(w=>w.word),whole:wholeBookWords().length};
   });
-  assert.deepEqual(summary,{total:4248,formal:4247,review:['revoltive'],bad:[],whole:4247});
+  assert.deepEqual(summary,{total:4247,formal:4246,review:['revoltive'],bad:[],whole:4246});
   // Every formal entry must support four unique, current choices in both directions.
   for(let offset=0;offset<summary.formal;offset+=250){const bad=await page.evaluate(({offset})=>{
    const all=qEligibleWords(),meanings=new Set(all.map(qFullMeaning)),words=new Set(all.map(w=>w.word)),fail=[];

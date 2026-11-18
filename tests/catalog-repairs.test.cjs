@@ -10,7 +10,7 @@ test('offline overlay is repeatable and does not mark the book doubt as verified
  assert.equal(context.window.EXTERNAL_VOCAB.coed.ipa,'/ˌkəʊˈed/');
 });
 test('whole-catalog corrections have source references, real glosses and well-formed IPA',()=>{
- assert.equal(repairs.meaningCount,153);assert.equal(repairs.ipaCount,596);
+ assert.equal(repairs.meaningCount,156);assert.equal(repairs.ipaCount,599);
  for(const [word,e]of Object.entries(repairs.entries)){
   if(e.reviewedMeaning){assert.ok(e.meaningSourceUrl?.startsWith('https://'),word);assert.match(e.meaning,/[\u4e00-\u9fff]/);assert.ok(e.pos);assert.doesNotMatch(e.meaning,/DOS|Windows|网络命令|interj\./);}
   if(e.ipa&&!e.referenceOnly){assert.match(e.ipa,/^\/.+\/$/,word);assert.doesNotMatch(e.ipa,/[0-9\\^\u0400-\u04ff\u4e00-\u9fff]|[ɒə]ː/,word);assert.ok(e.pronunciationSourceUrl?.startsWith('https://'),word);}

@@ -444,7 +444,7 @@ save=function(){
     localStorage.setItem(KEY,JSON.stringify(compact));
   }catch(error){if(!save.storageWarned){save.storageWarned=true;toast('浏览器存储空间不足，请先导出学习数据')}}
 };
-// Remap only a confirmed OCR duplicate, not a legitimate user-entered acronym.
+// Remap only confirmed OCR duplicates, preserving user-entered names and acronyms.
 function qMergeCatalogDuplicate(from,to){
   if(from.id!==to.id){
     const previous=state.records[from.id],current=state.records[to.id];
@@ -498,11 +498,13 @@ function qApplyExternalDictionary(){
   const byCanonical=new Map(state.words.map(word=>[qWordKey(word.word),word]));
   const removed=new Set();
   state.words.forEach(word=>{
-    const originalKey=qWordKey(word.word),canonical=word.id==='ocr-pil'&&word.source==='ocr'&&originalKey==='pil'?'pill':qCanonicalWord(originalKey);
+    const originalKey=qWordKey(word.word);
+    const confirmedOcr=word.source==='ocr'&&(word.id==='ocr-pil'&&originalKey==='pil'||word.id==='ocr-nino'&&originalKey==='nino');
+    const canonical=confirmedOcr?(word.id==='ocr-nino'?'el nino':'pill'):qCanonicalWord(originalKey);
     if(canonical!==originalKey){
       const existing=byCanonical.get(canonical);
-      if(existing&&existing!==word){if(word.id==='ocr-pil')qMergeCatalogDuplicate(word,existing);removed.add(word);return;}
-      word.word=canonical;changed=true;
+      if(existing&&existing!==word){if(confirmedOcr)qMergeCatalogDuplicate(word,existing);removed.add(word);return;}
+      word.word=canonical;byCanonical.set(canonical,word);changed=true;
     }
     const external=qExternalEntry(word);
     if(!external?.meaning)return;

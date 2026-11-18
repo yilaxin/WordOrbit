@@ -1,4 +1,5 @@
-/* Whole-catalog editorial repairs, 2026-10-22. Language facts and short study
+/* Whole-catalog editorial repairs, base 2026-10-22; final four reviewed 2026-11-18.
+ * Language facts and short study
  * glosses only; no dictionary page text, examples, audio or runtime requests. */
 (function(root){
  'use strict';
@@ -3336,13 +3337,22 @@ cosmetics|n. plural|化妆品；美容用品
  for(const [word,value] of Object.entries(pronunciations))Object.assign(entries[word]||= {},value);
  for(const [word,pronunciationNote] of Object.entries(notes))Object.assign(entries[word]||= {},{pronunciationNote});
  entries.revoltive={meaning:'厌恶的；反感的（原书用法，现代常用词典未核实）',pos:'adj.',ipa:'—',referenceOnly:true,reviewReason:'原书第 230 页确有此词形，但未能在所查 Cambridge、Collins 等主流词典核实对应标准释义与发音。保留原形作资料，不参与正式练习；请区分 revolted（感到厌恶的）与 revolting（令人厌恶的）。'};
- const result=Object.freeze({edition:'2026-10-22',entries:Object.freeze(entries),meaningCount:meaningRows.length,ipaCount:Object.keys(pronunciations).length});
+ // resolved-legacy-2026-11-18: actual dictionary entries and printed pages checked.
+ // The OCR fragment nino is resolved by the ID-scoped merge in quality-overrides.
+ const finalReview={
+  primate:{meaning:'灵长类动物；首席主教；灵长类的',pos:'n. / adj.',ipa:'/ˈpraɪmeɪt/',meaningSourceUrl:'https://www.collinsdictionary.com/dictionary/english/primate',pronunciationSourceUrl:'https://www.collinsdictionary.com/dictionary/english/primate',accent:'UK',pronunciationNote:'主读音 /ˈpraɪmeɪt/。宗教义“首席主教”也可读 /ˈpraɪmət/；来源还列美式 /ˈpraɪmɪt/ 变体。不能把所有旧读法一概判错，动物义在此统一采用 /ˈpraɪmeɪt/。'},
+  proliferate:{meaning:'迅速增殖；激增；迅速扩散；使大量增加',pos:'v.',ipa:'/prəˈlɪfəˌreɪt/',meaningSourceUrl:'https://www.merriam-webster.com/dictionary/proliferate',pronunciationSourceUrl:'https://www.collinsdictionary.com/dictionary/english/proliferate',accent:'UK',pronunciationNote:'采用英式 /prəˈlɪfəˌreɪt/，主重音在第二音节；来源另列美式 /proʊ-/ 起首变体。旧 /prəəʊ-/ 将元音形式混写，已修正。'},
+  sterility:{meaning:'不育；不孕；无菌状态；土地贫瘠；缺乏创意或生气',pos:'n.',ipa:'/stɛˈrɪlɪtɪ/',meaningSourceUrl:'https://www.collinsdictionary.com/dictionary/english/sterility',pronunciationSourceUrl:'https://www.collinsdictionary.com/dictionary/english/sterility',accent:'UK',pronunciationNote:'采用 Collins 英式 /stɛˈrɪlɪtɪ/；主重音在第二音节。旧标注的重音并非错误，本次规范音标符号；来源也有首音节弱化为 /stə-/ 的读法。'},
+  'el nino':{meaning:'厄尔尼诺现象；赤道太平洋海水异常增暖现象',pos:'n.',ipa:'/el ˈniːnjəʊ/',meaningSourceUrl:'https://www.merriam-webster.com/dictionary/El%20Ni%C3%B1o',pronunciationSourceUrl:'https://www.collinsdictionary.com/dictionary/english/el-nino',accent:'UK',pronunciationNote:'规范名称写作 El Niño，公共检索键保留 el nino。原书印刷第003页（PDF第10页）的 nino 是 OCR 拆词残片，已并入此条；不采用“男子名”旧误配。'}
+ };
+ for(const [word,e]of Object.entries(finalReview))Object.assign(entries[word]||= {},e,{reviewedMeaning:true,reviewedIpa:true,reviewDate:'2026-11-18'});
+ const result=Object.freeze({edition:'2026-11-18',entries:Object.freeze(entries),meaningCount:Object.values(entries).filter(e=>e.reviewedMeaning).length,ipaCount:Object.values(entries).filter(e=>e.ipa&&!e.referenceOnly).length});
  if(typeof module==='object'&&module.exports)module.exports=result;
  if(root){
   root.CATALOG_REPAIRS=result;
   for(const [word,entry] of Object.entries(entries)){
    const previous=root.EXTERNAL_VOCAB?.[word]||{};
-   (root.EXTERNAL_VOCAB||= {})[word]={...previous,...entry,...(entry.ipa?{reviewedIpa:!entry.referenceOnly}:{}),...(entry.meaning?{reviewed:!entry.referenceOnly,reviewSource:'WordOrbit whole-catalog review 2026-10-22'}:{})};
+   (root.EXTERNAL_VOCAB||= {})[word]={...previous,...entry,...(entry.ipa?{reviewedIpa:!entry.referenceOnly}:{}),...(entry.meaning?{reviewed:!entry.referenceOnly,reviewSource:'WordOrbit whole-catalog review '+(entry.reviewDate||'2026-10-22')}:{})};
   }
  }
 })(typeof window==='object'?window:null);

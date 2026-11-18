@@ -4,7 +4,7 @@ const C = require('../src/VocabDesk/Website/sense-training-core.js');
 const production = require('../src/VocabDesk/Website/sense-catalog.js');
 const EXPECTED_BATCH_WORDS = 200;
 const EXPECTED_BATCH_SENSES = 361;
-const EXPECTED_TOTAL_WORDS = 4243;
+const EXPECTED_TOTAL_WORDS = 4246;
 const EXPECTED_TOTAL_SENSES = 8184;
 const ALLOWED = /^https:\/\/(dictionary\.cambridge\.org|www\.collinsdictionary\.com|api\.dictionaryapi\.dev|www\.vocabulary\.com|www\.merriam-webster\.com|learn\.microsoft\.com|developer\.mozilla\.org|docs\.github\.com)\//;
 const DECISIONS = new Set(['scope-excluded', 'restricted-verified', 'context-required', 'outside-scope-unresolved']);
@@ -28,22 +28,22 @@ function target(word, text) {
 }
 
 test('batch 19 is registered in the actual lazy production and offline paths', () => {
-  assert.equal(production.version, 24);
-  assert.equal(Object.keys(production.entries).length, 4243);
+  assert.equal(production.version, 25);
+  assert.equal(Object.keys(production.entries).length, 4246);
   assert.match(fs.readFileSync(path.join(site, 'sense-study.js'), 'utf8'), /'09','10','11'/);
   assert.match(fs.readFileSync(path.join(site, 'service-worker.js'), 'utf8'), /'09','10','11'/);
   assert.doesNotMatch(fs.readFileSync(path.join(site, 'index.html'), 'utf8'), /src=["'][^"']*sense-(?:batch|catalog|training|completion)/);
   const ctx = {window: {}};vm.createContext(ctx);
-  for(const n of ['03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24']) vm.runInContext(fs.readFileSync(path.join(site,'sense-batch-'+n+'.js'),'utf8'),ctx);
+  for(const n of ['03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25']) vm.runInContext(fs.readFileSync(path.join(site,'sense-batch-'+n+'.js'),'utf8'),ctx);
   for(const f of ['sense-completion-02.js','sense-catalog.js','sense-ready-index.js']) vm.runInContext(fs.readFileSync(path.join(site,f),'utf8'),ctx);
   assert.equal(JSON.stringify(ctx.window.WORDORBIT_SENSE_CATALOG),JSON.stringify(production));
-  assert.equal(ctx.window.WordOrbitSenseIndex.words,4243);
-  assert.equal(ctx.window.WordOrbitSenseIndex.senses,10550);
+  assert.equal(ctx.window.WordOrbitSenseIndex.words,4246);
+  assert.equal(ctx.window.WordOrbitSenseIndex.senses,10560);
 });
 
-test('production catalog has 4,243 words and batch 19 adds 200 distinct words with original bilingual examples', () => {
-  assert.equal(candidate.version, 24);
-  assert.deepEqual([...candidate.batches], ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24']);
+test('production catalog has 4,246 words and batch 19 adds 200 distinct words with original bilingual examples', () => {
+  assert.equal(candidate.version, 25);
+  assert.deepEqual([...candidate.batches], ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25']);
   assert.equal(Object.keys(candidate.entries).length, EXPECTED_TOTAL_WORDS);
   assert.equal(batch.length, EXPECTED_BATCH_WORDS);
   assert.equal(new Set(batch.map(([word]) => word)).size, EXPECTED_BATCH_WORDS);
@@ -81,7 +81,7 @@ test('production catalog has 4,243 words and batch 19 adds 200 distinct words wi
   assert.equal(allSentences.size, EXPECTED_TOTAL_SENSES);
 });
 
-test('four 50-word rounds cover all batch 19 goals from the full 4,243-word pool without duplicates or fallbacks', () => {
+test('four 50-word rounds cover all batch 19 goals from the full 4,246-word pool without duplicates or fallbacks', () => {
   const words = Object.keys(candidate.entries).map(word => ({ id: 'pool-' + word, word }));
   const entryById = new Map(words.map(w => [w.id, candidate.entries[w.word]]));
   const before = JSON.stringify(words);
@@ -137,7 +137,7 @@ test('batch 19 distinguishes current pronunciation scope, common senses and rela
  assert.ok(e('coordinate').senses.every(s=>s.pos==='v.'));assert.ok(e('absent').senses.every(s=>s.pos==='adj.'));
  for(const[w,v]of [['utilise','utilize'],['parlour','parlor'],['jeans','jean']])assert.equal(e(w).senses[0].source,'https://www.merriam-webster.com/dictionary/'+v);
  assert.match(e('bel').senses[0].example.en,/ten decibels/);assert.match(e('lie').senses[0].example.en,/lay quietly/);assert.match(e('lie').senses[2].example.en,/lied/);
- assert.equal(e('specialist').senses[1].pos,'n.（作定语）');assert.equal(e('nino'),undefined);assert.equal(e('primate'),undefined);
+ assert.equal(e('specialist').senses[1].pos,'n.（作定语）');assert.equal(e('nino'),undefined);assert.equal(e('primate').batch,'25');
  for(const[a,b]of [['amaze','astound'],['neglect','disregard'],['injure','hurt'],['cargo','goods'],['rely','depend']])assert.ok(e(a).senses.some(s=>e(b).senses.some(t=>C.overlaps(s,t))),a+'/'+b);
 });
 test('batch 19 learned-selection requires positive history',()=>{
